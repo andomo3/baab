@@ -1,0 +1,14 @@
+[
+  { "name": "playboi carti", "image": null, "genres": ["rap", "pluggnb"] },
+  { "name": "jaden smith",   "image": null, "genres": ["pop rap"] },
+  { "name": "ken carson",    "image": null, "genres": ["pluggnb", "rap"] },
+  { "name": "yeat",          "image": null, "genres": ["pluggnb", "rap"] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] },
+  { "name": "—",             "image": null, "genres": [] }
+]

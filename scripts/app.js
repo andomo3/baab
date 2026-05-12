@@ -118,30 +118,6 @@
   if (featured) PROJECT_FILES.slice(0, 4).forEach(p => featured.appendChild(tile(p)));
   if (recent) PROJECT_FILES.slice().reverse().slice(0, 5).forEach(p => recent.appendChild(tile(p)));
 
-  // ----------- Projects playlist -----------
-  const pl = document.getElementById('projects-playlist');
-  if (pl) {
-    PROJECTS.forEach((t, i) => {
-      const row = document.createElement('div');
-      row.className = 'row' + (i === 0 ? ' playing' : '');
-      row.innerHTML = `
-        <div class="num">${i === 0 ? '<span class="eq" style="color:var(--p3)"><span></span><span></span><span></span><span></span></span>' : `<span class="n">${String(i+1).padStart(2,'0')}</span>`}</div>
-        <div class="cover"><span class="cover-icon">${ICONS[String(i+1).padStart(2,'0')] || ''}</span></div>
-        <div class="meta"><div class="title">${t.title}</div><div class="sub">${t.artist}</div></div>
-        <div class="album">${t.album}</div>
-        <div class="plays">${t.plays}</div>
-        <div class="dur">${t.dur}</div>
-        <div class="more">···</div>
-      `;
-      row.addEventListener('click', () => {
-        if (window.__term) window.__term.runCmd('play ' + (i+1));
-        pl.querySelectorAll('.row:not(.header)').forEach(r => r.classList.remove('playing'));
-        row.classList.add('playing');
-      });
-      pl.appendChild(row);
-    });
-  }
-
   // ----------- File tree + IDE tabs -----------
   const tree = document.getElementById('file-tree');
   if (tree) {
@@ -220,6 +196,10 @@
     }
   }
 
+  let bootDone = false;
+  let syncingFromTab = false;
+  let syncingFromTerm = false;
+
   function openTab(id) {
     if (!tabs || !content) return;
     let tab = tabs.querySelector(`.ide-tab[data-tab="${id}"]`);
@@ -243,31 +223,113 @@
     tabs.querySelectorAll('.ide-tab').forEach(t => t.classList.toggle('active', t === tab));
     if (tree) tree.querySelectorAll('.ide-item').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
     content.innerHTML = renderFileView(id);
-  }
 
-  // Open the first project by default
+    // Sync the player to the open tab (suppressed during boot and re-entrant calls)
+    if (bootDone && !syncingFromTerm) {
+      syncingFromTab = true;
+      const n = parseInt(id, 10);
+      if (window.__term) window.__term.runCmd('play ' + n);
+      syncingFromTab = false;
+    }
+  }
+  window.__openTab = openTab;
+
+  // Open the first project by default (silent — boot flag prevents sync echo)
   if (PROJECT_FILES[0]) openTab(PROJECT_FILES[0].id);
+  bootDone = true;
+
+  // When the track changes (terminal, prev/next, shelf tile), navigate to
+  // projects and open the matching IDE tab.
+  window.addEventListener('np-update', (e) => {
+    if (syncingFromTab) return;
+    const idx = e.detail && e.detail.idx;
+    const t = (window.__term && window.__term.TRACKS && window.__term.TRACKS[idx]);
+    if (!t) return;
+    const projectsPage = document.querySelector('.page[data-page="projects"]');
+    const onProjects = projectsPage && projectsPage.classList.contains('active');
+    if (!onProjects && window.__navigate) window.__navigate('projects');
+    syncingFromTerm = true;
+    openTab(t.n);
+    syncingFromTerm = false;
+  });
 
   // ----------- Heatmap -----------
   const hm = document.getElementById('heatmap');
   if (hm) {
-    for (let w = 0; w < 53; w++) {
-      for (let d = 0; d < 7; d++) {
-        const recencyBoost = (w / 53) * 1.8;
-        const weekday = (d >= 1 && d <= 5) ? 1.0 : 0.45;
-        const noise = Math.random();
-        const score = (noise * weekday + recencyBoost * 0.4);
-        let cls = '';
-        if (score > 1.4) cls = 'l4';
-        else if (score > 1.0) cls = 'l3';
-        else if (score > 0.65) cls = 'l2';
-        else if (score > 0.35) cls = 'l1';
-        const cell = document.createElement('div');
-        cell.className = 'cell ' + cls;
-        cell.title = `week ${w+1} · ${['sun','mon','tue','wed','thu','fri','sat'][d]} · ${cls ? Math.round(score*7) : 0} commits`;
-        hm.appendChild(cell);
+    const GITHUB_USER = 'andomo3';
+    const DAYS = ['sun','mon','tue','wed','thu','fri','sat'];
+
+    function renderMockHeatmap(el) {
+      for (let w = 0; w < 53; w++) {
+        for (let d = 0; d < 7; d++) {
+          const recencyBoost = (w / 53) * 1.8;
+          const weekday = (d >= 1 && d <= 5) ? 1.0 : 0.45;
+          const score = (Math.random() * weekday + recencyBoost * 0.4);
+          let cls = '';
+          if (score > 1.4) cls = 'l4';
+          else if (score > 1.0) cls = 'l3';
+          else if (score > 0.65) cls = 'l2';
+          else if (score > 0.35) cls = 'l1';
+          const cell = document.createElement('div');
+          cell.className = 'cell ' + cls;
+          cell.title = `week ${w+1} · ${DAYS[d]} · ${cls ? Math.round(score*7) : 0} commits`;
+          el.appendChild(cell);
+        }
       }
     }
+
+    function renderHeatmap(grid) {
+      let totalCommits = 0, activeDays = 0, maxStreak = 0, curStreak = 0;
+      hm.innerHTML = '';
+      const flat = grid.flat();
+      const max = Math.max(...flat, 1);
+      grid.forEach((week, wi) => {
+        week.forEach((count, di) => {
+          totalCommits += count;
+          if (count > 0) { activeDays++; curStreak++; maxStreak = Math.max(maxStreak, curStreak); }
+          else curStreak = 0;
+          const lvl = count === 0 ? '' : count < max * 0.25 ? 'l1' : count < max * 0.5 ? 'l2' : count < max * 0.75 ? 'l3' : 'l4';
+          const cell = document.createElement('div');
+          cell.className = 'cell ' + lvl;
+          cell.title = `week ${wi+1} · ${DAYS[di]} · ${count} commits`;
+          hm.appendChild(cell);
+        });
+      });
+      const statsEl = hm.closest('.heatmap-wrap') && hm.closest('.heatmap-wrap').querySelector('.heatmap-stats');
+      if (statsEl) {
+        const s = statsEl.querySelectorAll('.s');
+        if (s[0]) s[0].innerHTML = `<b>${totalCommits.toLocaleString()}</b>commits`;
+        if (s[1]) s[1].innerHTML = `<b>${activeDays}</b>active days`;
+        if (s[2]) s[2].innerHTML = `<b>${maxStreak}</b>day streak`;
+      }
+    }
+
+    async function buildHeatmap() {
+      const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
+      if (!reposRes.ok) throw new Error('rate limited');
+      const repos = await reposRes.json();
+      const weekMaps = await Promise.all(
+        repos.map(r =>
+          fetch(`https://api.github.com/repos/${GITHUB_USER}/${r.name}/stats/commit_activity`)
+            .then(res => res.ok ? res.json() : [])
+            .catch(() => [])
+        )
+      );
+      const grid = Array.from({length: 52}, () => new Array(7).fill(0));
+      for (const weeks of weekMaps) {
+        if (!Array.isArray(weeks)) continue;
+        weeks.forEach((wk, wi) => {
+          if (wi < 52 && Array.isArray(wk.days)) {
+            wk.days.forEach((count, di) => { grid[wi][di] += count; });
+          }
+        });
+      }
+      return grid;
+    }
+
+    buildHeatmap()
+      .then(renderHeatmap)
+      .catch(() => renderMockHeatmap(hm));
   }
 
   // ----------- Languages -----------
@@ -301,16 +363,26 @@
   // ----------- Artist grid -----------
   const ag = document.getElementById('artist-grid');
   if (ag) {
-    const artists = ['playboi carti','jaden smith','ken carson','yeat','—','—','—','—','—','—','—','—'];
-    ag.innerHTML = artists.map((name, i) => {
-      const angle = (i * 30) % 360;
-      const flip = i % 2 === 0;
-      return `
-        <div class="artist-tile" style="background: linear-gradient(${angle}deg, ${flip ? 'var(--primary)' : 'var(--secondary)'}, ${flip ? 'var(--secondary)' : 'var(--primary)'});">
-          <span>${name}</span>
-        </div>
-      `;
-    }).join('');
+    function renderFallbackArtists() {
+      const fallback = ['playboi carti','jaden smith','ken carson','yeat','—','—','—','—','—','—','—','—'];
+      ag.innerHTML = fallback.map((name, i) => {
+        const angle = (i * 30) % 360;
+        const flip = i % 2 === 0;
+        return `<div class="artist-tile" style="background:linear-gradient(${angle}deg,${flip?'var(--p1)':'var(--p3)'},${flip?'var(--p3)':'var(--p1)'})"><span>${name}</span></div>`;
+      }).join('');
+    }
+
+    fetch('data/spotify-top-artists.json')
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(artists => {
+        ag.innerHTML = artists.slice(0, 12).map(a => {
+          const bg = a.image
+            ? `background-image:url(${a.image})`
+            : `background:linear-gradient(135deg,var(--p1),var(--p3))`;
+          return `<div class="artist-tile" style="${bg}"><span>${a.name}</span></div>`;
+        }).join('');
+      })
+      .catch(renderFallbackArtists);
   }
 
   // ----------- Player sync -----------
@@ -343,10 +415,31 @@
     if (npTotal) npTotal.textContent = t.dur;
   });
 
+  function onProjectsPage() {
+    const p = document.querySelector('.page[data-page="projects"]');
+    return !!(p && p.classList.contains('active'));
+  }
+
   setInterval(() => {
     if (!isPlaying) return;
+    // While the user is reading a project, scroll drives the seek bar — skip auto-tick.
+    if (onProjectsPage()) return;
     trackElapsed = (trackElapsed + 1) % trackTotal;
     if (npFill) npFill.style.width = (trackElapsed / trackTotal * 100) + '%';
     if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
   }, 1000);
+
+  // Scroll → seek: as the user scrolls through the Projects page, fill the seek bar.
+  const mainEl = document.querySelector('.main');
+  if (mainEl) {
+    mainEl.addEventListener('scroll', () => {
+      if (!onProjectsPage()) return;
+      const total = mainEl.scrollHeight - mainEl.clientHeight;
+      if (total <= 0) return;
+      const pct = Math.min(1, Math.max(0, mainEl.scrollTop / total));
+      trackElapsed = pct * trackTotal;
+      if (npFill) npFill.style.width = (pct * 100) + '%';
+      if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
+    }, { passive: true });
+  }
 })();

@@ -160,19 +160,21 @@
   // 1. SCROLL-REACTIVE EQ
   // ====================================================================
   let scrollEnergy = 0;
-  let lastScroll = window.scrollY;
+  const scroller = document.querySelector('.main') || document.scrollingElement || document.documentElement;
+  let lastScroll = scroller.scrollTop || 0;
   let lastTime = performance.now();
 
   function onScroll() {
     const now = performance.now();
     const dt = Math.max(1, now - lastTime);
-    const dy = Math.abs(window.scrollY - lastScroll);
+    const cur = scroller.scrollTop || 0;
+    const dy = Math.abs(cur - lastScroll);
     const v = dy / dt;             // px/ms
     scrollEnergy = Math.min(1, scrollEnergy + v * 0.06);
-    lastScroll = window.scrollY;
+    lastScroll = cur;
     lastTime = now;
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  scroller.addEventListener('scroll', onScroll, { passive: true });
 
   // also nudge on click/key (so page feels alive without scrolling)
   ['click', 'keydown', 'pointermove'].forEach(ev => {
@@ -648,56 +650,48 @@
   }
 
   // ====================================================================
-  // 4. SETLISTS
+  // 4. SETLISTS — reorder the IDE file tree on the Projects page
   // ====================================================================
-  // Inject pill row + intro just above the playlist
-  const playlist = document.getElementById('projects-playlist');
-  if (playlist && playlist.parentElement) {
-    const card = playlist.closest('.card');
-    if (card && card.parentElement) {
-      const wrap = document.createElement('div');
-      wrap.innerHTML = `
-        <div class="setlist-bar">
-          <span class="label">Setlist</span>
-          <button class="setlist-pill active" data-setlist="default">All projects</button>
-          <button class="setlist-pill" data-setlist="ml-research">ML / Research</button>
-          <button class="setlist-pill" data-setlist="quant">Quant / Fintech</button>
-          <button class="setlist-pill" data-setlist="faang">FAANG SWE</button>
-        </div>
-        <div class="setlist-intro" id="setlist-intro"></div>
-      `;
-      card.parentElement.insertBefore(wrap, card);
-    }
+  const ideEl = document.querySelector('.page[data-page="projects"] .ide');
+  if (ideEl && ideEl.parentElement) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `
+      <div class="setlist-bar">
+        <span class="label">Setlist</span>
+        <button class="setlist-pill active" data-setlist="default">All projects</button>
+        <button class="setlist-pill" data-setlist="ml-research">ML / Research</button>
+        <button class="setlist-pill" data-setlist="quant">Quant / Fintech</button>
+        <button class="setlist-pill" data-setlist="faang">FAANG SWE</button>
+      </div>
+      <div class="setlist-intro" id="setlist-intro"></div>
+    `;
+    ideEl.parentElement.insertBefore(wrap, ideEl);
   }
 
   const setlistIntro = document.getElementById('setlist-intro');
+  const fileTree = document.getElementById('file-tree');
+
   function applySetlist(name) {
-    // toggle pill active state
     document.querySelectorAll('.setlist-pill').forEach(p => {
       p.classList.toggle('active', p.dataset.setlist === name);
     });
+    if (!fileTree) return;
+
+    const items = Array.from(fileTree.querySelectorAll('.ide-item'));
 
     if (name === 'default' || !SETLISTS[name]) {
-      // restore original order
-      const rows = Array.from(playlist.querySelectorAll('.row:not(.header)'));
-      rows.sort((a, b) => Number(a.dataset.origIdx) - Number(b.dataset.origIdx));
-      rows.forEach(r => playlist.appendChild(r));
-      // also clear .playing offsets
+      items.sort((a, b) => Number(a.dataset.origIdx) - Number(b.dataset.origIdx));
+      items.forEach(it => fileTree.appendChild(it));
       if (setlistIntro) setlistIntro.classList.remove('show');
       return;
     }
 
     const sl = SETLISTS[name];
-    const rows = Array.from(playlist.querySelectorAll('.row:not(.header)'));
     const byN = {};
-    rows.forEach(r => { byN[r.dataset.trackN] = r; });
-    sl.order.forEach((n, i) => {
-      const row = byN[n];
-      if (!row) return;
-      // update displayed number
-      const numCell = row.querySelector('.num .n');
-      if (numCell) numCell.textContent = String(i+1).padStart(2, '0');
-      playlist.appendChild(row);
+    items.forEach(it => { byN[it.dataset.tab] = it; });
+    sl.order.forEach(n => {
+      const it = byN[n];
+      if (it) fileTree.appendChild(it);
     });
 
     if (setlistIntro) {
@@ -706,21 +700,12 @@
     }
   }
 
-  // Tag rows with their original index + track number for reordering
-  // (deferred to allow app.js to render rows first)
+  // Tag file-tree items with original index so we can restore default order
   setTimeout(() => {
-    const rows = Array.from(playlist ? playlist.querySelectorAll('.row:not(.header)') : []);
-    rows.forEach((r, i) => {
-      r.dataset.origIdx = i;
-      // The track number is in the .num span as text "01" "02" etc, OR the row is the first (.playing)
-      // We rely on TRACKS[i] for n. (rows render in TRACKS order initially.)
-      const t = TRACKS[i];
-      if (t) r.dataset.trackN = t.n;
-      // Add a stable n for restoration (replace the eq with a number for non-first rows is already done)
-      // Default state already shows correct numbers.
+    if (!fileTree) return;
+    Array.from(fileTree.querySelectorAll('.ide-item')).forEach((it, i) => {
+      it.dataset.origIdx = i;
     });
-
-    // Wire pill clicks
     document.querySelectorAll('.setlist-pill').forEach(p => {
       p.addEventListener('click', () => applySetlist(p.dataset.setlist));
     });

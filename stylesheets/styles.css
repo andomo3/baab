@@ -100,7 +100,8 @@ button { font-family: inherit; }
     "sidebar header"
     "sidebar main"
     "player  player";
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* ---------- Sidebar ---------- */
@@ -1196,6 +1197,8 @@ button { font-family: inherit; }
   letter-spacing: -0.005em;
   cursor: pointer;
   transition: transform 200ms;
+  background-size: cover;
+  background-position: center;
 }
 .artist-tile:hover { transform: scale(1.04); }
 
