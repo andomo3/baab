@@ -3,41 +3,48 @@
   const PROJECTS = (window.__term && window.__term.TRACKS) || [];
 
   const PROJECT_FILES = [
-    { id: '01', file: 'house_pricing.py',  icon: '🐍', art: 'a1', title: 'Automated House Pricing Model',
-      sub: 'ML-Powered pricing automation reducing estimation time by 99%.',
-      metrics: [['MAE', '$8.2k'], ['R²', '0.94'], ['Speedup', '99%'], ['Rows', '184k']],
-      body: `Trained a gradient-boosted regression on 184k housing transactions, with feature engineering for neighborhood embeddings and seasonal adjustments. Replaced a manual two-day estimation process with a 1-second API call.\n\nThe key insight was treating "comparable comps" as a learned similarity metric rather than a hand-tuned heuristic — XGBoost found combinations humans wouldn't have written rules for.`,
-      stack: ['Python','XGBoost','Pandas','FastAPI'] },
-    { id: '02', file: 'perchance.ts',      icon: '🟦', art: 'a2', title: 'PerChance — Real-Time NBA Analytics',
-      sub: 'A counter to predatory sports betting platforms.',
-      metrics: [['Games', '1,230'], ['ROI vs Kalshi', '+11%'], ['p95 Latency', '120ms'], ['Users', '4.1k']],
-      body: `Built PerChance to counter predatory sports betting platforms with transparent NBA prediction tools. Powered by an ensemble of regression and bayesian updating with team-strength priors.`,
-      stack: ['Next.js','Postgres','Python','Bayes'] },
-    { id: '03', file: 'nomad_ratings.py',  icon: '🌍', art: 'a3', title: 'Nomad Ratings — Travel Credit',
-      sub: 'A Django platform that quantifies visa applicant risk.',
-      metrics: [['Countries', '60+'], ['Features', '34'], ['AUC', '0.81'], ['Uptime', '99.9%']],
-      body: `Integrates consulate feedback, violation history, and travel patterns into a credit-style score. Front-end is a thin shell on a postgres-backed Django API.`,
-      stack: ['Django','Postgres','React'] },
-    { id: '04', file: 'boxxer.tsx',        icon: '📦', art: 'a4', title: 'Boxxer — Offline-First Packing',
-      sub: 'A packing optimization engine for low-connectivity environments.',
-      metrics: [['Students', '1.2k'], ['Offline Ratio', '78%'], ['Avg Savings', '14lb'], ['Version', 'v0.4']],
-      body: `Engineered an offline-first PWA. The packing optimization engine runs locally in WASM, syncing to a server when connectivity is available.`,
-      stack: ['React','SQLite','PWA','Wasm'] },
-    { id: '05', file: 'queue_analysis.R',  icon: '📊', art: 'a5', title: 'Queue Analysis @ Ferst Drive',
-      sub: 'Vehicle and pedestrian data at a T-intersection.',
-      metrics: [['Samples', '4,212'], ['Avg Wait', '38s'], ['p95 Wait', '94s'], ['λ (peak)', '0.42/s']],
-      body: `Modeled the intersection as M/M/c queues by approach and tested signal-timing alternatives via simulation. Recommended a 7-second offset that reduced average pedestrian wait by 18%.`,
-      stack: ['R','simmer','ggplot2'] },
-    { id: '06', file: 'loan_default.py',   icon: '💳', art: 'a6', title: 'Loan Default Prediction',
-      sub: 'Improved loan default prediction to reduce financial risk.',
-      metrics: [['Models', '3'], ['Best AUC', '0.87'], ['Precision', '0.74'], ['Recall', '0.69']],
-      body: `Compared logistic regression, decision trees, and random forests across the same feature set. Random forest won on AUC but logistic regression won on interpretability — and that mattered for the lending team.`,
-      stack: ['Python','sklearn','SHAP'] },
-    { id: '07', file: 'robotics_oop.cpp',  icon: '🤖', art: 'a7', title: 'Robotics — Sensor Fusion',
-      sub: 'IR + optical odometry + wheel encoder data.',
-      metrics: [['Sensors', '3'], ['Drift / 10m', '4cm'], ['Hz', '60'], ['Failure', '0.4%']],
-      body: `Combined infrared, optical odometry, and wheel-encoder data to help the robot navigate intersections without GPS. Implemented a complementary filter weighted by sensor reliability.`,
-      stack: ['C++','ROS','Eigen'] },
+    {
+      id: '01', file: 'perchance.py', icon: '🏀', art: 'a1', title: 'PerChance — NBA Prop Prediction',
+      sub: 'Live prediction platform serving 100+ daily users across the NBA season.',
+      metrics: [['Daily Users', '100+'], ['Accuracy', '70%'], ['API Latency', '<200ms'], ['Training Data', '1.1M rows']],
+      body: `Sportsbooks price props using teams of analysts with injury feeds, sharp money movement, and lineup projections. The only edge available to a solo builder is model accuracy. I trained separate XGBoost regressors on 1.1M player-game records, validated across four held-out seasons, and reached 70% accuracy across 20 metrics — 15% above the naive baseline. A conservative backtest against linear regression lines (same features, different model) showed +13% ROI on points props.\n\nThe system ingests NBA data nightly, retrains automatically via Airflow, and serves predictions through a Django REST API with Redis caching. Sub-200ms under live traffic.`,
+      stack: ['PyTorch', 'XGBoost', 'Django', 'React', 'Docker', 'Airflow', 'Redis']
+    },
+    {
+      id: '02', file: 'altura_estimator.py', icon: '🏗️', art: 'a2', title: 'Altura — Renovation Cost Estimator',
+      sub: 'Automated pricing platform for a 101-unit multi-family property operator.',
+      metrics: [['Estimate Time', 'hours → 5s'], ['Categories', '13'], ['Units', '101'], ['Pipeline', 'Airflow DAG']],
+      body: `The client's pricing data wasn't missing — it was trapped in deeply nested Excel matrices that no off-the-shelf tool could parse. I built an ETL pipeline using PySpark and Airflow that extracts those matrices into structured Parquet tables, runs DuckDB validation, and feeds a Next.js interface where the client configures a project in four steps and gets a side-by-side estimate in under five seconds.\n\nWhat previously took most of a workday is now one click. The schema is PySpark-ready for multi-property expansion without code changes.`,
+      stack: ['PySpark', 'Airflow', 'DuckDB', 'Parquet', 'Next.js', 'Python']
+    },
+    {
+      id: '03', file: 'gtsf_portfolio.py', icon: '📈', art: 'a3', title: 'GTSF — Portfolio Risk Analysis',
+      sub: 'Quantitative tools for a $500K live student-managed equity fund.',
+      metrics: [['Portfolio', '$500K live'], ['VaR Reduction', '15%'], ['Coverage', '50 → 120 stocks'], ['Simulations', '10,000 runs']],
+      body: `The GTSF manages a $500K live equity fund where model outputs inform real trades. During the mentorship program, I sought to implement ARIMA models to validate sector-rotation strategies and ran 10,000-iteration Monte Carlo simulations to stress-test the portfolio under macro shocks — the simulations identified 8% downside risk that directly shaped the fund's hedging position.\n\n I also built a Bloomberg Terminal screener that tripled coverage from 50 to 120 tickers because I wanted to change what the team could even consider for the portfolio. First time I worked with data where being wrong had an immediate dollar cost.`,
+      stack: ['Python', 'Bloomberg Terminal', 'ARIMA', 'NumPy', 'Statsmodels', 'Monte Carlo']
+    },
+    {
+      id: '04', file: 'doc_intelligence.py', icon: '📄', art: 'a4', title: 'Document Intelligence System',
+      sub: 'Production classifier processing 10,000+ documents monthly for 50+ auditors.',
+      metrics: [['Precision', '95%'], ['Latency', '45s → 8s'], ['Volume', '10K docs/mo'], ['Error Rate', '40% → 5%']],
+      body: `The latency problem turned out to be a single O(n²) loop in the document matching step — swapping it for an O(n+m) hash-join approach cut processing time from 45 seconds to 8 seconds without touching the model. The precision problem was mostly label noise; a statistical validation framework with 50+ automated distributional checks surfaced the bad training examples that were silently degrading performance.\n\nThe pipeline now serves 50+ auditors processing 10,000+ documents monthly at 95% precision. A/B testing framework with bootstrapped confidence intervals and multiple-comparison corrections governs any future model updates.`,
+      stack: ['Python', 'PostgreSQL', 'NLP', 'A/B Testing', 'PyTest']
+    },
+    {
+      id: '05', file: 'loan_default.py', icon: '💳', art: 'a5', title: 'Loan Default Risk Model',
+      sub: 'ML classifier to flag high-risk loan applications before approval.',
+      metrics: [['AUC', '0.80'], ['Recall', '82%'], ['Applications', '50,000+'], ['Decision Quality', '+10%']],
+      body: `The interesting part wasn't the model — XGBoost on 50,000+ applications is fairly standard. The hard part was that the lending team couldn't act on a black-box score. SHAP analysis revealed debt-to-income ratio was driving the majority of predictions, which allowed me to build a tiered risk framework they could explain to regulators and apply in approval meetings.\n\nI engineered 15 features from raw credit bureau data using CTE-based SQL ETL — payment velocity, credit utilization trends, account age. Applied SMOTE to address the 20:1 class imbalance before training. The framework improved approval decision quality by 10%.`,
+      stack: ['XGBoost', 'SHAP', 'SQL', 'Python', 'SMOTE']
+    },
+    {
+      id: '06', file: 'hospital_ops.sql', icon: '🏥', art: 'a6', title: 'Hospital Operations Database',
+      sub: 'Redesigned data infrastructure for 50,000+ patient records.',
+      metrics: [['Tables', '15'], ['Records', '50,000+'], ['Redundancy', '-20%'], ['Query Time', '3s → 200ms']],
+      body: `The hospital's data wasn't inaccessible — it was just slow and structurally inconsistent. Every useful query required bespoke one-off scripts because there was no foreign key discipline and no normalization. I redesigned the schema to 3NF across 15 tables, eliminating 20% redundancy.\n\nThe most impactful change was composite indexes on the bed utilization queries — the primary operations query dropped from 3 seconds to 200ms, making it fast enough to pull up in a morning standup rather than scheduled as an overnight report. Window functions handle the rolling utilization analysis.`,
+      stack: ['PostgreSQL', 'Python', 'CTEs', 'Window Functions']
+    },
   ];
 
   // Clock
@@ -46,7 +53,7 @@
     if (clock) {
       const d = new Date();
       const h = d.getHours(), m = d.getMinutes();
-      clock.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+      clock.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
     }
   }, 1000);
 
@@ -62,7 +69,7 @@
     if (current) {
       current.classList.add('leaving');
       setTimeout(() => {
-        current.classList.remove('active','leaving');
+        current.classList.remove('active', 'leaving');
         target.classList.add('active');
         if (main) main.scrollTo({ top: 0, behavior: 'instant' });
       }, 180);
@@ -77,11 +84,11 @@
   });
   window.addEventListener('navigate', (e) => navigate(e.detail));
   const hash = (location.hash || '').replace('#/', '');
-  if (['home','projects','about','contact'].includes(hash)) navigate(hash);
+  if (['home', 'projects', 'about', 'contact'].includes(hash)) navigate(hash);
 
   window.addEventListener('keydown', (e) => {
     if (!(e.metaKey || e.ctrlKey)) return;
-    const map = { '1':'home', '2':'projects', '3':'about', '4':'contact' };
+    const map = { '1': 'home', '2': 'projects', '3': 'about', '4': 'contact' };
     if (map[e.key]) { e.preventDefault(); navigate(map[e.key]); }
     if (e.key === 'k') { e.preventDefault(); const s = document.getElementById('search'); if (s) s.focus(); }
   });
@@ -153,22 +160,12 @@
         <h1>${p.title}</h1>
         <div class="sub">${p.sub}</div>
         <div class="meta-grid">
-          ${p.metrics.map(([k,v]) => `<div class="metric"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}
+          ${p.metrics.map(([k, v]) => `<div class="metric"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom: 18px;">
           ${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}
         </div>
-        <h3>What &amp; Why</h3>
         <p>${p.body.replace(/\n\n/g, '</p><p>')}</p>
-        <h3>Preview</h3>
-        <pre class="code"><span class="ln"> 1</span><span class="com"># ${p.file} — top of the module</span>
-<span class="ln"> 2</span><span class="kw">from</span> <span class="var">core</span> <span class="kw">import</span> <span class="fn">model</span>, <span class="fn">data</span>
-<span class="ln"> 3</span>
-<span class="ln"> 4</span><span class="kw">def</span> <span class="fn">${p.id === '02' ? 'predict_spread' : p.id === '07' ? 'fuse_sensors' : 'train'}</span>(<span class="var">X</span>, <span class="var">y</span>):
-<span class="ln"> 5</span>    <span class="com"># the boring 90% lives here, the magic 10% in features.py</span>
-<span class="ln"> 6</span>    <span class="var">m</span> = <span class="fn">${p.id === '06' ? 'RandomForestClassifier' : 'GradientBoosting'}</span>(<span class="fn">n_estimators</span>=<span class="num">${300 + parseInt(p.id, 10) * 11}</span>)
-<span class="ln"> 7</span>    <span class="var">m</span>.<span class="fn">fit</span>(<span class="var">X</span>, <span class="var">y</span>)
-<span class="ln"> 8</span>    <span class="kw">return</span> <span class="var">m</span></pre>
       </div>
     `;
   }
@@ -257,7 +254,7 @@
   const hm = document.getElementById('heatmap');
   if (hm) {
     const GITHUB_USER = 'andomo3';
-    const DAYS = ['sun','mon','tue','wed','thu','fri','sat'];
+    const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
     function renderMockHeatmap(el) {
       for (let w = 0; w < 53; w++) {
@@ -272,7 +269,7 @@
           else if (score > 0.35) cls = 'l1';
           const cell = document.createElement('div');
           cell.className = 'cell ' + cls;
-          cell.title = `week ${w+1} · ${DAYS[d]} · ${cls ? Math.round(score*7) : 0} commits`;
+          cell.title = `week ${w + 1} · ${DAYS[d]} · ${cls ? Math.round(score * 7) : 0} commits`;
           el.appendChild(cell);
         }
       }
@@ -291,7 +288,7 @@
           const lvl = count === 0 ? '' : count < max * 0.25 ? 'l1' : count < max * 0.5 ? 'l2' : count < max * 0.75 ? 'l3' : 'l4';
           const cell = document.createElement('div');
           cell.className = 'cell ' + lvl;
-          cell.title = `week ${wi+1} · ${DAYS[di]} · ${count} commits`;
+          cell.title = `week ${wi + 1} · ${DAYS[di]} · ${count} commits`;
           hm.appendChild(cell);
         });
       });
@@ -308,7 +305,6 @@
       for (let i = 0; i < retries; i++) {
         const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/stats/commit_activity`);
         if (res.status === 202) {
-          // GitHub is computing stats — wait and retry
           await new Promise(r => setTimeout(r, 2000));
           continue;
         }
@@ -319,13 +315,12 @@
       return [];
     }
 
-    async function buildHeatmap() {
+    async function buildHeatmapLive() {
       const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
       if (!reposRes.ok) throw new Error(`GitHub repos fetch failed: ${reposRes.status}`);
       const repos = await reposRes.json();
-      console.log(`[heatmap] fetching commit activity for ${repos.length} repos…`);
       const weekMaps = await Promise.all(repos.map(r => fetchCommitActivity(r.name).catch(() => [])));
-      const grid = Array.from({length: 52}, () => new Array(7).fill(0));
+      const grid = Array.from({ length: 52 }, () => new Array(7).fill(0));
       for (const weeks of weekMaps) {
         weeks.forEach((wk, wi) => {
           if (wi < 52 && Array.isArray(wk.days)) {
@@ -333,14 +328,17 @@
           }
         });
       }
-      const total = grid.flat().reduce((a, b) => a + b, 0);
-      console.log(`[heatmap] done — ${total} commits across 52 weeks`);
       return grid;
     }
 
-    buildHeatmap()
+    fetch('data/github-commits.json')
+      .then(r => r.ok ? r.json() : Promise.reject('no static file'))
       .then(renderHeatmap)
-      .catch(err => { console.warn('[heatmap] falling back to mock:', err); renderMockHeatmap(hm); });
+      .catch(() =>
+        buildHeatmapLive()
+          .then(renderHeatmap)
+          .catch(err => { console.warn('[heatmap] falling back to mock:', err); renderMockHeatmap(hm); })
+      );
   }
 
   // ----------- Languages -----------
@@ -375,11 +373,11 @@
   const ag = document.getElementById('artist-grid');
   if (ag) {
     function renderFallbackArtists() {
-      const fallback = ['playboi carti','jaden smith','ken carson','yeat','—','—','—','—','—','—','—','—'];
+      const fallback = ['playboi carti', 'jaden smith', 'ken carson', 'yeat', '—', '—', '—', '—', '—', '—', '—', '—'];
       ag.innerHTML = fallback.map((name, i) => {
         const angle = (i * 30) % 360;
         const flip = i % 2 === 0;
-        return `<div class="artist-tile" style="background:linear-gradient(${angle}deg,${flip?'var(--p1)':'var(--p3)'},${flip?'var(--p3)':'var(--p1)'})"><span>${name}</span></div>`;
+        return `<div class="artist-tile" style="background:linear-gradient(${angle}deg,${flip ? 'var(--p1)' : 'var(--p3)'},${flip ? 'var(--p3)' : 'var(--p1)'})"><span>${name}</span></div>`;
       }).join('');
     }
 

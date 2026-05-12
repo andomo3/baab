@@ -7,13 +7,12 @@
 
   // ---------- Data ----------
   const TRACKS = [
-    { n: '01', title: 'Automated House Pricing Model',     artist: 'ML × Real Estate',  album: 'estimation_99pct',  dur: '3:42', plays: '1.2M', stack: ['Python','XGBoost','Pandas'] },
-    { n: '02', title: 'PerChance: Real-Time NBA Analytics', artist: 'Sportsbook Buster',  album: 'fair_odds',         dur: '4:18', plays: '847K', stack: ['Next.js','Postgres','ML'] },
-    { n: '03', title: 'Nomad Ratings — Travel Credit',      artist: 'Visa Risk Engine',   album: 'consulate_b_side',  dur: '5:01', plays: '512K', stack: ['Django','Postgres'] },
-    { n: '04', title: 'Boxxer: Offline-First Packing',      artist: 'College Made Easier',album: 'low_connectivity',  dur: '3:55', plays: '2.4M', stack: ['React','SQLite','PWA'] },
-    { n: '05', title: 'Queue Analysis at Ferst Drive',      artist: 'Traffic Statistics', album: 'intersection',      dur: '4:36', plays: '198K', stack: ['R','Stats','GIS'] },
-    { n: '06', title: 'Loan Default Prediction',            artist: 'Credit Risk Models', album: 'logit_decision_rf', dur: '4:11', plays: '673K', stack: ['Python','sklearn'] },
-    { n: '07', title: 'Robotics Engineer — OOP & Robotics', artist: 'Sensor Fusion',      album: 'odom_ir_encoder',   dur: '3:28', plays: '341K', stack: ['C++','ROS'] },
+    { n: '01', title: 'PerChance — NBA Prop Prediction',      artist: 'Founder · Jan 2026',       album: 'live_at_100_users',     dur: '4:18', plays: '1.1M', stack: ['PyTorch','XGBoost','Django','React'] },
+    { n: '02', title: 'Altura — Renovation Cost Estimator',   artist: 'Data & ML Engineer',        album: 'hours_to_5_seconds',    dur: '3:55', plays: '847K', stack: ['PySpark','Airflow','DuckDB','Next.js'] },
+    { n: '03', title: 'GTSF — Portfolio Risk Analysis',       artist: 'Quantitative Analyst',      album: 'live_500k_equity',      dur: '4:11', plays: '512K', stack: ['Python','Bloomberg','ARIMA','Monte Carlo'] },
+    { n: '04', title: 'Document Intelligence System',         artist: 'Data Science Intern',       album: 'mumbai_audit_pipeline', dur: '3:42', plays: '673K', stack: ['Python','PostgreSQL','NLP'] },
+    { n: '05', title: 'Loan Default Risk Model',              artist: 'Credit Risk Models',        album: 'logit_xgb_shap',        dur: '4:36', plays: '512K', stack: ['XGBoost','SHAP','SQL'] },
+    { n: '06', title: 'Hospital Operations Database',         artist: 'Systems Design',            album: '3nf_50k_records',       dur: '3:28', plays: '198K', stack: ['PostgreSQL','Python','CTEs'] },
   ];
 
   const HELP = [
@@ -81,13 +80,13 @@
   // ---------- Boot intro (animated) ----------
   const intro = [
     { delay: 100, html: `<span class="dim">[boot] terminal-mu v0.4.2 // probabilistic shell</span>`, cls: 'dim' },
-    { delay: 280, html: `<span class="dim">[ok]   loading playlist… <span class="ok">7 tracks</span> indexed</span>`, cls: 'out' },
+    { delay: 280, html: `<span class="dim">[ok]   loading playlist… <span class="ok">6 tracks</span> indexed</span>`, cls: 'out' },
     { delay: 240, html: `<span class="dim">[ok]   markov chain warm — transitions stable</span>`, cls: 'out' },
     { delay: 240, html: `<span class="dim">[ok]   stack profiler online</span>`, cls: 'out' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">whoami</span>` , cls: 'cmd', type: true },
-    { delay: 200, html: `<span style="color:var(--fg)">abba ndomo</span> · <span class="dim">georgia tech</span> · <span class="dim">cs + math</span>`, cls: 'out' },
-    { delay: 100, html: `<span class="dim">"every project is a competitive sport — preparation, agility, deep understanding of your teammates."</span>`, cls: 'dim' },
+    { delay: 200, html: `<span style="color:var(--fg)">abba ndomo</span> · <span class="dim">georgia tech '27</span> · <span class="dim">ISyE + OR</span>`, cls: 'out' },
+    { delay: 100, html: `<span class="dim">data & ml engineer · building perchance · CPT available · f-1 visa</span>`, cls: 'dim' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">play 1</span>`, cls: 'cmd', type: true },
     { delay: 100, html: `<span class="ok">▶</span> now playing: <span style="color:var(--fg)">${TRACKS[0].title}</span> — <span class="dim">${TRACKS[0].artist}</span>`, cls: 'out' },
@@ -201,7 +200,7 @@
     next() { COMMANDS.play([String(((currentTrack + 1) % TRACKS.length) + 1)]); },
     prev() { COMMANDS.play([String(((currentTrack - 1 + TRACKS.length) % TRACKS.length) + 1)]); },
     queue() {
-      lineHTML(`<span class="dim">queue · 7 tracks · 28:11 total</span>`, 'dim');
+      lineHTML(`<span class="dim">queue · 6 tracks · 24:10 total</span>`, 'dim');
       TRACKS.forEach((t, i) => {
         const playing = i === currentTrack;
         const num = `<span style="color:var(--fg-muted); font-variant-numeric: tabular-nums;">${String(i+1).padStart(2,'0')}</span>`;
@@ -221,9 +220,9 @@
     },
     stack() {
       const langs = [
-        ['Python',     32], ['TypeScript', 22], ['SQL',         12],
-        ['C++',         9], ['R',           8], ['JavaScript',  7],
-        ['Go',          5], ['Bash',        5],
+        ['Python',     35], ['SQL',         18], ['TypeScript',  15],
+        ['R',           8], ['JavaScript',   8], ['Java',         7],
+        ['Bash',        5], ['C++',          4],
       ];
       lineHTML(`<span class="dim">top languages, by recent commit volume</span>`, 'dim');
       langs.forEach(([n, p]) => {
@@ -233,8 +232,8 @@
       });
     },
     whoami() {
-      lineHTML(`<span style="color:var(--fg)">abba ndomo</span> · engineer · georgia tech '26`, 'out');
-      lineHTML(`<span class="dim">cs + math · seeking summer 2025 data analyst · building boxxer ai</span>`, 'dim');
+      lineHTML(`<span style="color:var(--fg)">abba ndomo</span> · data & ml engineer · georgia tech '27`, 'out');
+      lineHTML(`<span class="dim">ISyE + OR · building perchance · CPT available · f-1 visa</span>`, 'dim');
     },
     fortune() {
       const fortunes = [

@@ -356,13 +356,13 @@
 }
 .liner-body p + p { margin-top: 10px; }
 .liner-body em { color: var(--p3); font-style: normal; }
-.liner-body .draft-tag {
+.liner-body .draft-tag { display: none; }
+.liner-body .draft-tag-disabled {
   font-family: var(--mono);
   font-size: 10px;
   color: var(--fg-4);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  display: inline-block;
   padding: 3px 7px;
   border: 1px dashed var(--fg-4);
   border-radius: 3px;

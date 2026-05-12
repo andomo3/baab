@@ -1,5 +1,5 @@
 /* ============================================================
-   abba.fm v2 — Apple Music × terminal (sleek, modern)
+   baab.com v2 — Apple Music × terminal (sleek, modern)
    Inter everywhere, glassy surfaces, generous whitespace.
    ============================================================ */
 
@@ -131,16 +131,12 @@ button { font-family: inherit; }
 .sb-brand .mark {
   width: 28px; height: 28px;
   border-radius: 8px;
-  background: var(--grad);
-  box-shadow: 0 4px 14px color-mix(in oklch, var(--p2) 50%, transparent);
-  position: relative;
-  overflow: hidden;
-}
-.sb-brand .mark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), transparent 50%);
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex: 0 0 auto;
 }
 .sb-brand .dim { color: var(--fg-3); font-weight: 500; }
 
@@ -380,8 +376,8 @@ button { font-family: inherit; }
   width: 280px;
   height: 280px;
   border-radius: var(--r-xl);
-  background: var(--grad);
-  box-shadow: var(--shadow-2);
+  background: transparent;
+  box-shadow: none;
   overflow: hidden;
   isolation: isolate;
 }
@@ -389,18 +385,10 @@ button { font-family: inherit; }
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--grad);
+  background: transparent;
   z-index: 0;
 }
-.hero-art::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35) 0%, transparent 40%),
-    repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.05) 6px 7px);
-  z-index: 1;
-}
+.hero-art::after { display: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Headshot portrait — placeholder until image is dropped in */
@@ -747,7 +735,13 @@ button { font-family: inherit; }
   min-height: 280px;
   max-height: 320px;
   overflow-y: auto;
+  overflow-x: hidden;
   color: var(--fg-2);
+}
+.np-widget-body .line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .np-widget-body .line + .line { margin-top: 3px; }
 .np-widget-body .prompt { color: var(--p3); font-weight: 500; }
@@ -1033,7 +1027,9 @@ button { font-family: inherit; }
 }
 .ide-tab .x { color: var(--fg-4); font-size: 12px; opacity: 0.6; }
 
-.ide-content { padding: 28px 32px; }
+.ide-main { min-width: 0; }
+.ide-content { padding: 28px 32px; overflow-wrap: break-word; word-break: break-word; }
+.project-detail p { overflow-wrap: break-word; }
 
 .code {
   font-family: var(--mono);
@@ -1303,16 +1299,11 @@ button { font-family: inherit; }
 .player-left .cover {
   width: 56px; height: 56px;
   border-radius: 8px;
-  background: var(--grad);
+  background: rgba(255,255,255,0.06);
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 22px rgba(0,0,0,0.4);
   flex: 0 0 auto;
-}
-.player-left .cover::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.3), transparent 50%);
 }
 .player-left .meta { min-width: 0; }
 .player-left .t {
