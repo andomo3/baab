@@ -294,10 +294,26 @@ button { font-family: inherit; }
   width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--grad);
+  overflow: hidden;
   display: grid; place-items: center;
   font-size: 12px; font-weight: 700;
   color: white;
   letter-spacing: 0.02em;
+}
+.header .avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.player-left .cover-icon-np {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  z-index: 1;
 }
 
 /* ---------- Main scroll area ---------- */

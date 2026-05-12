@@ -304,32 +304,43 @@
       }
     }
 
+    async function fetchCommitActivity(repoName, retries = 3) {
+      for (let i = 0; i < retries; i++) {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/stats/commit_activity`);
+        if (res.status === 202) {
+          // GitHub is computing stats — wait and retry
+          await new Promise(r => setTimeout(r, 2000));
+          continue;
+        }
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+      }
+      return [];
+    }
+
     async function buildHeatmap() {
       const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
-      if (!reposRes.ok) throw new Error('rate limited');
+      if (!reposRes.ok) throw new Error(`GitHub repos fetch failed: ${reposRes.status}`);
       const repos = await reposRes.json();
-      const weekMaps = await Promise.all(
-        repos.map(r =>
-          fetch(`https://api.github.com/repos/${GITHUB_USER}/${r.name}/stats/commit_activity`)
-            .then(res => res.ok ? res.json() : [])
-            .catch(() => [])
-        )
-      );
+      console.log(`[heatmap] fetching commit activity for ${repos.length} repos…`);
+      const weekMaps = await Promise.all(repos.map(r => fetchCommitActivity(r.name).catch(() => [])));
       const grid = Array.from({length: 52}, () => new Array(7).fill(0));
       for (const weeks of weekMaps) {
-        if (!Array.isArray(weeks)) continue;
         weeks.forEach((wk, wi) => {
           if (wi < 52 && Array.isArray(wk.days)) {
             wk.days.forEach((count, di) => { grid[wi][di] += count; });
           }
         });
       }
+      const total = grid.flat().reduce((a, b) => a + b, 0);
+      console.log(`[heatmap] done — ${total} commits across 52 weeks`);
       return grid;
     }
 
     buildHeatmap()
       .then(renderHeatmap)
-      .catch(() => renderMockHeatmap(hm));
+      .catch(err => { console.warn('[heatmap] falling back to mock:', err); renderMockHeatmap(hm); });
   }
 
   // ----------- Languages -----------
@@ -403,12 +414,16 @@
   const playBtn = document.getElementById('np-play');
   if (playBtn) playBtn.addEventListener('click', () => { isPlaying = !isPlaying; });
 
+  const npCoverIcon = document.querySelector('.player-left .cover-icon-np');
+
   window.addEventListener('np-update', (e) => {
     const idx = e.detail.idx;
     const t = PROJECTS[idx];
     if (!t) return;
     if (npTitle) npTitle.textContent = t.title;
     if (npArtist) npArtist.textContent = `${t.artist} · ${t.album}`;
+    const pf = PROJECT_FILES.find(f => parseInt(f.id, 10) === idx + 1);
+    if (npCoverIcon && pf) npCoverIcon.textContent = pf.icon;
     const [m, s] = t.dur.split(':').map(Number);
     trackTotal = m * 60 + s;
     trackElapsed = 0;
