@@ -35,7 +35,7 @@
       <span class="icon">⌂</span><span>Home</span>
     </div>
     <div class="sb-item" data-nav="projects">
-      <span class="icon">♫</span><span>Projects</span><span class="count">7</span>
+      <span class="icon">♫</span><span>Projects</span><span class="count">6</span>
     </div>
     <div class="sb-item" data-nav="about">
       <span class="icon">◐</span><span>About</span>
@@ -43,13 +43,24 @@
     <div class="sb-item" data-nav="contact">
       <span class="icon">✉</span><span>Contact</span>
     </div>
+
+    <div class="sb-section">Connect</div>
+    <a class="sb-item" href="resume.pdf" target="_blank">
+      <span class="icon">↗</span><span>Resume</span><span class="count">PDF</span>
+    </a>
+    <a class="sb-item" href="https://github.com/andomo3" target="_blank">
+      <span class="icon">⌥</span><span>GitHub</span>
+    </a>
+    <a class="sb-item" href="https://linkedin.com/in/AbbaNdomo" target="_blank">
+      <span class="icon">in</span><span>LinkedIn</span>
+    </a>
   </aside>
 
   <!-- ============== HEADER ============== -->
   <header class="header">
     <div class="nav-controls">
-      <button class="nav-btn" title="Back">‹</button>
-      <button class="nav-btn" title="Forward">›</button>
+      <button class="nav-btn" title="Back" data-history="back">‹</button>
+      <button class="nav-btn" title="Forward" data-history="forward">›</button>
     </div>
     <div class="right">
       <span class="pill"><span class="dot"></span> available · CPT · summer '26</span>
@@ -392,7 +403,7 @@
         <div class="t" id="np-title">Automated House Pricing Model</div>
         <div class="s" id="np-artist">ML × Real Estate · estimation_99pct</div>
       </div>
-      <button class="like" title="Add to favorites">♡</button>
+      <button class="like" id="np-like" title="Like this track">♡</button>
     </div>
     <div class="player-center">
       <div class="player-controls">
@@ -400,7 +411,7 @@
         <button class="icon-btn" onclick="window.__term &amp;&amp; window.__term.runCmd('prev')" title="Previous">⏮</button>
         <button class="play-main" id="np-play" onclick="this.textContent = this.textContent.trim()==='▶'?'❚❚':'▶';">❚❚</button>
         <button class="icon-btn" onclick="window.__term &amp;&amp; window.__term.runCmd('next')" title="Next">⏭</button>
-        <button class="icon-btn" title="Repeat">↻</button>
+        <button class="icon-btn" title="Repeat" data-toggle="repeat">↻</button>
       </div>
       <div class="player-progress">
         <span id="np-elapsed">1:24</span>
@@ -410,7 +421,7 @@
     </div>
     <div class="player-right">
       <button class="icon-btn" title="Lyrics">𝅘𝅥𝅮</button>
-      <button class="icon-btn" title="Queue">≡</button>
+      <button class="icon-btn" title="Queue" data-nav="projects">≡</button>
     </div>
   </footer>
 

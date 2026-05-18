@@ -10,126 +10,48 @@
 
   const TRACKS = (window.__term && window.__term.TRACKS) || [];
 
-  // ---------- Per-track data: liner notes + visualizer config ----------
-  // NOTE: liner notes are PLACEHOLDER drafts. Replace with your own voice.
+  // ---------- Per-track data: liner notes ----------
   const EXTRA = {
     '01': {
       liner: {
-        side: 'B-side · House Pricing',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>started as an econometrics homework set, then it ate three months. the part nobody asked about: feature engineering. school district + walkability + a hand-tuned rolling window of comparable sales.</p>
-<p>the part i'm proudest of: <em>knowing when to stop tuning</em>. XGBoost gets to 99-percentile MAE on intown atlanta and falls apart in the metro fringes — there's not enough signal in the suburbs and i had to learn to say so out loud. the readme makes it sound clean. it wasn't.</p>`,
-      },
-      viz: {
-        kind: 'house',
-        stats: [
-          { label: 'MAE (intown)', value: '$8,420', delta: '↓ 17% vs baseline', bar: 0.92 },
-          { label: 'R²', value: '0.971', delta: 'XGBoost · 5-fold CV', bar: 0.97 },
-          { label: 'features', value: '142', delta: 'after pruning · was 380', bar: 0.55 },
-          { label: 'training rows', value: '78,210', delta: 'fulton + dekalb · 2018–2024', bar: 0.62 },
-        ],
+        side: 'B-side · the spread between belief and odds',
+        body: `<p>started as a small bet on player props, became a serious system. sportsbooks have analysts with sharp money and injury feeds — the only edge available to a solo builder is model accuracy, and i wanted to see if a student with XGBoost could find a corner.</p>
+<p>the headline is 70% accuracy across 20 metrics, 15% above the naive baseline. the operational lesson is the one that matters more: a model that's 4% better than vegas but takes 800ms to refresh isn't 4% better. it's <em>0%</em>. sub-200ms or it doesn't ship.</p>`,
       },
     },
     '02': {
       liner: {
-        side: 'B-side · PerChance NBA',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>odds are just a statement about belief — and books make money on the spread between their belief and yours. i wanted to see if a graduate student could find a corner.</p>
-<p><em>answer: yes</em>, but only on player props in the first quarter, and the edge dies the moment volume picks up. the real lesson was operational. a model that's 4% better than vegas but takes 800ms to refresh isn't 4% better. it's <em>0%</em>.</p>`,
-      },
-      viz: {
-        kind: 'court',
-        stats: [
-          { label: 'edge vs vegas', value: '+3.8%', delta: 'Q1 player props only', bar: 0.74 },
-          { label: 'refresh cadence', value: '120ms', delta: '↓ from 800ms', bar: 0.85 },
-          { label: 'tracked games', value: '1,242', delta: '2023–24 regular season', bar: 0.62 },
-          { label: 'sharpe', value: '1.71', delta: 'paper-traded', bar: 0.66 },
-        ],
+        side: 'B-side · hours to seconds',
+        body: `<p>the client's pricing data wasn't missing — it was trapped in deeply nested Excel matrices nobody else would write a parser for. PySpark + Airflow did the parsing, DuckDB did the validation, Next.js delivered the experience. what was most of a workday became one click.</p>
+<p>the real win isn't the speed. it's the schema. the multi-property roadmap doesn't need a code change — it needs a Parquet partition. <em>boring infrastructure is the most expensive thing you can save someone.</em></p>`,
       },
     },
     '03': {
       liner: {
-        side: 'B-side · Nomad Ratings',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>my parents are immigrants. i'm an immigrant. so i built a thing that scores how a country's risk <em>to a credit network</em> differs from its risk <em>to a person trying to get a visa</em>.</p>
-<p>underwriters and embassies use overlapping but distinct features and the overlap is where weird things happen. the model isn't deployed. it's a study. <em>that feels right for now.</em></p>`,
-      },
-      viz: {
-        kind: 'world',
-        stats: [
-          { label: 'countries scored', value: '186', delta: 'world bank + chargeback feeds', bar: 0.96 },
-          { label: 'risk-pair gap', value: '0.41', delta: 'avg cosine distance', bar: 0.55 },
-          { label: 'flagged corridors', value: '14', delta: 'where models disagree', bar: 0.30 },
-          { label: 'data freshness', value: '7d', delta: 'rolling refresh', bar: 0.78 },
-        ],
+        side: 'B-side · when money has a vote',
+        body: `<p>$500K live, and the model outputs informed real trades. ARIMA validated sector-rotation strategies, but the moment that stuck was the Monte Carlo run that surfaced an 8% downside tail nobody had priced in. the hedging position shifted that week.</p>
+<p>first experience where being wrong had an immediate dollar cost. the math was the easy part. <em>defending the math in a room of people who'd lost money the year before — that was the project.</em></p>`,
       },
     },
     '04': {
       liner: {
-        side: 'B-side · Boxxer',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>college kids move four times in two years and nobody's app works in a U-Haul without service. so i made one that does.</p>
-<p>SQLite + service worker + a scan-the-barcode-on-the-side-of-the-box flow that i tested at 3am in my own kitchen. shipped to friends. they sent screenshots. <em>that's the metric that matters.</em></p>`,
-      },
-      viz: {
-        kind: 'boxes',
-        stats: [
-          { label: 'install size', value: '420kb', delta: 'service worker cached', bar: 0.18 },
-          { label: 'works offline', value: '100%', delta: 'sqlite local-first', bar: 1.0 },
-          { label: 'beta users', value: '38', delta: 'GT + Emory friends', bar: 0.42 },
-          { label: 'boxes tracked', value: '1,140', delta: 'across 22 moves', bar: 0.66 },
-        ],
+        side: 'B-side · O(n²) was the bug',
+        body: `<p>the latency story everyone wanted to tell was infra: bigger boxes, more replicas. the actual fix was a single O(n²) loop in the document matching step. swapping it for an O(n+m) hash-join cut p99 from 45 seconds to 8 — no infra changes, no budget request.</p>
+<p>the precision story was label noise. a statistical validation framework with 50+ automated distributional checks caught the bad training examples that were silently dragging the model down. <em>profile before you provision.</em></p>`,
       },
     },
     '05': {
       liner: {
-        side: 'B-side · Queue Analysis',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>ferst drive between klaus and clough is one of the worst signalized intersections on tech's campus and i had a stats class that wanted a project. coupled an arrival process model with the city's green-phase data and showed that a <em>four-second offset</em> would cut peak waits by 22%.</p>
-<p>nobody is going to act on this. but the report exists, and i learned that bureaucracy is a discipline.</p>`,
-      },
-      viz: {
-        kind: 'queue',
-        stats: [
-          { label: 'peak wait', value: '74s', delta: '→ 58s with 4s offset', bar: 0.74 },
-          { label: 'waste reduction', value: '22%', delta: 'simulated, M/M/1', bar: 0.55 },
-          { label: 'observation hrs', value: '120', delta: 'manual tally + sensors', bar: 0.62 },
-          { label: 'p-value', value: '< 0.01', delta: 'paired t · pre/post', bar: 0.92 },
-        ],
+        side: 'B-side · explainability over AUC',
+        body: `<p>XGBoost on 50K applications got to 0.80 AUC. the interesting part wasn't the number — it was that the lending team couldn't act on a black-box score. SHAP showed debt-to-income ratio was driving most predictions, which became the basis for a tiered risk framework they could explain to regulators.</p>
+<p>a 0.78 model that auditors trust beats a 0.81 nobody will deploy. the SMOTE handled the 20:1 class imbalance. the CTE-engineered features made the bureau data legible. the framework made the model usable. <em>only one of those three made it into the deck.</em></p>`,
       },
     },
     '06': {
       liner: {
-        side: 'B-side · Loan Default',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>the dataset is from the kaggle home credit competition. <em>the project is what i didn't submit.</em> instead of optimizing AUC, i tried to explain what the model was learning to a hypothetical underwriter who didn't trust it.</p>
-<p>SHAP values, partial dependence, a lot of plots. the lesson is that a 0.78 AUC model that someone trusts beats a 0.81 AUC model that nobody will deploy.</p>`,
-      },
-      viz: {
-        kind: 'scatter',
-        stats: [
-          { label: 'AUC', value: '0.782', delta: 'logistic + random forest', bar: 0.78 },
-          { label: 'recall (default)', value: '0.71', delta: '@ 0.5 threshold', bar: 0.71 },
-          { label: 'features explained', value: '24/24', delta: 'SHAP coverage', bar: 1.0 },
-          { label: 'dataset size', value: '307K', delta: 'kaggle home credit', bar: 0.85 },
-        ],
-      },
-    },
-    '07': {
-      liner: {
-        side: 'B-side · Robotics',
-        body: `<span class="draft-tag">draft — replace</span>
-<p>VEX in high school, then ROS in a Tech sub-team, then a sensor-fusion side project that fused IR and an odometer to handle a hallway my single-source robot kept missing.</p>
-<p>wrote it in C++ because the team's stack wanted it there, but i'd write it in Rust today. the lesson is the same one every robotics project teaches: <em>the bug is always in the wires.</em></p>`,
-      },
-      viz: {
-        kind: 'lidar',
-        stats: [
-          { label: 'fusion rate', value: '50 Hz', delta: 'IR + odometer', bar: 0.62 },
-          { label: 'localization err', value: '4.2cm', delta: '↓ from 11cm single-src', bar: 0.85 },
-          { label: 'lines of C++', value: '2,840', delta: 'ROS2 / rclcpp', bar: 0.55 },
-          { label: 'hallway coverage', value: '99.6%', delta: 'previously 87%', bar: 0.99 },
-        ],
+        side: 'B-side · 3NF and the 200ms',
+        body: `<p>not glamorous. the hospital's data wasn't inaccessible — it was just slow and structurally inconsistent. every useful query needed a bespoke script because nobody had committed to foreign keys. i redesigned the schema to 3NF across 15 tables, eliminating 20% redundancy.</p>
+<p>the bed-utilization query went from 3 seconds to 200ms with composite indexes. that's the difference between an overnight batch and a tool people use in the morning standup. window functions handled the rolling analysis. <em>boring is a feature.</em></p>`,
       },
     },
   };
@@ -139,20 +61,20 @@
     'ml-research': {
       label: 'ML / Research',
       tag: 'For ML & research roles',
-      intro: '<b>Models, experiments, papers.</b> Starts with the most quantitative work — feature engineering on housing, then explainable credit modeling, then real-time NBA inference. The B-sides have the methodology.',
-      order: ['01', '06', '02', '07', '05', '04', '03'],
+      intro: '<b>Models, experiments, methodology.</b> Leads with the live PerChance prediction system, then the explainable loan-default model, then the NLP document classifier — methodology-heavy projects first. The B-sides have the technical depth.',
+      order: ['01', '05', '04', '02', '06', '03'],
     },
     'quant': {
       label: 'Quant / Fintech',
       tag: 'For quant & fintech roles',
-      intro: '<b>Pricing, risk, edge.</b> Three projects that deal in money: real-estate pricing, sportsbook arbitrage, credit default. Same skill — finding the spread between the model and the market.',
-      order: ['02', '06', '01', '03', '05', '07', '04'],
+      intro: '<b>Pricing, risk, edge.</b> Money-adjacent work first: the $500K GTSF fund, sportsbook prop prediction, credit default modeling. Same skill — finding the spread between the model and the market.',
+      order: ['03', '01', '05', '02', '04', '06'],
     },
     'faang': {
       label: 'FAANG SWE',
-      tag: 'For FAANG SWE roles',
-      intro: '<b>Scale, infra, shipped product.</b> Leads with the highest-traffic project (Boxxer, 2.4M plays), then the live-service NBA system, then the offline-capable infra work. Models come second.',
-      order: ['04', '02', '07', '01', '06', '05', '03'],
+      tag: 'For FAANG / Big Tech roles',
+      intro: '<b>Scale, infra, shipped systems.</b> Leads with the production document pipeline (10K docs/mo, O(n²)→O(n+m) optimization), then the hospital ops schema work, then the Altura data pipeline. Systems thinking first, models second.',
+      order: ['04', '06', '02', '01', '05', '03'],
     },
   };
 

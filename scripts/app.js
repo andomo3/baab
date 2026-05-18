@@ -63,7 +63,7 @@
     const current = document.querySelector('.page.active');
     const target = document.querySelector(`.page[data-page="${page}"]`);
     if (!target) return;
-    document.querySelectorAll('.sb-item, .mob-tab').forEach(a => a.classList.toggle('active', a.dataset.nav === page));
+    document.querySelectorAll('.sb-item, .mob-tab, [data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === page));
     history.replaceState({}, '', '#/' + page);
     if (current === target) return;
     if (current) {
@@ -79,9 +79,56 @@
     }
   }
   window.__navigate = navigate;
-  document.querySelectorAll('.sb-item, .mob-tab').forEach(a => {
+  document.querySelectorAll('.sb-item, .mob-tab, [data-nav]').forEach(a => {
     a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
   });
+
+  // Header back/forward
+  document.querySelectorAll('[data-history]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.history === 'back') window.history.back();
+      else if (btn.dataset.history === 'forward') window.history.forward();
+    });
+  });
+
+  // Cosmetic toggles (e.g. Repeat)
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => btn.classList.toggle('active'));
+  });
+
+  // Like button — toggle ♡↔♥, persist per-track in localStorage
+  const likeBtn = document.getElementById('np-like');
+  const likeKey = (id) => 'portfolio:liked:' + id;
+  function getCurrentTrackId() {
+    if (window.__term && typeof window.__term.getCurrent === 'function') {
+      const idx = window.__term.getCurrent();
+      const tracks = window.__term.TRACKS || [];
+      const t = tracks[idx];
+      return t && t.n;
+    }
+    return null;
+  }
+  function refreshLike() {
+    if (!likeBtn) return;
+    const id = getCurrentTrackId();
+    if (!id) return;
+    const liked = !!localStorage.getItem(likeKey(id));
+    likeBtn.classList.toggle('liked', liked);
+    likeBtn.textContent = liked ? '♥' : '♡';
+  }
+  if (likeBtn) {
+    likeBtn.addEventListener('click', () => {
+      const id = getCurrentTrackId();
+      if (!id) return;
+      const isLiked = !!localStorage.getItem(likeKey(id));
+      if (isLiked) localStorage.removeItem(likeKey(id));
+      else localStorage.setItem(likeKey(id), '1');
+      refreshLike();
+    });
+  }
+  window.addEventListener('np-update', refreshLike);
+  // Initial state once the terminal has booted
+  setTimeout(refreshLike, 300);
   window.addEventListener('navigate', (e) => navigate(e.detail));
   const hash = (location.hash || '').replace('#/', '');
   if (['home', 'projects', 'about', 'contact'].includes(hash)) navigate(hash);
@@ -168,8 +215,8 @@
         </div>
         <p>${p.body.replace(/\n\n/g, '</p><p>')}</p>
         <div class="proj-nav">
-          ${prev ? `<button class="proj-nav-btn" onclick="window.__openTab('${prev.id}')">← ${prev.title.split('—')[0].trim()}</button>` : '<span></span>'}
-          ${next ? `<button class="proj-nav-btn" onclick="window.__openTab('${next.id}')">→ ${next.title.split('—')[0].trim()}</button>` : '<span></span>'}
+          ${prev ? `<button class="proj-nav-btn" data-go="${prev.id}">← ${prev.title.split('—')[0].trim()}</button>` : '<span></span>'}
+          ${next ? `<button class="proj-nav-btn" data-go="${next.id}">→ ${next.title.split('—')[0].trim()}</button>` : '<span></span>'}
         </div>
       </div>
     `;
@@ -225,6 +272,9 @@
     tabs.querySelectorAll('.ide-tab').forEach(t => t.classList.toggle('active', t === tab));
     if (tree) tree.querySelectorAll('.ide-item').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
     content.innerHTML = renderFileView(id);
+    content.querySelectorAll('[data-go]').forEach(btn => {
+      btn.addEventListener('click', () => openTab(btn.dataset.go));
+    });
 
     // Sync the player to the open tab (suppressed during boot and re-entrant calls)
     if (bootDone && !syncingFromTerm) {

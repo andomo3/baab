@@ -1548,6 +1548,8 @@ button { font-family: inherit; }
   transition: 120ms;
 }
 .player-controls .icon-btn:hover { color: var(--fg); background: rgba(255,255,255,0.06); }
+.icon-btn.active { color: var(--p3); }
+.player-left .like.liked { color: oklch(0.72 0.22 25); }
 .player-controls .play-main {
   width: 36px; height: 36px;
   border-radius: 50%;
