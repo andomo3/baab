@@ -63,7 +63,7 @@
     const current = document.querySelector('.page.active');
     const target = document.querySelector(`.page[data-page="${page}"]`);
     if (!target) return;
-    document.querySelectorAll('.sb-item').forEach(a => a.classList.toggle('active', a.dataset.nav === page));
+    document.querySelectorAll('.sb-item, .mob-tab').forEach(a => a.classList.toggle('active', a.dataset.nav === page));
     history.replaceState({}, '', '#/' + page);
     if (current === target) return;
     if (current) {
@@ -79,7 +79,7 @@
     }
   }
   window.__navigate = navigate;
-  document.querySelectorAll('.sb-item').forEach(a => {
+  document.querySelectorAll('.sb-item, .mob-tab').forEach(a => {
     a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
   });
   window.addEventListener('navigate', (e) => navigate(e.detail));
