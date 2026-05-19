@@ -291,6 +291,10 @@
   PROJECT_FILES.forEach(p => openTab(p.id));
   openTab(PROJECT_FILES[0].id); // make the first one active
   bootDone = true;
+  // Sync the player bar to the initially-active project so the IDE
+  // and the player bar match on first render — independent of the
+  // terminal intro timing.
+  window.dispatchEvent(new CustomEvent('np-update', { detail: { idx: 0 } }));
 
   // When the track changes (terminal, prev/next, shelf tile), navigate to
   // projects and open the matching IDE tab.
