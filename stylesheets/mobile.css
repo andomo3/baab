@@ -45,10 +45,6 @@
   .player { grid-template-columns: 1fr 1fr; padding: 10px 20px; gap: 16px; }
   .player-right { display: none; }
 
-  /* Playlist */
-  .playlist .row { grid-template-columns: 28px 40px 1fr 60px 30px; }
-  .playlist .album, .playlist .plays { display: none; }
-
 }
 
 
@@ -88,12 +84,6 @@
     padding-bottom: 24px;
   }
 
-  /* ── Header / top-nav ── */
-  .top-nav {
-    padding: 0 16px;
-    gap: 12px;
-  }
-
   /* ── Mobile bottom tab bar ── */
   .mob-nav {
     grid-area: mob-nav;
@@ -101,7 +91,8 @@
     align-items: flex-start;
     padding-top: 0;
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: rgba(11, 11, 15, 0.96);
+    background: rgba(15, 13, 10, 0.96); /* --dark-bg fallback for no-color-mix browsers */
+    background: color-mix(in srgb, var(--dark-bg) 96%, transparent);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
     border-top: 1px solid rgba(255,255,255,0.07);
@@ -143,30 +134,26 @@
     gap: 12px;
     border-top: 1px solid rgba(255,255,255,0.07);
   }
-  .player-center, .player-right { display: none; }
+  .player-right { display: none; }
+  /* Working mini play control: un-hide .player-center but show only the
+     real #np-play button (glyph/aria-label stay wired via app.js). */
+  .player-center { display: flex; flex-direction: row; align-items: center; }
+  .player-progress { display: none; }
+  .player-controls { gap: 0; }
+  .player-controls .icon-btn { display: none; }
+  .player-controls .play-main {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+    background: var(--accent);
+    color: var(--dark-fg);
+  }
   .player-left {
     gap: 10px;
     overflow: hidden;
   }
-  .player-left .cover {
-    width: 38px;
-    height: 38px;
-    border-radius: 6px;
-    flex: 0 0 auto;
-  }
-  .player-left .cover-icon-np { font-size: 18px; }
   .player-left .t { font-size: 13px; }
   .player-left .s { font-size: 11px; }
-  /* show a compact play button on the right of the mini player */
-  .player::after {
-    content: '▶';
-    display: flex;
-    align-items: center;
-    color: var(--fg-2);
-    font-size: 16px;
-    padding: 0 4px;
-    cursor: pointer;
-  }
 
   /* ── Hero (dark) ── */
   .hero-dark { padding: 36px 20px 44px; }
@@ -195,6 +182,13 @@
   /* Terminal widget: shorter on phone */
   .np-widget { min-height: 220px; }
   .np-widget-body { max-height: 180px; }
+  /* iOS: inputs under 16px trigger focus zoom */
+  .np-widget-input input { font-size: 16px; }
+
+  /* ── Touch targets (≥44px per Apple HIG) ── */
+  .icon-btn, .like { min-width: 44px; min-height: 44px; }
+  .nav-item { min-height: 44px; }
+  .mob-tab { min-height: 48px; }
 
   /* ── Projects shelf: 2-col ── */
   .shelf { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -216,11 +210,9 @@
   .ide-side { display: none; }
   .ide-main { min-width: 0; }
   .ide-content { padding: 20px; }
-  .ide-tabs { overflow-x: auto; white-space: nowrap; }
-  .ide-tab { display: inline-flex; }
 
   /* Project detail */
-  .project-detail h1 { font-size: 18px; }
+  .project-detail h2 { font-size: 18px; }
   .meta-grid { grid-template-columns: 1fr; gap: 4px; }
   .star-grid { grid-template-columns: 1fr; gap: 10px; }
   .proj-actions { flex-direction: column; align-items: flex-start; }
@@ -233,14 +225,6 @@
   /* ── About / Contact grids ── */
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 16px; }
   .card { padding: 16px; }
-
-  /* ── Playlist table ── */
-  .playlist .row {
-    grid-template-columns: 28px 36px 1fr 50px;
-    padding: 8px 12px;
-    font-size: 12.5px;
-  }
-  .playlist .album, .playlist .plays, .playlist .dur { display: none; }
 
 }
 

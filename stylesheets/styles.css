@@ -17,6 +17,8 @@
 
   --accent:      #C49A6C;
   --accent-dark: #8B5E3C;
+  --good: #4CAF50;
+  --grad: linear-gradient(90deg, var(--accent), var(--accent-dark));
 
   --hairline:   #DDD4C8;
   --hairline-2: #C8B8A8;
@@ -74,6 +76,7 @@ html, body {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   overflow-x: hidden;
 }
@@ -83,6 +86,13 @@ body {
 a { color: inherit; text-decoration: none; }
 
 button { font-family: inherit; }
+
+/* ---------- Focus visibility + skip link ---------- */
+:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; border-radius: 2px; }
+.np-widget-input input:focus-visible { outline: none; }
+.np-widget-input:focus-within { border-color: var(--accent); }
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 200; background: var(--dark-bg); color: var(--dark-fg); padding: 10px 16px; border-radius: var(--r-md, 8px); font: 600 13px var(--sans); }
+.skip-link:focus-visible { left: 12px; top: 12px; }
 
 /* Markov canvas removed — keep node hidden if it still exists */
 #markov-canvas { display: none !important; }
@@ -99,6 +109,7 @@ button { font-family: inherit; }
     "main"
     "player";
   height: 100vh;
+  height: 100dvh; /* dvh fallback pattern — avoids iOS URL-bar clipping */
   overflow: hidden;
   background: var(--bg);
   color: var(--fg);
@@ -120,6 +131,13 @@ button { font-family: inherit; }
   top: 0;
   z-index: 100;
   height: var(--header-h);
+}
+
+/* UA-style reset: these controls are now <button>s. Class-only selectors,
+   placed BEFORE the component rules so their font/padding overrides still win. */
+.nav-item, .nav-logo, .more {
+  background: none; border: 0; font: inherit; color: inherit;
+  cursor: pointer; text-align: inherit; padding: 0;
 }
 
 .nav-logo {
@@ -153,7 +171,7 @@ button { font-family: inherit; }
   user-select: none;
 }
 .nav-item:hover { color: var(--fg); background: var(--bg-2); }
-.nav-item.active { color: var(--fg); background: var(--bg-2); font-weight: 600; }
+.nav-item.active, .nav-item[aria-current="page"] { color: var(--fg); background: var(--bg-2); font-weight: 600; }
 
 .nav-right {
   display: flex;
@@ -192,15 +210,6 @@ button { font-family: inherit; }
 
 /* ---------- Old header (removed) ---------- */
 .header { display: none !important; }
-.player-left .cover-icon-np {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  z-index: 1;
-}
 
 /* ---------- Main scroll area ---------- */
 .main {
@@ -274,6 +283,7 @@ button { font-family: inherit; }
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 20px;
+  min-height: 1.55em; /* matches inherited line-height so the delete-cycle never collapses the line */
 }
 .hero-name {
   font-family: var(--display);
@@ -372,6 +382,7 @@ button { font-family: inherit; }
 .hero-photo {
   width: 100%;
   max-width: 340px;
+  height: auto; /* beat the height="" presentational hint so aspect-ratio governs */
   aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: var(--r-lg);
@@ -431,6 +442,16 @@ button { font-family: inherit; }
 }
 
 .tile {
+  /* UA reset — tiles are rendered as <button>s */
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
   cursor: pointer;
   position: relative;
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -662,103 +683,6 @@ button { font-family: inherit; }
 @keyframes px-beat {
   0%, 100% { transform: scaleX(1);    opacity: 1; }
   50%       { transform: scaleX(1.04); opacity: 0.7; }
-}
-
-/* ---------- Playlist (Apple Music table) ---------- */
-.playlist {
-  border-radius: var(--r-md);
-  overflow: hidden;
-}
-.playlist .row {
-  display: grid;
-  grid-template-columns: 36px 44px 1fr 1.1fr 100px 70px 30px;
-  gap: 16px;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 140ms;
-}
-.playlist .row:hover { background: rgba(255,255,255,0.04); }
-.playlist .row.playing { background: rgba(255,255,255,0.04); }
-.playlist .row.header {
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--fg-4);
-  text-transform: uppercase;
-  cursor: default;
-  padding: 8px 14px;
-  border-bottom: 1px solid var(--hairline);
-  border-radius: 0;
-}
-.playlist .row.header:hover { background: transparent; }
-.playlist .num {
-  text-align: right;
-  color: var(--fg-3);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  font-weight: 500;
-}
-.playlist .row.playing .num { color: var(--p3); }
-.playlist .row:hover .num .n { display: none; }
-.playlist .row:hover .num::after { content: "▶"; color: var(--fg); font-size: 11px; }
-.playlist .cover {
-  position: relative;
-  width: 44px; height: 44px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--hairline);
-  display: grid;
-  place-items: center;
-  color: var(--fg-2);
-  overflow: hidden;
-}
-.playlist .cover-icon { width: 22px; height: 22px; }
-.playlist .cover-icon svg { width: 100%; height: 100%; display: block; }
-.playlist .row:hover .cover-icon { color: var(--primary); }
-.playlist .row.playing .cover-icon { color: var(--primary); }
-.playlist .cover-legacy {
-  background: var(--grad);
-}
-.playlist .cover-legacy::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.3), transparent 50%);
-  pointer-events: none;
-}
-.playlist .meta .title {
-  color: var(--fg);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-}
-.playlist .row.playing .meta .title { color: var(--p3); }
-.playlist .meta .sub {
-  color: var(--fg-3);
-  font-size: 12.5px;
-  margin-top: 1px;
-}
-.playlist .album {
-  color: var(--fg-3);
-  font-size: 13px;
-}
-.playlist .plays {
-  color: var(--fg-3);
-  font-size: 12.5px;
-  font-variant-numeric: tabular-nums;
-}
-.playlist .dur {
-  color: var(--fg-3);
-  font-variant-numeric: tabular-nums;
-  font-size: 13px;
-  text-align: right;
-}
-.playlist .more {
-  color: var(--fg-4);
-  text-align: center;
-  font-size: 16px;
-  letter-spacing: 0.05em;
 }
 
 /* ---------- Now-playing terminal widget (refined) ---------- */
@@ -1050,6 +974,14 @@ button { font-family: inherit; }
   padding-left: 12px;
 }
 .ide-item {
+  /* UA reset — tree rows are rendered as <button>s
+     (100% minus the 12px margin-right below, matching the old div box) */
+  width: calc(100% - 12px);
+  background: none;
+  border: 0;
+  text-align: left;
+  line-height: inherit;
+  letter-spacing: inherit;
   padding: 5px 18px 5px 28px;
   color: var(--dark-fg-3);
   cursor: pointer;
@@ -1071,36 +1003,6 @@ button { font-family: inherit; }
 }
 .ide-item .glyph { color: var(--dark-fg-4); }
 .ide-item.active .glyph { color: var(--accent); }
-
-.ide-tabs {
-  display: flex;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  background: var(--dark-bg-2);
-  font-family: var(--mono);
-  font-size: 12px;
-  overflow-x: auto;
-}
-.ide-tab {
-  padding: 10px 14px;
-  border-right: 1px solid rgba(255,255,255,0.07);
-  color: var(--dark-fg-3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.ide-tab.active {
-  color: var(--dark-fg);
-  background: rgba(255,255,255,0.04);
-  position: relative;
-}
-.ide-tab.active::before {
-  content: "";
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--accent);
-}
-.ide-tab .x { color: var(--dark-fg-4); font-size: 12px; opacity: 0.6; }
 
 .ide-main { min-width: 0; background: var(--surface); }
 .ide-content { padding: 28px 32px; overflow-wrap: break-word; word-break: break-word; }
@@ -1125,7 +1027,7 @@ button { font-family: inherit; }
 .code .com { color: var(--dark-fg-3); font-style: italic; }
 .code .var { color: var(--dark-fg); }
 
-.project-detail h1 {
+.project-detail h2 {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.025em;
@@ -1201,7 +1103,6 @@ button { font-family: inherit; }
   border-color: var(--hairline-2);
 }
 .project-detail h3 {
-  color: var(--fg);
   margin-top: 28px;
   font-size: 12.5px;
   font-weight: 600;
@@ -1288,7 +1189,7 @@ button { font-family: inherit; }
   border-radius: var(--r-md);
   padding: 22px 26px;
 }
-.card h3 {
+.card .card-label {
   font-size: 11.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1296,7 +1197,7 @@ button { font-family: inherit; }
   color: var(--fg-4);
   margin: 0 0 14px;
 }
-.card h2 {
+.card h2, .card h3 {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -1345,20 +1246,6 @@ button { font-family: inherit; }
   border-radius: 3px;
 }
 .langs .pct { text-align: right; color: var(--fg-3); font-variant-numeric: tabular-nums; font-size: 12px; }
-
-.distribution {
-  display: flex;
-  align-items: end;
-  gap: 3px;
-  height: 96px;
-}
-.distribution .b {
-  flex: 1;
-  background: var(--grad);
-  border-radius: 3px 3px 0 0;
-  opacity: 0.85;
-  min-height: 4px;
-}
 
 .artist-grid {
   display: grid;
@@ -1462,15 +1349,6 @@ button { font-family: inherit; }
   align-items: center;
   gap: 14px;
   min-width: 0;
-}
-.player-left .cover {
-  width: 56px; height: 56px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.4);
-  flex: 0 0 auto;
 }
 .player-left .meta { min-width: 0; }
 .player-left .t {
@@ -1597,22 +1475,4 @@ button { font-family: inherit; }
 }
 .player-right .vbar > span {
   display: block; height: 100%; width: 70%; background: var(--dark-fg-2);
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 980px) {
-  .app { grid-template-columns: 1fr; grid-template-areas: "header" "main" "player"; }
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-photo-wrap { display: none; }
-  .hero-dark { padding: 48px 24px 56px; }
-  .hero-widget-row { grid-template-columns: 1fr; padding: 0 24px; }
-  .section { padding: 24px; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; }
-  .ide { grid-template-columns: 1fr; }
-  .ide-side { display: none; }
-  .player { grid-template-columns: 1fr 1fr; padding: 10px 16px; }
-  .player-right { display: none; }
-  .playlist .row { grid-template-columns: 28px 40px 1fr 60px 30px; }
-  .playlist .album, .playlist .plays { display: none; }
-  .nav-pill { display: none; }
 }
