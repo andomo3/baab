@@ -1,4 +1,4 @@
-/* App glue v2: navigation, shelves, playlist, IDE, heatmap, langs, distribution, player. */
+/* App glue v2: navigation, shelves, IDE, heatmap, langs, player. */
 (function () {
   const PROJECTS = (window.__term && window.__term.TRACKS) || [];
 
@@ -10,7 +10,7 @@
       stack: ['XGBoost', 'CatBoost', 'SHAP', 'Django', 'React', 'Airflow', 'Spark', 'Redis', 'Docker'],
       github: 'https://github.com/andomo3/nbaPropsPrediction',
       liveUrl: 'https://nba-props-prediction.vercel.app/',
-      preview: 'perchance.png',
+      preview: 'perchance.webp',
       star: {
         situation: 'Sportsbooks publish lines. Nobody tells you when a player is genuinely predictable — or why performance shifts by rest, form, and matchup.',
         task: 'Build an open-source platform with full player behavioral profiles: calibrated edge, output distributions, opponent splits, and a predictability fingerprint.',
@@ -24,7 +24,7 @@
       metrics: [['Estimate Time', 'hours → 5s'], ['Categories', '13'], ['Units', '101'], ['Pipeline', 'Airflow DAG']],
       stack: ['PySpark', 'Airflow', 'DuckDB', 'Parquet', 'Next.js', 'Python'],
       liveUrl: 'https://altura-orcin.vercel.app/',
-      preview: 'altura.png',
+      preview: 'altura.webp',
       star: {
         situation: 'A 101-unit property operator priced renovations from nested Excel matrices no off-the-shelf tool could parse. One estimate took most of a workday.',
         task: 'Automate the full extraction and pricing flow so the client receives an itemized estimate in seconds, not hours.',
@@ -82,23 +82,20 @@
     },
   ];
 
-  // Clock
-  const clock = document.getElementById('clock');
-  setInterval(() => {
-    if (clock) {
-      const d = new Date();
-      const h = d.getHours(), m = d.getMinutes();
-      clock.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-    }
-  }, 1000);
-
   // ----------- Navigation -----------
   function navigate(page) {
     const main = document.querySelector('.main');
     const current = document.querySelector('.page.active');
     const target = document.querySelector(`.page[data-page="${page}"]`);
     if (!target) return;
-    document.querySelectorAll('.nav-item, .nav-logo, .mob-tab, [data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === page));
+    document.querySelectorAll('.nav-item, .nav-logo, .mob-tab, [data-nav]').forEach(a => {
+      const isActive = a.dataset.nav === page;
+      a.classList.toggle('active', isActive);
+      if (a.classList.contains('nav-item')) {
+        if (isActive) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      }
+    });
     const screenLabel = document.getElementById('screen-label');
     if (screenLabel) screenLabel.textContent = target.dataset.screenLabel || '';
     history.replaceState({}, '', '#' + page);
@@ -117,37 +114,27 @@
   }
   window.__navigate = navigate;
 
-  // Scroll progress bar at top of header
-  const scrollProgress = document.getElementById('scroll-progress');
-  const mainScroll = document.querySelector('.main');
-  if (scrollProgress && mainScroll) {
-    const updateScrollProgress = () => {
-      const max = mainScroll.scrollHeight - mainScroll.clientHeight;
-      const pct = max > 0 ? (mainScroll.scrollTop / max) * 100 : 0;
-      scrollProgress.style.width = pct + '%';
-    };
-    mainScroll.addEventListener('scroll', updateScrollProgress, { passive: true });
-    updateScrollProgress();
-  }
-
   document.querySelectorAll('.nav-item, .nav-logo, .mob-tab, [data-nav]').forEach(a => {
     a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
+  });
+
+  // Delegated terminal-command triggers (player controls, shuffle "more" button)
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-cmd]');
+    if (el && window.__term) window.__term.runCmd(el.dataset.cmd);
   });
 
   // Nav logo click
   document.querySelector('.nav-logo')?.addEventListener('click', () => navigate('home'));
 
-  // Header back/forward
-  document.querySelectorAll('[data-history]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.dataset.history === 'back') window.history.back();
-      else if (btn.dataset.history === 'forward') window.history.forward();
-    });
-  });
-
-  // Cosmetic toggles (e.g. Repeat)
+  // Cosmetic toggles (e.g. Repeat) — keep aria-pressed in sync where declared
   document.querySelectorAll('[data-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => btn.classList.toggle('active'));
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      if (btn.hasAttribute('aria-pressed')) {
+        btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
+      }
+    });
   });
 
   // Like button — toggle ♡↔♥, persist per-track in localStorage
@@ -169,6 +156,7 @@
     const liked = !!localStorage.getItem(likeKey(id));
     likeBtn.classList.toggle('liked', liked);
     likeBtn.textContent = liked ? '♥' : '♡';
+    likeBtn.setAttribute('aria-pressed', String(liked));
   }
   if (likeBtn) {
     likeBtn.addEventListener('click', () => {
@@ -187,11 +175,21 @@
   const hash = (location.hash || '').replace('#', '');
   if (['home', 'projects', 'about', 'contact'].includes(hash)) navigate(hash);
 
+  // Plain digit shortcuts (1-4) — no modifiers, so browser combos like
+  // Ctrl+1 (tab switching) are never hijacked. Inactive while typing.
   window.addEventListener('keydown', (e) => {
-    if (!(e.metaKey || e.ctrlKey)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return; // leave browser-reserved combos alone
+    const a = document.activeElement;
+    if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable)) return;
     const map = { '1': 'home', '2': 'projects', '3': 'about', '4': 'contact' };
-    if (map[e.key]) { e.preventDefault(); navigate(map[e.key]); }
-    if (e.key === 'k') { e.preventDefault(); const t = document.getElementById('term-input'); if (t) t.focus(); }
+    if (map[e.key]) navigate(map[e.key]);
+    if (e.key === '/') {
+      const ti = document.getElementById('term-input');
+      if (ti && ti.offsetParent !== null) { // terminal visible (home page)
+        e.preventDefault(); // keep the slash out of the input
+        ti.focus();
+      }
+    }
   });
 
   // ----------- Contextual icons (24px, line) -----------
@@ -202,15 +200,15 @@
     '04': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>',
     '05': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-8"/><path d="M22 20H2"/></svg>',
     '06': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>',
-    '07': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 4v4"/><circle cx="12" cy="4" r="1.2"/><path d="M9 13h.01M15 13h.01"/><path d="M2 13v3M22 13v3"/></svg>',
   };
   window.__ICONS = ICONS;
   function tile(p) {
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    el.type = 'button';
     el.className = 'tile';
     el.innerHTML = `
       <div class="art${p.preview ? ' art--preview' : ''}" data-pid="${p.id}">
-        ${p.preview ? `<img class="art-preview" src="${p.preview}" alt="${p.title}" />` : '<div class="play-overlay"></div>'}
+        ${p.preview ? `<img class="art-preview" src="${p.preview}" alt="${p.title}" loading="lazy" width="220" height="220" />` : '<div class="play-overlay"></div>'}
       </div>
       <div class="title">${p.title}</div>
       <div class="sub">${p.sub.split('.')[0]}</div>
@@ -228,7 +226,8 @@
   const tree = document.getElementById('file-tree');
   if (tree) {
     PROJECT_FILES.forEach(p => {
-      const el = document.createElement('div');
+      const el = document.createElement('button');
+      el.type = 'button';
       el.className = 'ide-item';
       el.dataset.tab = p.id;
       el.innerHTML = `<span class="glyph">›</span><span>${p.file}</span>`;
@@ -263,7 +262,7 @@
     return `
       <div class="project-detail">
         <div class="crumb">~/projects/${p.file}</div>
-        <h1>${p.title}</h1>
+        <h2>${p.title}</h2>
         <div class="sub">${p.sub}</div>
         <div class="proj-actions">
           <div class="stack-row">${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}</div>
@@ -300,11 +299,16 @@
   let syncingFromTab = false;
   let syncingFromTerm = false;
 
-  function openTab(id) {
+  function openTab(id, opts = {}) {
     if (!content) return;
     const p = PROJECT_FILES.find(x => x.id === id);
     if (!p) return;
-    if (tree) tree.querySelectorAll('.ide-item').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+    if (tree) tree.querySelectorAll('.ide-item').forEach(t => {
+      const open = t.dataset.tab === id;
+      t.classList.toggle('active', open);
+      if (open) t.setAttribute('aria-current', 'true');
+      else t.removeAttribute('aria-current');
+    });
     content.innerHTML = renderFileView(id);
     content.style.animation = 'none';
     content.offsetHeight;
@@ -315,13 +319,15 @@
     if (!syncingFromTerm) {
       syncingFromTab = true;
       const n = parseInt(id, 10);
-      if (window.__term) window.__term.runCmd('play ' + n);
+      if (window.__term) window.__term.runCmd('play ' + n, opts.silent ? { echo: false, silent: true } : undefined);
       syncingFromTab = false;
     }
   }
   window.__openTab = openTab;
 
-  openTab(PROJECT_FILES[0].id);
+  // Initial IDE/player sync: execute silently so no stray `play 1` block
+  // prints above the terminal boot intro.
+  openTab(PROJECT_FILES[0].id, { silent: true });
   // Sync the player bar to the initially-active project so the IDE
   // and the player bar match on first render — independent of the
   // terminal intro timing.
@@ -343,8 +349,9 @@
   });
 
   // ----------- Heatmap -----------
+  // Guard: skip all heatmap work (incl. fetches) while its section is hidden.
   const hm = document.getElementById('heatmap');
-  if (hm) {
+  if (hm && hm.offsetParent !== null) {
     const GITHUB_USER = 'andomo3';
     const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
@@ -446,21 +453,6 @@
     `).join('');
   }
 
-  // ----------- Distribution -----------
-  const dist = document.getElementById('distribution');
-  if (dist) {
-    const N = 48;
-    let html = '';
-    for (let i = 0; i < N; i++) {
-      const x = i / N * 24;
-      const morning = Math.exp(-Math.pow((x - 9.5) / 2.4, 2));
-      const night = 1.4 * Math.exp(-Math.pow((x - 22) / 2.0, 2));
-      const v = morning + night + 0.04 * Math.random();
-      html += `<div class="b" style="height: ${10 + v * 70}px; opacity: ${0.55 + v * 0.4};"></div>`;
-    }
-    dist.innerHTML = html;
-  }
-
   // ----------- Artist grid -----------
   const ag = document.getElementById('artist-grid');
   if (ag) {
@@ -502,9 +494,11 @@
   let trackTotal = 222;
   let isPlaying = true;
   const playBtn = document.getElementById('np-play');
-  if (playBtn) playBtn.addEventListener('click', () => { isPlaying = !isPlaying; });
-
-  const npCoverIcon = document.querySelector('.player-left .cover-icon-np');
+  if (playBtn) playBtn.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    playBtn.textContent = isPlaying ? '❚❚' : '▶';
+    playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+  });
 
   window.addEventListener('np-update', (e) => {
     const idx = e.detail.idx;
@@ -512,8 +506,6 @@
     if (!t) return;
     if (npTitle) npTitle.textContent = t.title;
     if (npArtist) npArtist.textContent = t.artist;
-    const pf = PROJECT_FILES.find(f => parseInt(f.id, 10) === idx + 1);
-    if (npCoverIcon && pf) npCoverIcon.textContent = pf.icon;
     const [m, s] = t.dur.split(':').map(Number);
     trackTotal = m * 60 + s;
     trackElapsed = 0;

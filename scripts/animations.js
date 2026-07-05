@@ -1,5 +1,8 @@
 (function () {
 
+  // Shared reduced-motion flag — every JS-driven animation checks this.
+  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ---------- Loading screen ----------
   const loader = document.getElementById('loader');
   const heroDark = document.querySelector('.hero-dark');
@@ -25,6 +28,7 @@
 
   // ---------- Stat counters ----------
   function startStatCounters() {
+    if (REDUCED_MOTION) return; // markup already holds the final numbers
     document.querySelectorAll('.hero-stat-n').forEach(el => {
       const raw = el.textContent.trim();
       const num = parseInt(raw.replace(/\D/g, ''), 10);
@@ -77,6 +81,7 @@
   function startEyebrowCycle() {
     const el = document.querySelector('.hero-eyebrow');
     if (!el) return;
+    if (REDUCED_MOTION) { el.textContent = EYEBROW_PHRASES[0]; return; } // static, no cycle
     let phraseIdx = 0;
     let charIdx = 0;
     let deleting = false;
@@ -114,6 +119,7 @@
   function typeTagline() {
     const el = document.querySelector('.hero-tagline');
     if (!el) return;
+    if (REDUCED_MOTION) return; // full text is already in the markup
     const text = el.textContent.trim();
     typewriter(el, text, 14, (cursor) => {
       setTimeout(() => cursor.classList.add('tw-cursor-done'), 1200);
@@ -124,8 +130,11 @@
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+        const el = entry.target;
+        el.classList.add('visible');
+        // Clear the inline stagger delay so later state changes aren't lagged
+        el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
+        revealObserver.unobserve(el);
       }
     });
   }, { threshold: 0.07, rootMargin: '0px 0px -24px 0px' });
@@ -154,12 +163,16 @@
       revealObserver.observe(el);
     });
 
-    document.querySelectorAll('.section-head .sub').forEach(el => {
-      if (el.dataset.twText) return;
-      el.dataset.twText = el.textContent.trim();
-      el.textContent = '';
-      subObserver.observe(el);
-    });
+    // Skip under reduced motion, and skip subs with child elements —
+    // typewriting flattens textContent and would destroy styled spans.
+    if (!REDUCED_MOTION) {
+      document.querySelectorAll('.section-head .sub').forEach(el => {
+        if (el.dataset.twText || el.children.length > 0) return;
+        el.dataset.twText = el.textContent.trim();
+        el.textContent = '';
+        subObserver.observe(el);
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

@@ -5,6 +5,8 @@
   const inputRow = document.getElementById('term-input-row');
   if (!term || !input) return;
 
+  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ---------- Data ----------
   const TRACKS = [
     { n: '01', title: 'PerChance — NBA Props Intelligence',    artist: 'Founder',              dur: '4:18', plays: '1.1M', stack: ['XGBoost','CatBoost','Django','React'] },
@@ -43,10 +45,12 @@
     if (text != null) e.textContent = text;
     return e;
   }
+  let silentMode = false;
   function lineHTML(html, cls) {
     const d = document.createElement('div');
     d.className = 'line ' + (cls || 'out');
     d.innerHTML = html;
+    if (silentMode) return d; // execute-only mode: don't append output
     term.appendChild(d);
     term.scrollTop = term.scrollHeight;
     return d;
@@ -64,8 +68,8 @@
   function trackLine(t, playing=false) {
     const icon = playing
       ? `<span class="eq"><span></span><span></span><span></span><span></span></span>`
-      : `<span style="color:var(--fg-muted)">▸</span>`;
-    return `<div class="np"><div class="icon">${icon}</div><div><div><span class="title">${t.title}</span> <span class="dim" style="color:var(--fg-muted)">— ${t.artist}</span></div><div style="color:var(--fg-muted);font-size:11.5px;">stack: ${t.stack.join(' · ')}</div></div><div class="time">${t.dur}</div></div>`;
+      : `<span style="color:var(--dark-fg-3)">▸</span>`;
+    return `<div class="np"><div class="icon">${icon}</div><div><div><span class="title">${t.title}</span> <span class="dim" style="color:var(--dark-fg-3)">— ${t.artist}</span></div><div style="color:var(--dark-fg-3);font-size:11.5px;">stack: ${t.stack.join(' · ')}</div></div><div class="time">${t.dur}</div></div>`;
   }
 
   // ---------- Boot intro (animated) ----------
@@ -76,14 +80,14 @@
     { delay: 240, html: `<span class="dim">[ok]   stack profiler online</span>`, cls: 'out' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">whoami</span>` , cls: 'cmd', type: true },
-    { delay: 200, html: `<span style="color:var(--fg)">abba ndomo</span> · <span class="dim">georgia tech '27</span> · <span class="dim">ISyE + OR</span>`, cls: 'out' },
+    { delay: 200, html: `<span style="color:var(--dark-fg)">abba ndomo</span> · <span class="dim">georgia tech '27</span> · <span class="dim">ISyE + OR</span>`, cls: 'out' },
     { delay: 100, html: `<span class="dim">data & ml engineer · building perchance · CPT available · f-1 visa</span>`, cls: 'dim' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">play 1</span>`, cls: 'cmd', type: true },
-    { delay: 100, html: `<span class="ok">▶</span> now playing: <span style="color:var(--fg)">${TRACKS[0].title}</span> — <span class="dim">${TRACKS[0].artist}</span>`, cls: 'out' },
+    { delay: 100, html: `<span class="ok">▶</span> now playing: <span style="color:var(--dark-fg)">${TRACKS[0].title}</span> — <span class="dim">${TRACKS[0].artist}</span>`, cls: 'out' },
     { delay: 80, html: trackLine(TRACKS[0], true), cls: 'out' },
     { delay: 240, html: `&nbsp;` },
-    { delay: 200, html: `<span class="dim">type</span> <span style="color:var(--p3)">help</span> <span class="dim">to see what i respond to. ↑/↓ recalls history.</span>`, cls: 'dim' },
+    { delay: 200, html: `<span class="dim">type</span> <span style="color:var(--accent)">help</span> <span class="dim">to see what i respond to. ↑/↓ recalls history.</span>`, cls: 'dim' },
   ];
 
   function typeLineInto(target, fullHTML, done) {
@@ -109,7 +113,8 @@
     let i = 0;
     target.innerHTML = '';
     const cursor = document.createElement('span');
-    cursor.style.cssText = 'display:inline-block;width:7px;height:13px;background:var(--p3);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(2,end) infinite;';
+    cursor.className = 'term-cursor';
+    cursor.style.cssText = 'display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:-2px;margin-left:1px;animation:cursor-blink 1s steps(2,end) infinite;';
     function step() {
       if (i >= text.length) {
         target.innerHTML = fullHTML; // upgrade to styled HTML
@@ -126,6 +131,13 @@
 
   let introIdx = 0;
   function runIntro() {
+    if (REDUCED_MOTION) {
+      // Print the whole boot intro instantly; input usable immediately.
+      intro.forEach(step => lineHTML(step.html, step.cls || 'out'));
+      inputRow.style.opacity = '1';
+      input.focus({ preventScroll: true });
+      return;
+    }
     typing = true;
     function next() {
       if (introIdx >= intro.length) {
@@ -152,13 +164,13 @@
   // ---------- Commands ----------
   const COMMANDS = {
     help() {
-      lineHTML('<span style="color:var(--fg)">commands</span>', 'out');
+      lineHTML('<span style="color:var(--dark-fg)">commands</span>', 'out');
       HELP.forEach(([cmd, desc]) => {
-        lineHTML(`  <span style="color:var(--p3)">${cmd.padEnd(16, ' ')}</span><span class="dim">${desc}</span>`, 'out');
+        lineHTML(`  <span style="color:var(--accent)">${cmd.padEnd(16, ' ')}</span><span class="dim">${desc}</span>`, 'out');
       });
     },
     ls() {
-      lineHTML(`<span style="color:var(--p1)">home/</span>  <span style="color:var(--p1)">projects/</span>  <span style="color:var(--p1)">about/</span>  <span style="color:var(--p1)">contact/</span>  <span class="dim">resume.pdf</span>`, 'out');
+      lineHTML(`<span style="color:var(--accent)">home/</span>  <span style="color:var(--accent)">projects/</span>  <span style="color:var(--accent)">about/</span>  <span style="color:var(--accent)">contact/</span>  <span class="dim">resume.pdf</span>`, 'out');
     },
     cd(args) {
       const page = (args[0] || '').replace(/\/$/, '');
@@ -184,7 +196,7 @@
       }
       currentTrack = idx;
       const t = TRACKS[idx];
-      lineHTML(`<span class="ok">▶</span> now playing: <span style="color:var(--fg)">${t.title}</span> — <span class="dim">${t.artist}</span>`, 'out');
+      lineHTML(`<span class="ok">▶</span> now playing: <span style="color:var(--dark-fg)">${t.title}</span> — <span class="dim">${t.artist}</span>`, 'out');
       lineHTML(trackLine(t, true), 'out');
       window.dispatchEvent(new CustomEvent('np-update', { detail: { idx } }));
     },
@@ -194,9 +206,9 @@
       lineHTML(`<span class="dim">queue · 6 tracks · 24:10 total</span>`, 'dim');
       TRACKS.forEach((t, i) => {
         const playing = i === currentTrack;
-        const num = `<span style="color:var(--fg-muted); font-variant-numeric: tabular-nums;">${String(i+1).padStart(2,'0')}</span>`;
-        const tt = playing ? `<span style="color:var(--p3)">${t.title}</span>` : `<span style="color:var(--fg)">${t.title}</span>`;
-        lineHTML(`  ${num}  ${tt} <span class="dim">— ${t.artist}</span>  <span style="color:var(--fg-muted)">${t.dur}</span>`, 'out');
+        const num = `<span style="color:var(--dark-fg-3); font-variant-numeric: tabular-nums;">${String(i+1).padStart(2,'0')}</span>`;
+        const tt = playing ? `<span style="color:var(--accent)">${t.title}</span>` : `<span style="color:var(--dark-fg)">${t.title}</span>`;
+        lineHTML(`  ${num}  ${tt} <span class="dim">— ${t.artist}</span>  <span style="color:var(--dark-fg-3)">${t.dur}</span>`, 'out');
       });
     },
     now() {
@@ -206,7 +218,7 @@
     },
     shuffle() {
       const i = Math.floor(Math.random() * TRACKS.length);
-      lineHTML(`<span class="dim">rolled ~ U{1..${TRACKS.length}}</span> → <span style="color:var(--p3)">${i+1}</span>`, 'dim');
+      lineHTML(`<span class="dim">rolled ~ U{1..${TRACKS.length}}</span> → <span style="color:var(--accent)">${i+1}</span>`, 'dim');
       COMMANDS.play([String(i+1)]);
     },
     stack() {
@@ -219,11 +231,11 @@
       langs.forEach(([n, p]) => {
         const w = Math.round(p * 0.6);
         const bar = '█'.repeat(w) + '░'.repeat(30 - w);
-        lineHTML(`  <span style="color:var(--fg)">${n.padEnd(11,' ')}</span> <span style="color:var(--p3)">${bar}</span> <span class="dim">${p}%</span>`, 'out');
+        lineHTML(`  <span style="color:var(--dark-fg)">${n.padEnd(11,' ')}</span> <span style="color:var(--accent)">${bar}</span> <span class="dim">${p}%</span>`, 'out');
       });
     },
     whoami() {
-      lineHTML(`<span style="color:var(--fg)">abba ndomo</span> · data & ml engineer · georgia tech '27`, 'out');
+      lineHTML(`<span style="color:var(--dark-fg)">abba ndomo</span> · data & ml engineer · georgia tech '27`, 'out');
       lineHTML(`<span class="dim">ISyE + OR · building perchance · CPT available · f-1 visa</span>`, 'dim');
     },
     fortune() {
@@ -234,29 +246,36 @@
         'you are the posterior of your daily prior.',
         'the only stationary distribution is the one you ship.',
       ];
-      lineHTML(`<span style="color:var(--p3)">𝑝</span> <span style="color:var(--fg)">${fortunes[Math.floor(Math.random()*fortunes.length)]}</span>`, 'out');
+      lineHTML(`<span style="color:var(--accent)">𝑝</span> <span style="color:var(--dark-fg)">${fortunes[Math.floor(Math.random()*fortunes.length)]}</span>`, 'out');
     },
     clear() {
       term.innerHTML = '';
     },
     contact() {
-      lineHTML(`<span class="dim">use </span><span style="color:var(--p3)">cd contact</span><span class="dim"> or:</span>`, 'dim');
-      lineHTML(`  email   · <a style="color:var(--p3)" href="mailto:abba.ndomo@gmail.com">abba.ndomo@gmail.com</a>`, 'out');
-      lineHTML(`  github  · <a style="color:var(--p3)" target="_blank" href="https://github.com/andomo3">github.com/andomo3</a>`, 'out');
-      lineHTML(`  linkedin · <a style="color:var(--p3)" target="_blank" href="https://linkedin.com/in/AbbaNdomo">linkedin.com/in/AbbaNdomo</a>`, 'out');
+      lineHTML(`<span class="dim">use </span><span style="color:var(--accent)">cd contact</span><span class="dim"> or:</span>`, 'dim');
+      lineHTML(`  email   · <a style="color:var(--accent)" href="mailto:abbandomo@gmail.com">abbandomo@gmail.com</a>`, 'out');
+      lineHTML(`  github  · <a style="color:var(--accent)" target="_blank" href="https://github.com/andomo3">github.com/andomo3</a>`, 'out');
+      lineHTML(`  linkedin · <a style="color:var(--accent)" target="_blank" href="https://linkedin.com/in/AbbaNdomo">linkedin.com/in/AbbaNdomo</a>`, 'out');
     },
   };
 
-  function runCmd(raw) {
+  function runCmd(raw, { echo = true, silent = false } = {}) {
     const trimmed = raw.trim();
-    if (!trimmed) { printPrompt(''); return; }
-    printPrompt(trimmed);
-    history.push(trimmed); histIdx = history.length;
+    if (!trimmed) { if (echo) printPrompt(''); return; }
+    if (echo) {
+      printPrompt(trimmed);
+      history.push(trimmed); histIdx = history.length;
+    }
     const parts = trimmed.split(/\s+/);
     const cmd = parts[0].toLowerCase();
     const args = parts.slice(1);
-    if (COMMANDS[cmd]) COMMANDS[cmd](args);
-    else lineHTML(`<span class="err">command not found: ${cmd}</span> <span class="dim">— try </span><span style="color:var(--p3)">help</span>`, 'err');
+    silentMode = silent;
+    try {
+      if (COMMANDS[cmd]) COMMANDS[cmd](args);
+      else lineHTML(`<span class="err">command not found: ${cmd}</span> <span class="dim">— try </span><span style="color:var(--accent)">help</span>`, 'err');
+    } finally {
+      silentMode = false;
+    }
   }
 
   // ---------- Input wiring ----------
@@ -287,5 +306,12 @@
   setTimeout(runIntro, 220);
 
   // expose for tweaks/external buttons
-  window.__term = { runCmd, COMMANDS, TRACKS, getCurrent: () => currentTrack };
+  window.__term = {
+    runCmd,
+    COMMANDS,
+    TRACKS,
+    getCurrent: () => currentTrack,
+    // Append one output line to the terminal body (same renderer runCmd uses).
+    print: (html, cls) => lineHTML(html, cls),
+  };
 })();
