@@ -6,11 +6,13 @@
 <title>Abba Ndomo — Data & ML Engineer</title>
 <meta name="description" content="Portfolio of Abba Ndomo — Data & ML engineer at Georgia Tech (ISyE + OR '27), building PerChance and shipping production pipelines." />
 <meta name="author" content="Abba Ndomo" />
-<meta name="theme-color" content="#1a1a1a" />
+<meta name="theme-color" content="#FAF8F4" />
 <meta property="og:title" content="Abba Ndomo — Data & ML Engineer" />
 <meta property="og:description" content="Portfolio · Georgia Tech ISyE + OR '27 · building PerChance" />
 <meta property="og:type" content="website" />
-<meta property="og:image" content="headshot.jpeg" />
+<meta property="og:image" content="https://andomo3.github.io/baab/headshot.jpeg" />
+<meta property="og:url" content="https://andomo3.github.io/baab/" />
+<link rel="canonical" href="https://andomo3.github.io/baab/" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,6 +24,8 @@
 <link rel="stylesheet" href="stylesheets/animations.css" />
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- Loading screen -->
 <div id="loader">
@@ -37,50 +41,17 @@
 
   <!-- ============== TOP NAV ============== -->
   <header class="top-nav">
-    <div class="nav-logo" data-nav="home">baab.com</div>
+    <button type="button" class="nav-logo" data-nav="home">baab.com</button>
     <nav class="nav-links">
-      <div class="nav-item active" data-nav="home">Home</div>
-      <div class="nav-item" data-nav="projects">Projects</div>
-      <div class="nav-item" data-nav="about">About</div>
-      <div class="nav-item" data-nav="contact">Contact</div>
+      <button type="button" class="nav-item active" data-nav="home" aria-current="page">Home</button>
+      <button type="button" class="nav-item" data-nav="projects">Projects</button>
+      <button type="button" class="nav-item" data-nav="about">About</button>
+      <button type="button" class="nav-item" data-nav="contact">Contact</button>
     </nav>
   </header>
 
-  <!-- SIDEBAR REMOVED -->
-  <aside class="sidebar" style="display:none!important">
-    <div class="sb-brand">
-      <div class="mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="9" width="2.5" height="6" rx="1" fill="currentColor"/><rect x="5" y="5" width="2.5" height="10" rx="1" fill="currentColor"/><rect x="9" y="1" width="2.5" height="14" rx="1" fill="currentColor"/><rect x="13" y="6" width="2.5" height="9" rx="1" fill="currentColor"/></svg></div>
-    </div>
-
-    <div class="sb-section">Library</div>
-    <div class="sb-item active" data-nav="home">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span><span>Home</span>
-    </div>
-    <div class="sb-item" data-nav="projects">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17V5l11-2v12"/><circle cx="6" cy="17" r="3"/><circle cx="17" cy="15" r="3"/></svg></span><span>Projects</span><span class="count">6</span>
-    </div>
-    <div class="sb-item" data-nav="about">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span><span>About</span>
-    </div>
-    <div class="sb-item" data-nav="contact">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 8l9 6 9-6"/></svg></span><span>Contact</span>
-    </div>
-
-    <div class="sb-section">Connect</div>
-    <a class="sb-item" href="resume.pdf" target="_blank">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 14h6M9 17h4"/></svg></span><span>Resume</span><span class="count">PDF</span>
-    </a>
-    <a class="sb-item" href="https://github.com/andomo3" target="_blank">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.59 2 12.25c0 4.53 2.87 8.36 6.84 9.72.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.59 17.52 2 12 2z"/></svg></span><span>GitHub</span>
-    </a>
-    <a class="sb-item" href="https://linkedin.com/in/AbbaNdomo" target="_blank">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></span><span>LinkedIn</span>
-    </a>
-  </aside>
-
-
   <!-- ============== MAIN ============== -->
-  <main class="main">
+  <main class="main" id="main" tabindex="-1">
 
     <!-- ============== HOME ============== -->
     <section class="page active" data-page="home" data-screen-label="01 Home">
@@ -98,12 +69,12 @@
             </div>
             <div class="hero-actions">
               <button class="hero-btn-primary" data-nav="projects">View Projects</button>
-              <a class="hero-btn-ghost" href="resume.pdf" target="_blank">Resume ↗</a>
-              <a class="hero-btn-ghost" href="https://linkedin.com/in/AbbaNdomo" target="_blank">LinkedIn ↗</a>
+              <a class="hero-btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
+              <a class="hero-btn-ghost" href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn ↗</a>
             </div>
           </div>
           <div class="hero-photo-wrap">
-            <img class="hero-photo" src="headshot.jpeg" alt="Abba Ndomo" />
+            <img class="hero-photo" src="headshot.jpeg" alt="Abba Ndomo" width="1200" height="1600" fetchpriority="high" />
           </div>
         </div>
       </div>
@@ -117,7 +88,7 @@
               <h2>Projects</h2>
               <div class="sub">Selected work</div>
             </div>
-            <span class="more" onclick="window.__navigate &amp;&amp; window.__navigate('projects')">See all →</span>
+            <button type="button" class="more" data-nav="projects">See all →</button>
           </div>
           <div class="shelf" id="featured-shelf"></div>
         </div>
@@ -127,19 +98,19 @@
           <div class="section-head" style="margin-top:0;">
             <div>
               <h2>Now Playing</h2>
-              <div class="sub">A music CLI · type <span style="color: var(--p3); font-family: var(--mono);">help</span> to explore</div>
+              <div class="sub">A music CLI · type <span style="color: var(--accent-dark); font-family: var(--mono);">help</span> to explore</div>
             </div>
           </div>
           <div class="np-widget" id="terminal">
             <div class="np-widget-head">
               <div class="lights"><span></span><span></span><span></span></div>
               <div class="title">abba@portfolio — zsh</div>
-              <div class="right">⌘K</div>
+              <div class="right" title="Press / to focus">/</div>
             </div>
             <div class="np-widget-body" id="term-body" aria-live="polite"></div>
             <div class="np-widget-input" id="term-input-row">
               <span class="prompt">›</span>
-              <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" />
+              <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
               <span class="hint">↵ run · ↑↓ history</span>
             </div>
           </div>
@@ -154,7 +125,7 @@
             <h2>Experience Timeline</h2>
             <div class="sub">Where I've showed up</div>
           </div>
-          <span class="more" onclick="window.__navigate &amp;&amp; window.__navigate('about')">More about me →</span>
+          <button type="button" class="more" data-nav="about">More about me →</button>
         </div>
 
         <div class="timeline">
@@ -217,10 +188,10 @@
           <div class="heatmap-legend">
             <span>Less</span>
             <span class="swatch" style="background: rgba(255, 255, 255, 0.04);"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--p1) 22%, rgba(255,255,255,0.04));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--p1) 50%, var(--p3));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--p1) 70%, var(--p3));"></span>
-            <span class="swatch" style="background: linear-gradient(135deg, var(--p1), var(--p3));"></span>
+            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 22%, rgba(255,255,255,0.04));"></span>
+            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 50%, var(--accent-dark));"></span>
+            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 70%, var(--accent-dark));"></span>
+            <span class="swatch" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));"></span>
             <span>More</span>
           </div>
         </div>
@@ -235,9 +206,9 @@
         <div class="section-head" style="margin-top: 8px;">
           <div>
             <h2>Projects</h2>
-            <div class="sub">A library of 7 tracks · pick a file from the tree to read</div>
+            <div class="sub">A library of 6 tracks · pick a file from the tree to read</div>
           </div>
-          <span class="more" onclick="window.__term &amp;&amp; window.__term.runCmd('shuffle')">⤭ Shuffle</span>
+          <button type="button" class="more" data-cmd="shuffle">⤭ Shuffle</button>
         </div>
 
         <div class="ide">
@@ -270,8 +241,8 @@
         <div class="about-grid">
           <div>
             <div class="card">
-              <h3>Identity</h3>
-              <h2>Abba Ndomo</h2>
+              <div class="card-label">Identity</div>
+              <h3>Abba Ndomo</h3>
               <div style="color: var(--fg-3); font-size: 13.5px; margin-bottom: 14px;">Data & ML Engineer · ISyE + OR · Georgia Tech '27</div>
               <p style="color: var(--fg-2); margin: 0 0 12px;">
                 I have lived across <b style="color: var(--fg);">six countries</b> and am proficient in English, Kiswahili, Spanish, Russian, and Azerbaijani. I build production ML systems and data pipelines — from a live NBA intelligence platform to automated pricing infrastructure
@@ -282,7 +253,7 @@
             </div>
 
             <div class="card" style="margin-top: 18px;">
-              <h3>Stack — recent commit volume</h3>
+              <div class="card-label">Stack — recent commit volume</div>
               <div class="langs" id="langs"></div>
             </div>
 
@@ -290,7 +261,7 @@
 
           <div>
             <div class="card">
-              <h3>Facts</h3>
+              <div class="card-label">Facts</div>
               <div class="kv-list">
                 <div class="row"><div class="k">School</div><div class="v">Georgia Tech '27 · ISyE + OR</div></div>
                 <div class="row"><div class="k">Currently</div><div class="v">Building PerChance · Data & ML Engineer @ Altura</div></div>
@@ -299,9 +270,9 @@
             </div>
 
             <div class="card" style="margin-top: 18px;">
-              <h3>Top Artists — last.fm, all time</h3>
+              <div class="card-label">Top Artists — Spotify, all time</div>
               <div class="artist-grid" id="artist-grid"></div>
-              <div style="font-size: 11.5px; color: var(--fg-4); margin-top: 12px;">via Spotify · long term · all time</div>
+              <div style="font-size: 11.5px; color: var(--fg-3); margin-top: 12px;">via Spotify · long term · all time</div>
             </div>
 
           </div>
@@ -323,21 +294,21 @@
 
         <div class="contact-grid">
           <div class="card">
-            <h3>Get in touch</h3>
-            <h2 style="margin-bottom: 8px;">Let's work together.</h2>
+            <div class="card-label">Get in touch</div>
+            <h3 style="margin-bottom: 8px;">Let's work together.</h3>
             <p style="color: var(--fg-3); margin: 0 0 28px; font-size: 14px;">Open to MLE and data engineering roles — full-time, internship, or contract. Fastest response via email or LinkedIn.</p>
 
             <div class="contact-icons">
               <a class="contact-icon" href="mailto:abbandomo@gmail.com" title="Email">@</a>
               <a class="contact-icon" href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener" title="LinkedIn">in</a>
-              <a class="contact-icon" href="https://github.com/andomo3" target="_blank" rel="noopener" title="GitHub"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.59 2 12.25c0 4.53 2.87 8.36 6.84 9.72.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.59 17.52 2 12 2z"/></svg></a>
-              <a class="contact-icon" href="resume.pdf" target="_blank" title="Resume">↗</a>
+              <a class="contact-icon" href="https://github.com/andomo3" target="_blank" rel="noopener" title="GitHub"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.59 2 12.25c0 4.53 2.87 8.36 6.84 9.72.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.59 17.52 2 12 2z"/></svg></a>
+              <a class="contact-icon" href="resume.pdf" target="_blank" rel="noopener" title="Resume">↗</a>
             </div>
           </div>
 
           <div>
             <div class="card">
-              <h3>Availability</h3>
+              <div class="card-label">Availability</div>
               <pre class="code" style="margin: 0;"><span class="ln"> 1</span><span class="kw">export const</span> <span class="var">availability</span> = {
 <span class="ln"> 2</span>  <span class="fn">role</span>: [<span class="str">'MLE'</span>, <span class="str">'data engineering'</span>],
 <span class="ln"> 3</span>  <span class="fn">visa</span>: <span class="str">'F-1 · CPT authorized'</span>,
@@ -362,15 +333,15 @@
         <div class="t" id="np-title">PerChance</div>
         <div class="s" id="np-artist">Founder</div>
       </div>
-      <button class="like" id="np-like" title="Like this track">♡</button>
+      <button class="like" id="np-like" title="Like this track" aria-label="Like this track" aria-pressed="false">♡</button>
     </div>
     <div class="player-center">
       <div class="player-controls">
-        <button class="icon-btn" onclick="window.__term &amp;&amp; window.__term.runCmd('shuffle')" title="Shuffle">⤭</button>
-        <button class="icon-btn" onclick="window.__term &amp;&amp; window.__term.runCmd('prev')" title="Previous">⏮</button>
-        <button class="play-main" id="np-play" onclick="this.textContent = this.textContent.trim()==='▶'?'❚❚':'▶';">❚❚</button>
-        <button class="icon-btn" onclick="window.__term &amp;&amp; window.__term.runCmd('next')" title="Next">⏭</button>
-        <button class="icon-btn" title="Repeat" data-toggle="repeat">↻</button>
+        <button class="icon-btn" data-cmd="shuffle" title="Shuffle" aria-label="Shuffle">⤭</button>
+        <button class="icon-btn" data-cmd="prev" title="Previous" aria-label="Previous">⏮</button>
+        <button class="play-main" id="np-play" data-toggle="play" aria-label="Pause">❚❚</button>
+        <button class="icon-btn" data-cmd="next" title="Next" aria-label="Next">⏭</button>
+        <button class="icon-btn" title="Repeat" data-toggle="repeat" aria-label="Repeat" aria-pressed="false">↻</button>
       </div>
       <div class="player-progress">
         <span id="np-elapsed">1:24</span>
@@ -379,27 +350,27 @@
       </div>
     </div>
     <div class="player-right">
-      <button class="icon-btn" title="Lyrics">𝅘𝅥𝅮</button>
-      <button class="icon-btn" title="Queue" data-nav="projects">≡</button>
+      <button class="icon-btn" title="Lyrics" aria-label="Open liner notes">𝅘𝅥𝅮</button>
+      <button class="icon-btn" title="Queue" data-nav="projects" aria-label="Open projects">≡</button>
     </div>
   </footer>
 
   <!-- Mobile bottom tab bar (visible on phones only) -->
   <nav class="mob-nav" id="mob-nav">
     <button class="mob-tab active" data-nav="home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
       <span>Home</span>
     </button>
     <button class="mob-tab" data-nav="projects">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
       <span>Projects</span>
     </button>
     <button class="mob-tab" data-nav="about">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       <span>About</span>
     </button>
     <button class="mob-tab" data-nav="contact">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
       <span>Contact</span>
     </button>
   </nav>

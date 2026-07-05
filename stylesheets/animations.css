@@ -111,7 +111,8 @@
   border-radius: 2px;
 }
 .nav-item:hover::after { transform: scaleX(1); }
-.nav-item.active::after { transform: scaleX(1); }
+.nav-item.active::after,
+.nav-item[aria-current="page"]::after { transform: scaleX(1); }
 
 /* ---------- Loader cursor blink ---------- */
 .loader-sub::after {
@@ -247,8 +248,13 @@
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }
+  .term-cursor { animation: none !important; }
   .hero-photo-wrap::before { animation: none; }
   .hero-photo { animation: none; }
+  /* Tile art loops (px-bounce/px-city/px-bars/px-code/px-card/px-beat
+     live on .tile .art[data-pid]::after) + terminal EQ bars */
+  .tile .art::before, .tile .art::after,
+  .eq span { animation: none !important; }
   .tile:hover { transform: none; }
   .hero-btn-primary:hover { transform: none; box-shadow: none; }
 }
