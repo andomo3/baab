@@ -67,7 +67,8 @@
 .hero-tagline,
 .hero-stats-row,
 .hero-actions,
-.hero-photo-wrap {
+.hero-photo-wrap,
+.hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
@@ -79,6 +80,8 @@
 .hero-dark.hero-loaded .hero-stats-row { opacity: 1; transform: none; transition-delay: 0.42s; }
 .hero-dark.hero-loaded .hero-actions   { opacity: 1; transform: none; transition-delay: 0.52s; }
 .hero-dark.hero-loaded .hero-photo-wrap { opacity: 1; transform: none; transition-delay: 0.24s; }
+/* The prompt is the last beat of the entrance — it arrives after the buttons. */
+.hero-dark.hero-loaded .hero-terminal-row { opacity: 1; transform: none; transition-delay: 0.64s; }
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -160,24 +163,6 @@
   box-shadow: 0 8px 28px rgba(0,0,0,0.08);
 }
 
-/* ---------- Tile hover — warm lift + shimmer ---------- */
-.tile:hover {
-  transform: translateY(-5px) scale(1.015);
-  box-shadow: 0 12px 36px rgba(196, 154, 108, 0.18);
-}
-.tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--r-md);
-  background: linear-gradient(145deg, rgba(196, 154, 108, 0.10) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 250ms ease;
-  pointer-events: none;
-  z-index: 4;
-}
-.tile:hover::after { opacity: 1; }
-
 /* ---------- Hero button micro-interactions ---------- */
 .hero-btn-primary:hover {
   background: var(--accent-dark);
@@ -244,17 +229,14 @@
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
   .hero-eyebrow, .hero-name, .hero-tagline,
-  .hero-stats-row, .hero-actions, .hero-photo-wrap { opacity: 1; transform: none; transition: none; }
+  .hero-stats-row, .hero-actions, .hero-photo-wrap,
+  .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }
   .term-cursor { animation: none !important; }
   .hero-photo-wrap::before { animation: none; }
   .hero-photo { animation: none; }
-  /* Tile art loops (px-bounce/px-city/px-bars/px-code/px-card/px-beat
-     live on .tile .art[data-pid]::after) + terminal EQ bars */
-  .tile .art::before, .tile .art::after,
   .eq span { animation: none !important; }
-  .tile:hover { transform: none; }
   .hero-btn-primary:hover { transform: none; box-shadow: none; }
 }

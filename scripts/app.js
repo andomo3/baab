@@ -1,4 +1,4 @@
-/* App glue v2: navigation, shelves, IDE, heatmap, langs, player. */
+/* App glue v2: navigation, IDE explorer, langs, player sync. */
 (function () {
   const PROJECTS = (window.__term && window.__term.TRACKS) || [];
 
@@ -202,26 +202,6 @@
     '06': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>',
   };
   window.__ICONS = ICONS;
-  function tile(p) {
-    const el = document.createElement('button');
-    el.type = 'button';
-    el.className = 'tile';
-    el.innerHTML = `
-      <div class="art${p.preview ? ' art--preview' : ''}" data-pid="${p.id}">
-        ${p.preview ? `<img class="art-preview" src="${p.preview}" alt="${p.title}" loading="lazy" width="220" height="220" />` : '<div class="play-overlay"></div>'}
-      </div>
-      <div class="title">${p.title}</div>
-      <div class="sub">${p.sub.split('.')[0]}</div>
-    `;
-    el.addEventListener('click', () => {
-      navigate('projects');
-      setTimeout(() => openTab(p.id), 220);
-    });
-    return el;
-  }
-  const featured = document.getElementById('featured-shelf');
-  if (featured) PROJECT_FILES.slice(0, 4).forEach(p => featured.appendChild(tile(p)));
-
   // ----------- File tree + IDE tabs -----------
   const tree = document.getElementById('file-tree');
   if (tree) {
@@ -347,98 +327,6 @@
     openTab(t.n);
     syncingFromTerm = false;
   });
-
-  // ----------- Heatmap -----------
-  // Guard: skip all heatmap work (incl. fetches) while its section is hidden.
-  const hm = document.getElementById('heatmap');
-  if (hm && hm.offsetParent !== null) {
-    const GITHUB_USER = 'andomo3';
-    const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
-    function renderMockHeatmap(el) {
-      for (let w = 0; w < 53; w++) {
-        for (let d = 0; d < 7; d++) {
-          const recencyBoost = (w / 53) * 1.8;
-          const weekday = (d >= 1 && d <= 5) ? 1.0 : 0.45;
-          const score = (Math.random() * weekday + recencyBoost * 0.4);
-          let cls = '';
-          if (score > 1.4) cls = 'l4';
-          else if (score > 1.0) cls = 'l3';
-          else if (score > 0.65) cls = 'l2';
-          else if (score > 0.35) cls = 'l1';
-          const cell = document.createElement('div');
-          cell.className = 'cell ' + cls;
-          cell.title = `week ${w + 1} · ${DAYS[d]} · ${cls ? Math.round(score * 7) : 0} commits`;
-          el.appendChild(cell);
-        }
-      }
-    }
-
-    function renderHeatmap(grid) {
-      let totalCommits = 0, activeDays = 0, maxStreak = 0, curStreak = 0;
-      hm.innerHTML = '';
-      const flat = grid.flat();
-      const max = Math.max(...flat, 1);
-      grid.forEach((week, wi) => {
-        week.forEach((count, di) => {
-          totalCommits += count;
-          if (count > 0) { activeDays++; curStreak++; maxStreak = Math.max(maxStreak, curStreak); }
-          else curStreak = 0;
-          const lvl = count === 0 ? '' : count < max * 0.25 ? 'l1' : count < max * 0.5 ? 'l2' : count < max * 0.75 ? 'l3' : 'l4';
-          const cell = document.createElement('div');
-          cell.className = 'cell ' + lvl;
-          cell.title = `week ${wi + 1} · ${DAYS[di]} · ${count} commits`;
-          hm.appendChild(cell);
-        });
-      });
-      const statsEl = hm.closest('.heatmap-wrap') && hm.closest('.heatmap-wrap').querySelector('.heatmap-stats');
-      if (statsEl) {
-        const s = statsEl.querySelectorAll('.s');
-        if (s[0]) s[0].innerHTML = `<b>${totalCommits.toLocaleString()}</b>commits`;
-        if (s[1]) s[1].innerHTML = `<b>${activeDays}</b>active days`;
-        if (s[2]) s[2].innerHTML = `<b>${maxStreak}</b>day streak`;
-      }
-    }
-
-    async function fetchCommitActivity(repoName, retries = 3) {
-      for (let i = 0; i < retries; i++) {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/stats/commit_activity`);
-        if (res.status === 202) {
-          await new Promise(r => setTimeout(r, 2000));
-          continue;
-        }
-        if (!res.ok) return [];
-        const data = await res.json();
-        return Array.isArray(data) ? data : [];
-      }
-      return [];
-    }
-
-    async function buildHeatmapLive() {
-      const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
-      if (!reposRes.ok) throw new Error(`GitHub repos fetch failed: ${reposRes.status}`);
-      const repos = await reposRes.json();
-      const weekMaps = await Promise.all(repos.map(r => fetchCommitActivity(r.name).catch(() => [])));
-      const grid = Array.from({ length: 52 }, () => new Array(7).fill(0));
-      for (const weeks of weekMaps) {
-        weeks.forEach((wk, wi) => {
-          if (wi < 52 && Array.isArray(wk.days)) {
-            wk.days.forEach((count, di) => { grid[wi][di] += count; });
-          }
-        });
-      }
-      return grid;
-    }
-
-    fetch('data/github-commits.json')
-      .then(r => r.ok ? r.json() : Promise.reject('no static file'))
-      .then(renderHeatmap)
-      .catch(() =>
-        buildHeatmapLive()
-          .then(renderHeatmap)
-          .catch(err => { console.warn('[heatmap] falling back to mock:', err); renderMockHeatmap(hm); })
-      );
-  }
 
   // ----------- Languages -----------
   const langsEl = document.getElementById('langs');

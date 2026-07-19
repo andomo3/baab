@@ -33,7 +33,7 @@
   .hero-name { font-size: 56px; }
 
   /* Content sections */
-  .hero-widget-row { grid-template-columns: 1fr; padding: 0 24px; gap: 20px; }
+  .hero-terminal-row { margin-top: 40px; }
   .section { padding: 24px; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
 
@@ -156,7 +156,7 @@
   .player-left .s { font-size: 11px; }
 
   /* ── Hero (dark) ── */
-  .hero-dark { padding: 36px 20px 44px; }
+  .hero-dark { padding: 28px 20px 40px; }
   .hero-inner {
     grid-template-columns: 1fr;
   }
@@ -164,24 +164,24 @@
   .hero-name { font-size: 48px; }
   .hero-tagline { font-size: 14px; }
   .hero-stats-row { gap: 20px; }
-  .hero-actions { flex-direction: column; align-items: flex-start; }
-  .hero-btn-primary { width: 100%; text-align: center; }
+  /* Primary spans the row; the two secondary links share the line below it,
+     which buys back a full button's height for the terminal underneath. */
+  .hero-actions { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+  .hero-btn-primary { flex: 1 0 100%; text-align: center; }
+  .hero-btn-ghost { flex: 1 1 0; text-align: center; justify-content: center; }
 
   /* ── Sections ── */
   .section { padding: 20px 20px; }
   .section-head { margin-bottom: 14px; }
   .section-head h2 { font-size: 18px; }
 
-  /* ── Hero widget row ── */
-  .hero-widget-row {
-    grid-template-columns: 1fr;
-    padding: 0 20px;
-    gap: 24px;
-  }
+  /* ── Hero terminal ── */
+  .hero-terminal-row { margin-top: 32px; }
 
   /* Terminal widget: shorter on phone */
   .np-widget { min-height: 220px; }
   .np-widget-body { max-height: 180px; }
+  .hero-terminal-row .np-widget-body { min-height: 140px; }
   /* iOS: inputs under 16px trigger focus zoom */
   .np-widget-input input { font-size: 16px; }
 
@@ -190,16 +190,6 @@
   .nav-item { min-height: 44px; }
   .mob-tab { min-height: 48px; }
 
-  /* ── Projects shelf: 2-col ── */
-  .shelf { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .tile .title { font-size: 12.5px; }
-  .tile .sub { font-size: 11.5px; }
-
-  /* ── Heatmap: horizontal scroll ── */
-  .heatmap-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .heatmap-grid { min-width: 480px; }
-  .heatmap-stats { flex-wrap: wrap; gap: 8px 16px; }
-  .heatmap-stats .s { font-size: 12px; }
 
   /* ── IDE ── */
   .ide {

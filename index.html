@@ -61,9 +61,8 @@
           <div class="hero-text">
             <div class="hero-eyebrow">MLE · Data Engineering · Atlanta · GT '27 · CPT / F-1</div>
             <h1 class="hero-name">Abba<br>Ndomo.</h1>
-            <p class="hero-tagline">Georgia Tech ISyE — Operations Research track. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>            <div class="hero-stats-row">
-              <div class="hero-stat"><span class="hero-stat-n">6</span><span class="hero-stat-l">shipped projects</span></div>
-              <div class="hero-stat"><span class="hero-stat-n">2</span><span class="hero-stat-l">internships</span></div>
+            <p class="hero-tagline">Georgia Tech ISyE — Operations Research track. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>
+            <div class="hero-stats-row">
               <div class="hero-stat"><span class="hero-stat-n">6</span><span class="hero-stat-l">countries lived</span></div>
               <div class="hero-stat"><span class="hero-stat-n">5</span><span class="hero-stat-l">languages</span></div>
             </div>
@@ -77,30 +76,9 @@
             <img class="hero-photo" src="headshot.jpeg" alt="Abba Ndomo" width="1200" height="1600" fetchpriority="high" />
           </div>
         </div>
-      </div>
 
-      <!-- Hero widget row: featured shelf + terminal -->
-      <div class="hero-widget-row">
-        <!-- Featured projects shelf -->
-        <div>
-          <div class="section-head" style="margin-top:0;">
-            <div>
-              <h2>Projects</h2>
-              <div class="sub">Selected work</div>
-            </div>
-            <button type="button" class="more" data-nav="projects">See all →</button>
-          </div>
-          <div class="shelf" id="featured-shelf"></div>
-        </div>
-
-        <!-- Refined terminal widget -->
-        <div>
-          <div class="section-head" style="margin-top:0;">
-            <div>
-              <h2>Now Playing</h2>
-              <div class="sub">A music CLI · type <span style="color: var(--accent-dark); font-family: var(--mono);">help</span> to explore</div>
-            </div>
-          </div>
+        <!-- The CLI is the hero's payoff: the shell's own title bar labels it. -->
+        <div class="hero-terminal-row">
           <div class="np-widget" id="terminal">
             <div class="np-widget-head">
               <div class="lights"><span></span><span></span><span></span></div>
@@ -166,34 +144,6 @@
               </div>
             </div>
           </article>
-        </div>
-      </div>
-
-      <!-- Heatmap -->
-      <div class="section" style="display:none;">
-        <div class="section-head">
-          <div>
-            <h2>Commit Rhythm</h2>
-            <div class="sub">53 weeks · tap a cell to play that day's loop</div>
-          </div>
-        </div>
-        <div class="heatmap-wrap">
-          <div class="heatmap-stats">
-            <div class="s"><b>1,284</b>commits</div>
-            <div class="s"><b>312</b>active days</div>
-            <div class="s"><b>37</b>day streak</div>
-            <div class="s"><b>02:00</b>busiest hour</div>
-          </div>
-          <div class="heatmap-grid" id="heatmap"></div>
-          <div class="heatmap-legend">
-            <span>Less</span>
-            <span class="swatch" style="background: rgba(255, 255, 255, 0.04);"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 22%, rgba(255,255,255,0.04));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 50%, var(--accent-dark));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 70%, var(--accent-dark));"></span>
-            <span class="swatch" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));"></span>
-            <span>More</span>
-          </div>
         </div>
       </div>
 
