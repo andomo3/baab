@@ -68,7 +68,7 @@
     'quant': {
       label: 'Quant / Fintech',
       tag: 'For quant & fintech roles',
-      intro: '<b>Pricing, risk, edge.</b> Money-adjacent work first: the $500K GTSF fund, sportsbook prop prediction, credit default modeling. Same skill — finding the spread between the model and the market.',
+      intro: '<b>Pricing, risk, edge.</b> Money-adjacent work first: the $500K GTSF fund, where every thesis was pitched before it was sized, then sportsbook prop prediction and credit default modeling. Same skill — finding the spread between the model and the market.',
       order: ['03', '01', '05', '02', '04', '06'],
     },
     'faang': {
