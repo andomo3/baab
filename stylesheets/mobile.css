@@ -19,18 +19,20 @@
   /* Shell */
   .app {
     grid-template-columns: 1fr;
-    grid-template-rows: var(--header-h) 1fr var(--player-h);
+    grid-template-rows: var(--header-h) 1fr;
     grid-template-areas:
       "header"
-      "main"
-      "player";
+      "main";
   }
 
-  /* Hero (dark) */
-  .hero-dark { padding: 48px 24px 56px; }
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-photo-wrap { display: none; }
-  .hero-name { font-size: 56px; }
+  /* Hero */
+  .hero-v3 { padding: 44px 28px 0; }
+  .hero-grid { grid-template-columns: minmax(0,1fr); }
+  /* Stacked: the vertical rules become horizontal ones between rows. */
+  .hero-col { padding: 28px 0; border-right: 0 !important; border-bottom: 1px solid var(--hairline); }
+  .hero-col--cta { border-bottom: 0; }
+  .rule-section, .site-footer { padding-left: 28px; padding-right: 28px; }
+  .nav-role { display: none; }
 
   /* Content sections */
   .hero-terminal-row { margin-top: 40px; }
@@ -41,22 +43,17 @@
   .ide { grid-template-columns: 1fr; min-height: 500px; }
   .ide-side { display: none; }
 
-  /* Player */
-  .player { grid-template-columns: 1fr 1fr; padding: 10px 20px; gap: 16px; }
-  .player-right { display: none; }
-
 }
 
 
 /* ================================================================
    PHONE  ≤ 767px
-   (bottom tab nav, mini player, stacked hero, 2-col shelf)
+   (bottom tab nav, stacked hero, full-width sections)
    ================================================================ */
 @media (max-width: 767px) {
 
   /* ── CSS vars ── */
   :root {
-    --player-h: 58px;
     --header-h: 52px;
     --mob-nav-h: 62px;
   }
@@ -64,11 +61,10 @@
   /* ── App shell ── */
   .app {
     grid-template-columns: 1fr;
-    grid-template-rows: var(--header-h) 1fr var(--player-h) calc(var(--mob-nav-h) + env(safe-area-inset-bottom, 0px));
+    grid-template-rows: var(--header-h) 1fr calc(var(--mob-nav-h) + env(safe-area-inset-bottom, 0px));
     grid-template-areas:
       "header"
       "main"
-      "player"
       "mob-nav";
     overflow: hidden;
   }
@@ -127,48 +123,25 @@
   }
   .mob-tab:active { opacity: 0.7; }
 
-  /* ── Mini player ── */
-  .player {
-    grid-template-columns: 1fr auto;
-    padding: 0 16px;
-    gap: 12px;
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  .player-right { display: none; }
-  /* Working mini play control: un-hide .player-center but show only the
-     real #np-play button (glyph/aria-label stay wired via app.js). */
-  .player-center { display: flex; flex-direction: row; align-items: center; }
-  .player-progress { display: none; }
-  .player-controls { gap: 0; }
-  .player-controls .icon-btn { display: none; }
-  .player-controls .play-main {
-    width: 44px;
-    height: 44px;
-    font-size: 14px;
-    background: var(--accent);
-    color: var(--dark-fg);
-  }
-  .player-left {
-    gap: 10px;
-    overflow: hidden;
-  }
-  .player-left .t { font-size: 13px; }
-  .player-left .s { font-size: 11px; }
+  /* ── Hero ── */
+  .hero-v3 { padding: 24px 20px 0; }
+  .hero-name-xl { letter-spacing: -0.045em; }
+  .hero-grid { margin-top: 28px; }
+  .hero-col { padding: 24px 0; }
+  .hero-bio { font-size: 15px; margin-bottom: 20px; }
+  /* 2×2 holds at phone width — four short numerals, not four columns. */
+  .hero-col--stats { gap: 24px 20px; }
+  .hstat-n { font-size: 40px; }
+  .cta { padding: 15px 20px; text-align: center; }
 
-  /* ── Hero (dark) ── */
-  .hero-dark { padding: 28px 20px 40px; }
-  .hero-inner {
-    grid-template-columns: 1fr;
-  }
-  .hero-photo-wrap { display: none; }
-  .hero-name { font-size: 48px; }
-  .hero-tagline { font-size: 14px; }
-  .hero-stats-row { gap: 20px; }
-  /* Primary spans the row; the two secondary links share the line below it,
-     which buys back a full button's height for the terminal underneath. */
-  .hero-actions { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 8px; }
-  .hero-btn-primary { flex: 1 0 100%; text-align: center; }
-  .hero-btn-ghost { flex: 1 1 0; text-align: center; justify-content: center; }
+  /* Role rows collapse: org, then body, then dates left-aligned under it. */
+  .role-row { grid-template-columns: minmax(0,1fr); gap: 14px; padding: 32px 0; }
+  .role-when { text-align: left; }
+  .role-bullets li { font-size: 14.5px; }
+  .rule-section, .site-footer { padding-left: 20px; padding-right: 20px; }
+  .rule-section { margin-top: 48px; }
+  .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-links { gap: 18px; }
 
   /* ── Sections ── */
   .section { padding: 20px 20px; }
@@ -184,6 +157,12 @@
   .hero-terminal-row .np-widget-body { min-height: 140px; }
   /* iOS: inputs under 16px trigger focus zoom */
   .np-widget-input input { font-size: 16px; }
+
+  /* Liner notes must clear the bottom tab bar, which only exists at this
+     breakpoint. On desktop the panel sits at the viewport edge. */
+  .liner-panel {
+    bottom: calc(var(--mob-nav-h) + env(safe-area-inset-bottom, 0px) + 12px);
+  }
 
   /* ── Touch targets (≥44px per Apple HIG) ── */
   .icon-btn, .like { min-width: 44px; min-height: 44px; }
@@ -205,12 +184,6 @@
   .project-detail h2 { font-size: 18px; }
   .meta-grid { grid-template-columns: 1fr; gap: 4px; }
   .star-grid { grid-template-columns: 1fr; gap: 10px; }
-  .proj-actions { flex-direction: column; align-items: flex-start; }
-
-  /* ── Experience timeline ── */
-  .exp-card { grid-template-columns: 1fr; gap: 4px; padding: 24px 0; }
-  .exp-card .when { text-align: left; padding-top: 0; }
-  .exp-card .role { font-size: 15px; }
 
   /* ── About / Contact grids ── */
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 16px; }

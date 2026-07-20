@@ -1,4 +1,4 @@
-/* App glue v2: navigation, IDE explorer, langs, player sync. */
+/* App glue v3: navigation, IDE explorer, langs. */
 (function () {
   const PROJECTS = (window.__term && window.__term.TRACKS) || [];
 
@@ -118,7 +118,7 @@
     a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
   });
 
-  // Delegated terminal-command triggers (player controls, shuffle "more" button)
+  // Delegated terminal-command triggers (the Projects "Shuffle" button)
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-cmd]');
     if (el && window.__term) window.__term.runCmd(el.dataset.cmd);
@@ -127,51 +127,6 @@
   // Nav logo click
   document.querySelector('.nav-logo')?.addEventListener('click', () => navigate('home'));
 
-  // Cosmetic toggles (e.g. Repeat) — keep aria-pressed in sync where declared
-  document.querySelectorAll('[data-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('active');
-      if (btn.hasAttribute('aria-pressed')) {
-        btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
-      }
-    });
-  });
-
-  // Like button — toggle ♡↔♥, persist per-track in localStorage
-  const likeBtn = document.getElementById('np-like');
-  const likeKey = (id) => 'portfolio:liked:' + id;
-  function getCurrentTrackId() {
-    if (window.__term && typeof window.__term.getCurrent === 'function') {
-      const idx = window.__term.getCurrent();
-      const tracks = window.__term.TRACKS || [];
-      const t = tracks[idx];
-      return t && t.n;
-    }
-    return null;
-  }
-  function refreshLike() {
-    if (!likeBtn) return;
-    const id = getCurrentTrackId();
-    if (!id) return;
-    const liked = !!localStorage.getItem(likeKey(id));
-    likeBtn.classList.toggle('liked', liked);
-    likeBtn.textContent = liked ? '♥' : '♡';
-    likeBtn.setAttribute('aria-pressed', String(liked));
-  }
-  if (likeBtn) {
-    likeBtn.addEventListener('click', () => {
-      const id = getCurrentTrackId();
-      if (!id) return;
-      const isLiked = !!localStorage.getItem(likeKey(id));
-      if (isLiked) localStorage.removeItem(likeKey(id));
-      else localStorage.setItem(likeKey(id), '1');
-      refreshLike();
-    });
-  }
-  window.addEventListener('np-update', refreshLike);
-  // Initial state once the terminal has booted
-  setTimeout(refreshLike, 300);
-  window.addEventListener('navigate', (e) => navigate(e.detail));
   const hash = (location.hash || '').replace('#', '');
   if (['home', 'projects', 'about', 'contact'].includes(hash)) navigate(hash);
 
@@ -305,11 +260,11 @@
   }
   window.__openTab = openTab;
 
-  // Initial IDE/player sync: execute silently so no stray `play 1` block
+  // Initial IDE sync: execute silently so no stray `play 1` block
   // prints above the terminal boot intro.
   openTab(PROJECT_FILES[0].id, { silent: true });
-  // Sync the player bar to the initially-active project so the IDE
-  // and the player bar match on first render — independent of the
+  // Sync the terminal to the initially-active project so the IDE and the
+  // shell agree on first render — independent of the
   // terminal intro timing.
   window.dispatchEvent(new CustomEvent('np-update', { detail: { idx: 0 } }));
 
@@ -366,65 +321,4 @@
       .catch(renderFallbackArtists);
   }
 
-  // ----------- Player sync -----------
-  const npTitle = document.getElementById('np-title');
-  const npArtist = document.getElementById('np-artist');
-  const npFill = document.getElementById('np-fill');
-  const npElapsed = document.getElementById('np-elapsed');
-  const npTotal = document.getElementById('np-total');
-
-  function fmtTime(s) {
-    const m = Math.floor(s / 60), r = Math.floor(s % 60);
-    return m + ':' + String(r).padStart(2, '0');
-  }
-
-  let trackElapsed = 84;
-  let trackTotal = 222;
-  let isPlaying = true;
-  const playBtn = document.getElementById('np-play');
-  if (playBtn) playBtn.addEventListener('click', () => {
-    isPlaying = !isPlaying;
-    playBtn.textContent = isPlaying ? '❚❚' : '▶';
-    playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
-  });
-
-  window.addEventListener('np-update', (e) => {
-    const idx = e.detail.idx;
-    const t = PROJECTS[idx];
-    if (!t) return;
-    if (npTitle) npTitle.textContent = t.title;
-    if (npArtist) npArtist.textContent = t.artist;
-    const [m, s] = t.dur.split(':').map(Number);
-    trackTotal = m * 60 + s;
-    trackElapsed = 0;
-    if (npTotal) npTotal.textContent = t.dur;
-  });
-
-  function onProjectsPage() {
-    const p = document.querySelector('.page[data-page="projects"]');
-    return !!(p && p.classList.contains('active'));
-  }
-
-  setInterval(() => {
-    if (!isPlaying) return;
-    // While the user is reading a project, scroll drives the seek bar — skip auto-tick.
-    if (onProjectsPage()) return;
-    trackElapsed = (trackElapsed + 1) % trackTotal;
-    if (npFill) npFill.style.width = (trackElapsed / trackTotal * 100) + '%';
-    if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
-  }, 1000);
-
-  // Scroll → seek: as the user scrolls through the Projects page, fill the seek bar.
-  const mainEl = document.querySelector('.main');
-  if (mainEl) {
-    mainEl.addEventListener('scroll', () => {
-      if (!onProjectsPage()) return;
-      const total = mainEl.scrollHeight - mainEl.clientHeight;
-      if (total <= 0) return;
-      const pct = Math.min(1, Math.max(0, mainEl.scrollTop / total));
-      trackElapsed = pct * trackTotal;
-      if (npFill) npFill.style.width = (pct * 100) + '%';
-      if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
-    }, { passive: true });
-  }
 })();
