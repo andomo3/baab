@@ -317,11 +317,10 @@ button { font-family: inherit; }
 .hero-name-xl .surname {
   align-self: flex-end;
   color: rgba(255,255,255,0.38);
-  /* Inset, not flush: the accent stop needs something to hold it, and a
-     surname jammed into the corner reads as an accident rather than a choice. */
+  /* Inset, not flush: a surname jammed into the corner reads as an accident
+     rather than a choice. Shares its vertical with the masthead corner. */
   margin-right: var(--name-inset);
 }
-.hero-name-xl .stop { color: var(--accent); }
 
 /* Masthead corner — anchors the right edge opposite the given name, so the
    diagonal between the two names doesn't leave the composition lopsided. */
