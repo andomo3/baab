@@ -32,6 +32,10 @@
   --hairline:   rgba(255,255,255,0.07);
   --hairline-2: rgba(255,255,255,0.14);
 
+  /* How far the surname and the masthead corner stop short of the right edge.
+     Shared so the two always align on the same vertical. */
+  --name-inset: 6%;
+
   /* Dark-island aliases — the old two-palette system collapsed into one.
      Kept so existing selectors keep resolving until each is ported. */
   --dark-bg:   var(--bg);
@@ -288,6 +292,9 @@ button { font-family: inherit; }
   padding: 64px 64px 0;
 }
 
+/* The name and its masthead corner share a positioning context. */
+.hero-namebox { position: relative; }
+
 .hero-name-xl {
   font-family: var(--display);
   font-size: clamp(64px, 12.4vw, 186px);
@@ -298,12 +305,40 @@ button { font-family: inherit; }
   margin: 0;
   /* 0.85 line-height clips descenders on some faces; reserve the space. */
   padding-bottom: 0.04em;
+  /* Given name and surname swing to opposite edges. This replaces a hard <br>,
+     so the two-line stack is now layout-driven rather than baked into markup. */
+  display: flex;
+  flex-direction: column;
 }
+.hero-name-xl .given { align-self: flex-start; }
 /* The surname recedes so "Abba" reads first. The source design set this at
    18% white (1.6:1) which renders the family name near-invisible; 38% holds
    the same hierarchy while clearing the 3:1 floor for large text. */
-.hero-name-xl .surname { color: rgba(255,255,255,0.38); }
-.hero-name-xl .stop { color: var(--accent); }
+.hero-name-xl .surname {
+  align-self: flex-end;
+  color: rgba(255,255,255,0.38);
+  /* Inset, not flush: a surname jammed into the corner reads as an accident
+     rather than a choice. Shares its vertical with the masthead corner. */
+  margin-right: var(--name-inset);
+}
+
+/* Masthead corner — anchors the right edge opposite the given name, so the
+   diagonal between the two names doesn't leave the composition lopsided. */
+.hero-name-corner {
+  position: absolute;
+  top: 0.6em;
+  right: var(--name-inset);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 2;
+  color: var(--fg-3);
+}
+.hero-name-corner .nc-n { color: var(--accent); }
 
 /* ---------- Three columns under the name ---------- */
 .hero-grid {

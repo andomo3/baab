@@ -38,10 +38,10 @@
       metrics: [['Portfolio', '$500K live'], ['VaR Reduction', '15%'], ['Coverage', '50 → 120 stocks'], ['Simulations', '10,000 runs']],
       stack: ['Python', 'Bloomberg Terminal', 'ARIMA', 'NumPy', 'Statsmodels', 'Monte Carlo'],
       star: {
-        situation: 'The GT Student Fund manages $500K in live equity with model outputs driving real allocations. Coverage sat at 50 tickers with no macro stress-testing.',
-        task: 'Triple the investable universe and build a quantitative risk framework to surface tail risk before positions are sized.',
-        action: 'Built a Bloomberg screener to expand coverage. Ran 10,000-iteration Monte Carlo simulations under macro shocks. Implemented ARIMA models to validate sector-rotation strategies against historical regime data.',
-        result: 'Coverage expanded from 50 to 120 tickers. Simulations surfaced 8% downside risk that directly shaped the fund\'s hedging position. Portfolio VaR reduced 15%.'
+        situation: 'The GT Student Fund manages $500K in live equity with model outputs driving real allocations. Coverage sat at 50 tickers with no macro stress-testing, and nothing reached a position without being pitched and defended first.',
+        task: 'Triple the investable universe and build a quantitative risk framework that surfaces tail risk before positions are sized — and that holds up in the room it is presented to.',
+        action: 'Built a Bloomberg screener to expand coverage. Ran 10,000-iteration Monte Carlo simulations under macro shocks. Implemented ARIMA models to validate sector-rotation strategies against historical regime data. Every output was pitched, analyzed, and validated before it informed an allocation.',
+        result: 'Coverage expanded from 50 to 120 tickers. Simulations surfaced 8% downside risk that survived review and directly shaped the fund\'s hedging position. Portfolio VaR reduced 15%.'
       }
     },
     {

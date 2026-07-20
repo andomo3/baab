@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230F0D0A'/><text x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23C49A6C'>A</text></svg>" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D4A464'/></svg>" />
 <link rel="stylesheet" href="stylesheets/styles.css" />
 <link rel="stylesheet" href="stylesheets/enhancements.css" />
 <link rel="stylesheet" href="stylesheets/mobile.css" />
@@ -60,7 +60,12 @@
 
       <!-- ── HERO: the name is the thesis ── -->
       <div class="hero-v3">
-        <h1 class="hero-name-xl">Abba<br><span class="surname">Ndomo</span><span class="stop">.</span></h1>
+        <div class="hero-namebox">
+          <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
+          <!-- Masthead corner: anchors the right edge opposite the given name.
+               Kept outside the h1 so it stays out of the heading's accessible name. -->
+          <p class="hero-name-corner"><span class="nc-n">(01)</span><span>Atlanta, GA</span><span>ISyE &rsquo;27</span></p>
+        </div>
 
         <div class="hero-grid">
           <!-- What I do -->
@@ -88,7 +93,9 @@
                 <span class="status-dot" aria-hidden="true"></span>
                 <span>Open to full-time roles</span>
               </div>
-              <p class="hero-where">Based in Atlanta · Georgia Tech ISyE ’27 · CPT / F-1</p>
+              <!-- Location and cohort now live in the masthead corner above;
+                   this line carries only what that corner doesn't. -->
+              <p class="hero-where">CPT / F-1 work authorization</p>
             </div>
             <div class="hero-cta-stack">
               <button class="cta cta--primary" data-nav="projects">View Projects <span aria-hidden="true">→</span></button>
@@ -143,7 +150,7 @@
           </div>
           <div class="role-when">
             <div class="dates">Current</div>
-            <div class="kind">Full-time</div>
+            <div class="kind">Part-time</div>
           </div>
         </article>
 
@@ -155,9 +162,9 @@
           <div class="role-body">
             <div class="role-title-line">Quantitative Analyst</div>
             <ul class="role-bullets">
+              <li>The first room where a model had to defend itself out loud: every thesis pitched, every assumption analyzed, every output validated before it moved a dollar of $500K in live capital.</li>
               <li>Tripled ticker coverage 50 → 120 by building a Bloomberg Terminal screener, expanding the investable universe the team evaluated each week.</li>
-              <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks; surfaced 8% downside risk that directly shaped the fund’s hedging position.</li>
-              <li>Validated sector-rotation strategies with ARIMA models — the first project where a model error carried an immediate dollar cost.</li>
+              <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks and validated sector-rotation strategies with ARIMA against historical regime data; the 8% downside surfaced held up under review and shaped the fund’s hedging position.</li>
             </ul>
             <div class="stack">
               <span class="tag">Python</span><span class="tag">ARIMA</span><span class="tag">Monte Carlo</span><span class="tag">Bloomberg</span><span class="tag">NumPy</span>
