@@ -126,6 +126,19 @@
   /* ── Hero ── */
   .hero-v3 { padding: 24px 20px 0; }
   .hero-name-xl { letter-spacing: -0.045em; }
+  /* At 64px there is barely 150px of slack between the two names — an inset on
+     top of that reads as a stray indent, so the surname goes flush right. */
+  .hero-namebox { --name-inset: 0; }
+  /* No room for a corner beside the name; it becomes a strip beneath it. */
+  .hero-name-corner {
+    position: static;
+    flex-direction: row;
+    gap: 16px;
+    text-align: left;
+    line-height: 1.4;
+    font-size: 10px;
+    padding-top: 14px;
+  }
   .hero-grid { margin-top: 28px; }
   .hero-col { padding: 24px 0; }
   .hero-bio { font-size: 15px; margin-bottom: 20px; }
