@@ -1,7 +1,7 @@
 /* ====================================================================
    NOW-PLAYING ENHANCEMENTS
    - Reactive EQ (scroll velocity drives amplitude + speed)
-   - Liner notes panel (click ♪ in player)
+   - Liner notes panel (opened by the `liner` CLI command)
    - Setlists (pill row + terminal cmd)
    ==================================================================== */
 
@@ -15,16 +15,20 @@
 .eq span { animation-duration: var(--eq-speed) !important; }
 
 /* ====================================================================
-   LINER NOTES PANEL  (slides up from above the player)
+   LINER NOTES PANEL  (opened by the `liner` command)
    ==================================================================== */
 .liner-panel {
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: 96px;
+  /* Was 96px to clear the player bar. With the bar gone it sits on the
+     viewport edge like any other floating panel. */
+  bottom: 24px;
   max-width: 720px;
   margin: 0 auto;
-  background: rgba(18, 18, 24, 0.96);
+  /* Was rgba(18,18,24,.96) — a cool grey that read blue against the warm
+     near-black field. Matched to the raised-surface token instead. */
+  background: color-mix(in srgb, var(--bg-2) 96%, transparent);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   border: 1px solid var(--hairline);
@@ -102,11 +106,6 @@
   margin-bottom: 14px;
 }
 
-/* Player lyrics button — active state when panel open */
-.player-right .icon-btn.lyrics-active {
-  color: var(--primary);
-  background: color-mix(in oklch, var(--primary) 14%, transparent);
-}
 
 /* ====================================================================
    SETLISTS

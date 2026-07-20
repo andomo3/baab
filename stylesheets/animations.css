@@ -31,7 +31,7 @@
 .loader-word {
   font-family: var(--display);
   font-size: clamp(52px, 9vw, 100px);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--dark-fg);
   display: block;
@@ -61,24 +61,23 @@
   to { opacity: 0; }
 }
 
-/* ---------- Hero entrance stagger ---------- */
-.hero-eyebrow,
-.hero-name,
-.hero-tagline,
-.hero-stats-row,
-.hero-actions,
-.hero-photo-wrap {
+/* ---------- Hero entrance stagger ----------
+   One orchestrated beat: the name lands, the three columns arrive left to
+   right behind it, and the prompt closes the sequence. */
+.hero-name-xl,
+.hero-col,
+.hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.hero-dark.hero-loaded .hero-eyebrow   { opacity: 1; transform: none; transition-delay: 0.05s; }
-.hero-dark.hero-loaded .hero-name      { opacity: 1; transform: none; transition-delay: 0.18s; }
-.hero-dark.hero-loaded .hero-tagline   { opacity: 1; transform: none; transition-delay: 0.30s; }
-.hero-dark.hero-loaded .hero-stats-row { opacity: 1; transform: none; transition-delay: 0.42s; }
-.hero-dark.hero-loaded .hero-actions   { opacity: 1; transform: none; transition-delay: 0.52s; }
-.hero-dark.hero-loaded .hero-photo-wrap { opacity: 1; transform: none; transition-delay: 0.24s; }
+.hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
+.hero-v3.hero-loaded .hero-col--bio         { opacity: 1; transform: none; transition-delay: 0.26s; }
+.hero-v3.hero-loaded .hero-col--stats       { opacity: 1; transform: none; transition-delay: 0.36s; }
+.hero-v3.hero-loaded .hero-col--cta         { opacity: 1; transform: none; transition-delay: 0.46s; }
+/* The prompt is the last beat — it arrives after everything else has settled. */
+.hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -126,21 +125,6 @@
   50%       { opacity: 0; }
 }
 
-/* ---------- Hero photo float ---------- */
-.hero-photo {
-  animation: photo-float 5s ease-in-out infinite;
-}
-@keyframes photo-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
-}
-
-/* ---------- Hero photo glow pulse ---------- */
-@keyframes glow-pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.32; }
-  50%       { transform: translate(-50%, -50%) scale(1.14); opacity: 0.40; }
-}
-
 /* ---------- IDE tab content fade ---------- */
 .ide-content {
   animation: ide-content-in 0.2s ease both;
@@ -153,40 +137,18 @@
 /* ---------- Card hover lift ---------- */
 .card {
   transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+              background 200ms ease, border-color 200ms ease;
 }
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  /* On a dark field a black shadow does nothing. The lift reads through the
+     surface stepping up and the hairline brightening instead. */
+  background: var(--bg-3);
+  border-color: var(--hairline-2);
 }
 
-/* ---------- Tile hover — warm lift + shimmer ---------- */
-.tile:hover {
-  transform: translateY(-5px) scale(1.015);
-  box-shadow: 0 12px 36px rgba(196, 154, 108, 0.18);
-}
-.tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--r-md);
-  background: linear-gradient(145deg, rgba(196, 154, 108, 0.10) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 250ms ease;
-  pointer-events: none;
-  z-index: 4;
-}
-.tile:hover::after { opacity: 1; }
-
-/* ---------- Hero button micro-interactions ---------- */
-.hero-btn-primary:hover {
-  background: var(--accent-dark);
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(196, 154, 108, 0.40);
-}
-.hero-btn-primary:active { transform: scale(0.97); box-shadow: none; }
-.hero-btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: var(--dark-fg); }
-.hero-btn-ghost:hover::before { transform: scaleX(1); }
+/* ---------- CTA micro-interactions ---------- */
+.cta--primary:active { transform: translateY(1px); }
 
 /* ---------- kv-list row stagger ---------- */
 .kv-list .row {
@@ -243,18 +205,12 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-eyebrow, .hero-name, .hero-tagline,
-  .hero-stats-row, .hero-actions, .hero-photo-wrap { opacity: 1; transform: none; transition: none; }
+  .hero-name-xl, .hero-col,
+  .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }
   .term-cursor { animation: none !important; }
-  .hero-photo-wrap::before { animation: none; }
-  .hero-photo { animation: none; }
-  /* Tile art loops (px-bounce/px-city/px-bars/px-code/px-card/px-beat
-     live on .tile .art[data-pid]::after) + terminal EQ bars */
-  .tile .art::before, .tile .art::after,
   .eq span { animation: none !important; }
-  .tile:hover { transform: none; }
-  .hero-btn-primary:hover { transform: none; box-shadow: none; }
+  .cta--primary:active { transform: none; }
 }

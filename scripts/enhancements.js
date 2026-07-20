@@ -1,7 +1,7 @@
 /* ====================================================================
    NOW-PLAYING ENHANCEMENTS — runtime
    - Scroll-reactive EQ
-   - Liner notes panel (toggle on player ♪ button)
+   - Liner notes panel (opened by the `liner` CLI command)
    - Setlists (pills + terminal command)
    ==================================================================== */
 (function () {
@@ -160,19 +160,28 @@
     linerBody.innerHTML = ex.liner.body;
   }
 
-  // Find lyrics button (the ♪ icon-btn in player-right with title="Lyrics")
-  const lyricsBtn = document.querySelector('.player-right .icon-btn[title="Lyrics"]');
   function toggleLiner() {
     const open = linerPanel.classList.toggle('open');
-    if (open) {
-      fillLiner();
-      lyricsBtn && lyricsBtn.classList.add('lyrics-active');
-    } else {
-      lyricsBtn && lyricsBtn.classList.remove('lyrics-active');
-    }
+    if (open) fillLiner();
+    return open;
   }
-  if (lyricsBtn) lyricsBtn.addEventListener('click', toggleLiner);
   linerClose.addEventListener('click', toggleLiner);
+
+  // The panel used to open from a Lyrics button in the player bar. With the
+  // player gone, the CLI owns it — same registration pattern as `setlist`.
+  if (window.__term && window.__term.COMMANDS) {
+    window.__term.COMMANDS.liner = function () {
+      const idx = window.__term.getCurrent();
+      const t = window.__term.TRACKS[idx];
+      const open = toggleLiner();
+      if (open) {
+        window.__term.print(
+          `<span class="ok">▸</span> liner notes — <span style="color:var(--fg)">${t ? t.title : 'current track'}</span> <span class="dim">· esc to close</span>`, 'out');
+      } else {
+        window.__term.print('<span class="dim">liner notes closed</span>', 'dim');
+      }
+    };
+  }
 
   // refill on track change while open
   window.addEventListener('np-update', () => {

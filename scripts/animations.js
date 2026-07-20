@@ -5,12 +5,11 @@
 
   // ---------- Loading screen ----------
   const loader = document.getElementById('loader');
-  const heroDark = document.querySelector('.hero-dark');
+  const heroDark = document.querySelector('.hero-v3');
 
   function triggerHero() {
     if (heroDark) heroDark.classList.add('hero-loaded');
     startStatCounters();
-    setTimeout(startEyebrowCycle, 500);
     setTimeout(typeTagline, 250);
   }
 
@@ -29,7 +28,7 @@
   // ---------- Stat counters ----------
   function startStatCounters() {
     if (REDUCED_MOTION) return; // markup already holds the final numbers
-    document.querySelectorAll('.hero-stat-n').forEach(el => {
+    document.querySelectorAll('.hstat-n').forEach(el => {
       const raw = el.textContent.trim();
       const num = parseInt(raw.replace(/\D/g, ''), 10);
       if (isNaN(num)) return;
@@ -70,54 +69,9 @@
     tick();
   }
 
-  // ---------- Cycling eyebrow ----------
-  const EYEBROW_PHRASES = [
-    'MLE · Data Engineering',
-    "Georgia Tech ISyE · OR '27",
-    'Atlanta · CPT / F-1',
-    'Building PerChance',
-  ];
-
-  function startEyebrowCycle() {
-    const el = document.querySelector('.hero-eyebrow');
-    if (!el) return;
-    if (REDUCED_MOTION) { el.textContent = EYEBROW_PHRASES[0]; return; } // static, no cycle
-    let phraseIdx = 0;
-    let charIdx = 0;
-    let deleting = false;
-    let waiting = false;
-
-    function tick() {
-      if (waiting) return;
-      const phrase = EYEBROW_PHRASES[phraseIdx];
-
-      if (!deleting) {
-        charIdx++;
-        el.textContent = phrase.slice(0, charIdx);
-        if (charIdx === phrase.length) {
-          waiting = true;
-          setTimeout(() => { waiting = false; deleting = true; tick(); }, 2400);
-          return;
-        }
-        setTimeout(tick, 48 + Math.random() * 22);
-      } else {
-        charIdx--;
-        el.textContent = phrase.slice(0, charIdx);
-        if (charIdx === 0) {
-          deleting = false;
-          phraseIdx = (phraseIdx + 1) % EYEBROW_PHRASES.length;
-        }
-        setTimeout(tick, 20);
-      }
-    }
-
-    el.textContent = '';
-    tick();
-  }
-
   // ---------- Hero tagline typewriter ----------
   function typeTagline() {
-    const el = document.querySelector('.hero-tagline');
+    const el = document.querySelector('.hero-bio');
     if (!el) return;
     if (REDUCED_MOTION) return; // full text is already in the markup
     const text = el.textContent.trim();
@@ -155,7 +109,8 @@
 
   function observeRevealTargets() {
     document.querySelectorAll(
-      '.section-head, .exp-card, .card, .tile, .star-item, .metric, .np-widget, .hero-widget-row > div'
+      // The hero terminal is excluded — the load stagger already reveals it.
+      '.section-head, .role-row, .rule-head, .card, .star-item, .np-widget:not(.hero-terminal-row .np-widget)'
     ).forEach((el, i) => {
       if (el.classList.contains('reveal')) return;
       el.classList.add('reveal');

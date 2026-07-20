@@ -6,7 +6,7 @@
 <title>Abba Ndomo — Data & ML Engineer</title>
 <meta name="description" content="Portfolio of Abba Ndomo — Data & ML engineer at Georgia Tech (ISyE + OR '27), building PerChance and shipping production pipelines." />
 <meta name="author" content="Abba Ndomo" />
-<meta name="theme-color" content="#FAF8F4" />
+<meta name="theme-color" content="#0C0B09" />
 <meta property="og:title" content="Abba Ndomo — Data & ML Engineer" />
 <meta property="og:description" content="Portfolio · Georgia Tech ISyE + OR '27 · building PerChance" />
 <meta property="og:type" content="website" />
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230F0D0A'/><text x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23C49A6C'>A</text></svg>" />
 <link rel="stylesheet" href="stylesheets/styles.css" />
 <link rel="stylesheet" href="stylesheets/enhancements.css" />
@@ -42,11 +42,13 @@
   <!-- ============== TOP NAV ============== -->
   <header class="top-nav">
     <button type="button" class="nav-logo" data-nav="home">baab.com</button>
+    <div class="nav-role" aria-hidden="true"><span class="dash"></span>Data &amp; ML Engineer<span class="dash"></span></div>
     <nav class="nav-links">
       <button type="button" class="nav-item active" data-nav="home" aria-current="page">Home</button>
       <button type="button" class="nav-item" data-nav="projects">Projects</button>
       <button type="button" class="nav-item" data-nav="about">About</button>
       <button type="button" class="nav-item" data-nav="contact">Contact</button>
+      <a class="nav-resume" href="resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
     </nav>
   </header>
 
@@ -56,51 +58,47 @@
     <!-- ============== HOME ============== -->
     <section class="page active" data-page="home" data-screen-label="01 Home">
 
-      <div class="hero-dark">
-        <div class="hero-inner">
-          <div class="hero-text">
-            <div class="hero-eyebrow">MLE · Data Engineering · Atlanta · GT '27 · CPT / F-1</div>
-            <h1 class="hero-name">Abba<br>Ndomo.</h1>
-            <p class="hero-tagline">Georgia Tech ISyE — Operations Research track. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>            <div class="hero-stats-row">
-              <div class="hero-stat"><span class="hero-stat-n">6</span><span class="hero-stat-l">shipped projects</span></div>
-              <div class="hero-stat"><span class="hero-stat-n">2</span><span class="hero-stat-l">internships</span></div>
-              <div class="hero-stat"><span class="hero-stat-n">6</span><span class="hero-stat-l">countries lived</span></div>
-              <div class="hero-stat"><span class="hero-stat-n">5</span><span class="hero-stat-l">languages</span></div>
-            </div>
-            <div class="hero-actions">
-              <button class="hero-btn-primary" data-nav="projects">View Projects</button>
-              <a class="hero-btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
-              <a class="hero-btn-ghost" href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <!-- ── HERO: the name is the thesis ── -->
+      <div class="hero-v3">
+        <h1 class="hero-name-xl">Abba<br><span class="surname">Ndomo</span><span class="stop">.</span></h1>
+
+        <div class="hero-grid">
+          <!-- What I do -->
+          <div class="hero-col hero-col--bio">
+            <p class="hero-bio">Georgia Tech ISyE — Operations Research. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>
+            <div class="hero-pills">
+              <span class="pill">ML Systems</span>
+              <span class="pill">Data Engineering</span>
+              <span class="pill">Python · SQL</span>
             </div>
           </div>
-          <div class="hero-photo-wrap">
-            <img class="hero-photo" src="headshot.jpeg" alt="Abba Ndomo" width="1200" height="1600" fetchpriority="high" />
+
+          <!-- By the numbers -->
+          <div class="hero-col hero-col--stats">
+            <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">Shipped</span></div>
+            <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l">Roles</span></div>
+            <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">Countries</span></div>
+            <div class="hstat"><span class="hstat-n">5</span><span class="hstat-l">Languages</span></div>
+          </div>
+
+          <!-- Status + actions -->
+          <div class="hero-col hero-col--cta">
+            <div>
+              <div class="hero-status">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>Open to full-time roles</span>
+              </div>
+              <p class="hero-where">Based in Atlanta · Georgia Tech ISyE ’27 · CPT / F-1</p>
+            </div>
+            <div class="hero-cta-stack">
+              <button class="cta cta--primary" data-nav="projects">View Projects <span aria-hidden="true">→</span></button>
+              <a class="cta cta--ghost" href="resume.pdf" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Hero widget row: featured shelf + terminal -->
-      <div class="hero-widget-row">
-        <!-- Featured projects shelf -->
-        <div>
-          <div class="section-head" style="margin-top:0;">
-            <div>
-              <h2>Projects</h2>
-              <div class="sub">Selected work</div>
-            </div>
-            <button type="button" class="more" data-nav="projects">See all →</button>
-          </div>
-          <div class="shelf" id="featured-shelf"></div>
-        </div>
-
-        <!-- Refined terminal widget -->
-        <div>
-          <div class="section-head" style="margin-top:0;">
-            <div>
-              <h2>Now Playing</h2>
-              <div class="sub">A music CLI · type <span style="color: var(--accent-dark); font-family: var(--mono);">help</span> to explore</div>
-            </div>
-          </div>
+        <!-- The shell: labelled by its own title bar, not a heading. -->
+        <div class="hero-terminal-row">
           <div class="np-widget" id="terminal">
             <div class="np-widget-head">
               <div class="lights"><span></span><span></span><span></span></div>
@@ -117,87 +115,123 @@
         </div>
       </div>
 
-
-      <!-- Experience timeline (kept) -->
-      <div class="section">
-        <div class="section-head">
-          <div>
-            <h2>Experience Timeline</h2>
-            <div class="sub">Where I've showed up</div>
+      <!-- ── 01 WORK ── -->
+      <section class="rule-section" aria-labelledby="work-h">
+        <div class="rule-head">
+          <div class="rule-title">
+            <span class="rule-num" aria-hidden="true">01</span>
+            <h2 id="work-h">Work</h2>
           </div>
-          <button type="button" class="more" data-nav="about">More about me →</button>
+          <span class="rule-meta">3 roles</span>
         </div>
 
-        <div class="timeline">
-          <article class="exp-card">
-            <div class="when">Jun 2024<br>Aug 2024</div>
-            <div class="exp-body">
-              <div class="role">Software Engineering Intern</div>
-              <div class="at">@ KPMG</div>
-              <div class="summary">Built an NLP document classification pipeline serving 50+ enterprise auditors.</div>
-              <ul>
-                <li>Cut classification latency 45s → 8s by swapping an O(n²) matching loop for an O(n+m) hash-join — no model retraining, no infra changes.</li>
-                <li>Hit 95% precision on 10,000+ docs/month by building a 50+ check distributional validation framework to kill label noise before production.</li>
-                <li>Shipped an A/B testing framework with bootstrapped confidence intervals and multiple-comparison corrections to govern all future model updates.</li>
-              </ul>
-              <div class="stack">
-                <span class="tag">Python</span>
-                <span class="tag">NLP</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">A/B Testing</span>
-                <span class="tag">CI/CD</span>
-              </div>
+        <article class="role-row">
+          <div class="role-org">
+            <div class="org">Altura</div>
+            <div class="loc">Atlanta, GA</div>
+          </div>
+          <div class="role-body">
+            <div class="role-title-line">Data &amp; ML Engineer</div>
+            <ul class="role-bullets">
+              <li>Built a computer-vision pipeline that recovers cabinet linear footage from listing photos, replacing the on-site tape measure that capped how many properties could be bid — CLIP filters kitchen images, Grounding DINO detects fronts, MobileSAM splits multi-door units, zero-shot on CPU at 8–15s per image.</li>
+              <li>Established appliance-anchored scaling after disproving the obvious ruler: the refrigerator, assumed 36″, measured 33⅛″ in ground truth and is usually clipped by the frame. Ranges and dishwashers are dimensionally reliable and more often fully in shot.</li>
+              <li>Cut the precision requirement by mining the domain — 112 cabinet types in a production schedule collapse to 20 widths, so a measurement only has to be close enough to snap to a standard size. Reached ±7% width error against CAD and hand-measured truth, with every delta traced to a named mechanical cause.</li>
+            </ul>
+            <div class="stack">
+              <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Grounding DINO</span><span class="tag">SAM</span><span class="tag">CLIP</span><span class="tag">Supabase</span>
             </div>
-          </article>
+          </div>
+          <div class="role-when">
+            <div class="dates">Current</div>
+            <div class="kind">Full-time</div>
+          </div>
+        </article>
 
-          <article class="exp-card">
-            <div class="when">Jan 2025<br>May 2025</div>
-            <div class="exp-body">
-              <div class="role">Quantitative Analyst</div>
-              <div class="at">@ Georgia Tech Student Fund (GTSF)</div>
-              <div class="summary">Built quantitative tools for a $500K live student-managed equity fund.</div>
-              <ul>
-                <li>Tripled ticker coverage 50 → 120 by building a Bloomberg Terminal screener — expanded the investable universe the team evaluated each week.</li>
-                <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks; surfaced 8% downside risk that directly shaped the fund's hedging position.</li>
-                <li>Validated sector-rotation strategies with ARIMA models — first project where a model error had an immediate dollar cost.</li>
-              </ul>
-              <div class="stack">
-                <span class="tag">Python</span><span class="tag">ARIMA</span><span class="tag">Monte Carlo</span><span class="tag">Bloomberg</span><span class="tag">NumPy</span>
-              </div>
+        <article class="role-row">
+          <div class="role-org">
+            <div class="org">Georgia Tech Student Fund</div>
+            <div class="loc">Atlanta, GA</div>
+          </div>
+          <div class="role-body">
+            <div class="role-title-line">Quantitative Analyst</div>
+            <ul class="role-bullets">
+              <li>Tripled ticker coverage 50 → 120 by building a Bloomberg Terminal screener, expanding the investable universe the team evaluated each week.</li>
+              <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks; surfaced 8% downside risk that directly shaped the fund’s hedging position.</li>
+              <li>Validated sector-rotation strategies with ARIMA models — the first project where a model error carried an immediate dollar cost.</li>
+            </ul>
+            <div class="stack">
+              <span class="tag">Python</span><span class="tag">ARIMA</span><span class="tag">Monte Carlo</span><span class="tag">Bloomberg</span><span class="tag">NumPy</span>
             </div>
-          </article>
-        </div>
-      </div>
+          </div>
+          <div class="role-when">
+            <div class="dates">Jan 2025 — May 2025</div>
+            <div class="kind">$500K live fund</div>
+          </div>
+        </article>
 
-      <!-- Heatmap -->
-      <div class="section" style="display:none;">
-        <div class="section-head">
-          <div>
-            <h2>Commit Rhythm</h2>
-            <div class="sub">53 weeks · tap a cell to play that day's loop</div>
+        <article class="role-row">
+          <div class="role-org">
+            <div class="org">KPMG</div>
+            <div class="loc">Atlanta, GA</div>
+          </div>
+          <div class="role-body">
+            <div class="role-title-line">Software Engineering Intern</div>
+            <ul class="role-bullets">
+              <li>Cut classification latency 45s → 8s by swapping an O(n²) matching loop for an O(n+m) hash-join — no model retraining, no infra changes.</li>
+              <li>Hit 95% precision on 10,000+ docs/month by building a 50+ check distributional validation framework to kill label noise before production.</li>
+              <li>Shipped an A/B testing framework with bootstrapped confidence intervals and multiple-comparison corrections to govern future model updates.</li>
+            </ul>
+            <div class="stack">
+              <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">PostgreSQL</span><span class="tag">A/B Testing</span><span class="tag">CI/CD</span>
+            </div>
+          </div>
+          <div class="role-when">
+            <div class="dates">Jun 2024 — Aug 2024</div>
+            <div class="kind">Internship</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ── 02 EDUCATION ── -->
+      <section class="rule-section" aria-labelledby="edu-h">
+        <div class="rule-head">
+          <div class="rule-title">
+            <span class="rule-num" aria-hidden="true">02</span>
+            <h2 id="edu-h">Education</h2>
           </div>
         </div>
-        <div class="heatmap-wrap">
-          <div class="heatmap-stats">
-            <div class="s"><b>1,284</b>commits</div>
-            <div class="s"><b>312</b>active days</div>
-            <div class="s"><b>37</b>day streak</div>
-            <div class="s"><b>02:00</b>busiest hour</div>
+
+        <article class="role-row">
+          <div class="role-org">
+            <div class="org">Georgia Tech</div>
+            <div class="loc">Atlanta, GA</div>
           </div>
-          <div class="heatmap-grid" id="heatmap"></div>
-          <div class="heatmap-legend">
-            <span>Less</span>
-            <span class="swatch" style="background: rgba(255, 255, 255, 0.04);"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 22%, rgba(255,255,255,0.04));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 50%, var(--accent-dark));"></span>
-            <span class="swatch" style="background: color-mix(in oklch, var(--accent) 70%, var(--accent-dark));"></span>
-            <span class="swatch" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));"></span>
-            <span>More</span>
+          <div class="role-body">
+            <div class="role-title-line">B.S. Industrial &amp; Systems Engineering</div>
+            <div class="role-sub">Operations Research track</div>
+            <ul class="role-bullets">
+              <li>Coursework: Machine Learning, Stochastic Processes, Data Structures &amp; Algorithms, Linear Programming, Statistical Modeling.</li>
+            </ul>
           </div>
-        </div>
-      </div>
+          <div class="role-when">
+            <div class="dates">Expected 2027</div>
+            <div class="kind">Undergraduate</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ── FOOTER ── -->
+      <footer class="site-footer">
+        <span class="copy">© 2026 Abba Ndomo</span>
+        <nav class="footer-links" aria-label="Elsewhere">
+          <a href="https://github.com/andomo3" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="mailto:andomo3@gatech.edu">andomo3@gatech.edu</a>
+        </nav>
+      </footer>
 
     </section>
+
 
     <!-- ============== PROJECTS ============== -->
     <section class="page" data-page="projects" data-screen-label="02 Projects">
@@ -325,35 +359,6 @@
     </section>
 
   </main>
-
-  <!-- ============== PLAYER BAR ============== -->
-  <footer class="player">
-    <div class="player-left">
-      <div class="meta">
-        <div class="t" id="np-title">PerChance</div>
-        <div class="s" id="np-artist">Founder</div>
-      </div>
-      <button class="like" id="np-like" title="Like this track" aria-label="Like this track" aria-pressed="false">♡</button>
-    </div>
-    <div class="player-center">
-      <div class="player-controls">
-        <button class="icon-btn" data-cmd="shuffle" title="Shuffle" aria-label="Shuffle">⤭</button>
-        <button class="icon-btn" data-cmd="prev" title="Previous" aria-label="Previous">⏮</button>
-        <button class="play-main" id="np-play" data-toggle="play" aria-label="Pause">❚❚</button>
-        <button class="icon-btn" data-cmd="next" title="Next" aria-label="Next">⏭</button>
-        <button class="icon-btn" title="Repeat" data-toggle="repeat" aria-label="Repeat" aria-pressed="false">↻</button>
-      </div>
-      <div class="player-progress">
-        <span id="np-elapsed">1:24</span>
-        <div class="bar"><span id="np-fill"></span></div>
-        <span id="np-total">3:42</span>
-      </div>
-    </div>
-    <div class="player-right">
-      <button class="icon-btn" title="Lyrics" aria-label="Open liner notes">𝅘𝅥𝅮</button>
-      <button class="icon-btn" title="Queue" data-nav="projects" aria-label="Open projects">≡</button>
-    </div>
-  </footer>
 
   <!-- Mobile bottom tab bar (visible on phones only) -->
   <nav class="mob-nav" id="mob-nav">

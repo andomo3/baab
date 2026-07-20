@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home page: removing Selected Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF8F4; --bg-2:#F0EAE2; --bg-3:#E5DDD4; --surface:#FFFFFF;
+  --fg:#1C1009; --fg-2:#4A3728; --fg-3:#7A6657; --fg-4:#B5A898;
+  --accent:#C49A6C; --accent-dark:#8B5E3C; --good:#4CAF50;
+  --hairline:#DDD4C8; --hairline-2:#C8B8A8;
+  --dark-bg:#0F0D0A; --dark-bg-2:#1A1612; --dark-fg:#F3F0EC; --dark-fg-2:#C4B8A8; --dark-fg-3:#7A6E60; --dark-fg-4:#4A4038;
+  --sans:'Inter',-apple-system,system-ui,sans-serif;
+  --display:'Montserrat','Inter',sans-serif;
+  --mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:18px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--sans); font-size:15px; line-height:1.6;
+  letter-spacing:-0.005em; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:0 32px 120px;}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--dark-bg); color:var(--dark-fg); padding:56px 0 52px; margin-bottom:56px;}
+.masthead .wrap{padding-bottom:0;}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:20px;
+}
+.masthead h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(30px,4.4vw,46px);
+  line-height:1.14; letter-spacing:-0.03em; margin:0 0 18px; max-width:20ch;
+  padding-bottom:4px;
+}
+.masthead p{margin:0; max-width:62ch; color:var(--dark-fg-2); font-size:16px;}
+.verdict{
+  margin-top:30px; display:inline-flex; align-items:center; gap:12px;
+  border:1px solid var(--dark-fg-4); border-radius:var(--r-sm);
+  padding:11px 18px; font-size:14px; color:var(--dark-fg);
+}
+.verdict b{color:var(--accent); font-weight:600;}
+
+/* ---------- sections ---------- */
+section{margin-bottom:64px;}
+.sec-head{margin-bottom:26px; padding-bottom:14px; border-bottom:1px solid var(--hairline);}
+.sec-head h2{
+  font-family:var(--display); font-weight:700; font-size:22px;
+  letter-spacing:-0.02em; margin:0 0 5px;
+}
+.sec-head .sub{color:var(--fg-3); font-size:14px;}
+p.lede{max-width:70ch; color:var(--fg-2); margin:0 0 22px;}
+
+/* ---------- page maps ---------- */
+.maps{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px;}
+.map-col{min-width:0;}
+.map-label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--fg-3); margin-bottom:10px; display:flex; align-items:center; gap:8px;
+}
+.map-label .dot{width:7px;height:7px;border-radius:50%;background:var(--fg-4);}
+.map-label.is-after .dot{background:var(--accent);}
+.map-label.is-after{color:var(--accent-dark);}
+.map{
+  border:1px solid var(--hairline); border-radius:var(--r-md);
+  background:var(--surface); overflow:hidden;
+}
+
+/* mock blocks */
+.mk{padding:16px 18px; border-bottom:1px solid var(--hairline);}
+.mk:last-child{border-bottom:0;}
+.mk-dark{background:var(--dark-bg); border-bottom-color:#000;}
+.mk-tag{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--fg-4); margin-bottom:9px;
+}
+.mk-dark .mk-tag{color:var(--dark-fg-3);}
+.mk-name{font-family:var(--display); font-weight:800; font-size:19px; line-height:1.05; color:var(--dark-fg); letter-spacing:-0.02em;}
+.mk-line{height:5px; border-radius:3px; background:var(--bg-3);}
+.mk-dark .mk-line{background:var(--dark-fg-4);}
+.mk-stack{display:flex; flex-direction:column; gap:5px; margin-top:9px;}
+.mk-row{display:grid; gap:10px; align-items:start;}
+.mk-2col{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.mk-side{grid-template-columns:minmax(0,300px) minmax(0,1fr);}
+.mk-cell{min-width:0;}
+.mk-btns{display:flex; gap:6px; margin-top:11px; flex-wrap:wrap;}
+.mk-btn{font-size:10px; padding:4px 9px; border-radius:var(--r-xs); background:var(--accent); color:#241608; font-weight:600;}
+.mk-btn.ghost{background:transparent; border:1px solid var(--dark-fg-4); color:var(--dark-fg-2);}
+
+/* shelf tiles */
+.mk-tiles{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;}
+.mk-tile{border:1px solid var(--hairline); border-radius:var(--r-sm); overflow:hidden;}
+.mk-tile .art{height:34px; background:linear-gradient(135deg,var(--accent) 0%, var(--accent-dark) 100%); opacity:.75;}
+.mk-tile .cap{padding:6px 8px;}
+.mk-tile .cap .mk-line{background:var(--bg-3);}
+
+/* terminal mock */
+.mk-term{background:var(--dark-bg-2); border:1px solid var(--dark-fg-4); border-radius:var(--r-sm); overflow:hidden;}
+.mk-term .bar{display:flex; align-items:center; gap:5px; padding:6px 9px; border-bottom:1px solid var(--dark-fg-4);}
+.mk-term .bar i{width:6px;height:6px;border-radius:50%;background:var(--dark-fg-4); display:block;}
+.mk-term .bar span{font-family:var(--mono); font-size:8.5px; color:var(--dark-fg-3); margin-left:5px;}
+.mk-term .body{padding:9px 11px; font-family:var(--mono); font-size:9.5px; line-height:1.85; color:var(--dark-fg-2);}
+.mk-term .body .dim{color:var(--dark-fg-3);}
+.mk-term .body .acc{color:var(--accent);}
+.mk-term .body .cur{color:var(--accent);}
+.mk-term.tall .body{padding-bottom:34px;}
+
+/* timeline mock */
+.mk-exp{display:grid; grid-template-columns:56px minmax(0,1fr); gap:0 18px; margin-top:9px;}
+.mk-exp + .mk-exp{margin-top:12px;}
+.mk-exp .yr{font-family:var(--mono); font-size:9.5px; color:var(--accent-dark);}
+
+/* the hole */
+.mk-hole{
+  border:1px dashed var(--hairline-2); border-radius:var(--r-sm);
+  min-height:96px; display:flex; align-items:center; justify-content:center;
+  background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(196,154,108,.09) 6px,rgba(196,154,108,.09) 12px);
+}
+.mk-hole span{font-family:var(--mono); font-size:9.5px; color:var(--accent-dark); letter-spacing:.06em; text-align:center; padding:0 8px;}
+
+/* ---------- callout ---------- */
+.callout{
+  border-left:3px solid var(--accent); background:var(--bg-2);
+  border-radius:0 var(--r-sm) var(--r-sm) 0; padding:18px 22px; margin:26px 0 0;
+}
+.callout h3{font-family:var(--display); font-weight:700; font-size:15px; margin:0 0 7px; letter-spacing:-0.01em;}
+.callout p{margin:0; color:var(--fg-2); font-size:14px; max-width:78ch;}
+.callout p + p{margin-top:9px;}
+code{font-family:var(--mono); font-size:.88em; background:var(--bg-3); padding:1.5px 5px; border-radius:var(--r-xs); color:var(--accent-dark);}
+.mk-dark code{background:var(--dark-fg-4); color:var(--dark-fg);}
+
+/* ---------- findings ---------- */
+.finds{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;}
+.find{border:1px solid var(--hairline); border-radius:var(--r-md); background:var(--surface); padding:18px 20px; min-width:0;}
+.find .k{font-family:var(--mono); font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent-dark); margin-bottom:8px;}
+.find h4{font-family:var(--display); font-weight:700; font-size:14.5px; margin:0 0 7px; letter-spacing:-0.01em;}
+.find p{margin:0; font-size:13.5px; color:var(--fg-2);}
+
+/* ---------- options ---------- */
+.opts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px;}
+.opt{
+  border:1px solid var(--hairline); border-radius:var(--r-md); background:var(--surface);
+  padding:22px; min-width:0; display:flex; flex-direction:column;
+}
+.opt.rec{border-color:var(--accent); box-shadow:0 0 0 3px rgba(196,154,108,.13);}
+.opt-top{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:4px;}
+.opt-k{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-4);}
+.opt.rec .opt-k{color:var(--accent-dark);}
+.pick{font-family:var(--mono); font-size:9.5px; letter-spacing:.11em; text-transform:uppercase; background:var(--accent); color:#241608; padding:3px 8px; border-radius:var(--r-xs); font-weight:700; white-space:nowrap;}
+.opt h3{font-family:var(--display); font-weight:700; font-size:17px; margin:0 0 12px; letter-spacing:-0.02em;}
+.opt-wire{border:1px solid var(--hairline); border-radius:var(--r-sm); overflow:hidden; margin-bottom:16px; background:var(--bg);}
+.opt p{margin:0 0 14px; font-size:13.5px; color:var(--fg-2);}
+.tradeoff{margin-top:auto; padding-top:14px; border-top:1px solid var(--hairline); display:flex; flex-direction:column; gap:8px;}
+.tr{display:grid; grid-template-columns:14px minmax(0,1fr); gap:8px; font-size:12.5px; line-height:1.5;}
+.tr .s{font-family:var(--mono); font-weight:700;}
+.tr.up .s{color:var(--good);}
+.tr.dn .s{color:var(--accent-dark);}
+.tr span:last-child{color:var(--fg-2); min-width:0;}
+
+/* ---------- change table ---------- */
+.tbl-scroll{overflow-x:auto; border:1px solid var(--hairline); border-radius:var(--r-md); background:var(--surface);}
+table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:640px;}
+th{
+  text-align:left; font-family:var(--mono); font-size:10px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--fg-3); font-weight:500; padding:13px 18px; border-bottom:1px solid var(--hairline); background:var(--bg-2);
+  white-space:nowrap;
+}
+td{padding:13px 18px; border-bottom:1px solid var(--hairline); color:var(--fg-2); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td:first-child{white-space:nowrap;}
+.act{font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; padding:2.5px 7px; border-radius:var(--r-xs); font-weight:600;}
+.act.del{background:#F3E3DC; color:#8B3C2C;}
+.act.mod{background:var(--bg-3); color:var(--accent-dark);}
+.act.keep{background:#E4EFE0; color:#3C6B32;}
+
+/* ---------- questions ---------- */
+.qs{display:flex; flex-direction:column; gap:14px;}
+.q{border:1px solid var(--hairline); border-left:3px solid var(--accent-dark); border-radius:0 var(--r-sm) var(--r-sm) 0; background:var(--surface); padding:16px 20px;}
+.q h4{font-family:var(--display); font-weight:700; font-size:14px; margin:0 0 6px;}
+.q p{margin:0; font-size:13.5px; color:var(--fg-2); max-width:76ch;}
+.hint{margin-top:34px; font-size:13px; color:var(--fg-3); font-family:var(--mono); text-align:center;}
+
+@media (max-width:900px){
+  .opts{grid-template-columns:minmax(0,1fr);}
+  .maps{grid-template-columns:minmax(0,1fr);}
+}
+@media (max-width:620px){
+  .wrap{padding:0 20px 80px;}
+  .mk-side{grid-template-columns:minmax(0,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Home page · structure change</div>
+    <h1>Cutting Selected Work from the home page</h1>
+    <p>The shelf duplicates the “View Projects” button two blocks above it. Removing it is right — but it isn’t a delete. The shelf is holding up one half of a two-column grid, so the real question underneath is: <em>what does the CLI become once it stands alone?</em></p>
+    <div class="verdict">Built: <b>Option C — shelf cut, CLI folded into the hero island</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ BEFORE / AFTER ============ -->
+<section>
+  <div class="sec-head">
+    <h2>What home looks like now, and what a plain deletion leaves</h2>
+    <div class="sub">Rendered in the site’s own tokens — dark blocks are the dark islands</div>
+  </div>
+
+  <div class="maps">
+    <div class="map-col">
+      <div class="map-label"><span class="dot"></span>Now</div>
+      <div class="map">
+        <div class="mk mk-dark">
+          <div class="mk-tag">hero-dark</div>
+          <div class="mk-row mk-side">
+            <div class="mk-cell">
+              <div class="mk-name">Abba<br>Ndomo.</div>
+              <div class="mk-stack"><div class="mk-line" style="width:96%"></div><div class="mk-line" style="width:78%"></div></div>
+              <div class="mk-btns"><span class="mk-btn">View Projects</span><span class="mk-btn ghost">Resume</span><span class="mk-btn ghost">LinkedIn</span></div>
+            </div>
+            <div class="mk-cell"><div class="mk-line" style="height:74px;border-radius:8px;"></div></div>
+          </div>
+        </div>
+        <div class="mk">
+          <div class="mk-tag">hero-widget-row · 1fr 1fr</div>
+          <div class="mk-row mk-2col">
+            <div class="mk-cell">
+              <div style="font-family:var(--display);font-weight:700;font-size:12px;margin-bottom:2px;">Projects</div>
+              <div style="font-size:9.5px;color:var(--fg-3);margin-bottom:8px;">Selected work</div>
+              <div class="mk-tiles">
+                <div class="mk-tile"><div class="art"></div><div class="cap"><div class="mk-line" style="width:70%"></div></div></div>
+                <div class="mk-tile"><div class="art"></div><div class="cap"><div class="mk-line" style="width:55%"></div></div></div>
+                <div class="mk-tile"><div class="art"></div><div class="cap"><div class="mk-line" style="width:64%"></div></div></div>
+                <div class="mk-tile"><div class="art"></div><div class="cap"><div class="mk-line" style="width:48%"></div></div></div>
+              </div>
+            </div>
+            <div class="mk-cell">
+              <div style="font-family:var(--display);font-weight:700;font-size:12px;margin-bottom:2px;">Now Playing</div>
+              <div style="font-size:9.5px;color:var(--fg-3);margin-bottom:8px;">A music CLI</div>
+              <div class="mk-term">
+                <div class="bar"><i></i><i></i><i></i><span>abba@portfolio — zsh</span></div>
+                <div class="body">
+                  <div class="dim">[boot] terminal-mu v0.4.2</div>
+                  <div class="dim">type <span class="acc">help</span> to see what i respond to</div>
+                  <div><span class="cur">›</span> <span class="dim">play 3</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mk">
+          <div class="mk-tag">section · experience</div>
+          <div style="font-family:var(--display);font-weight:700;font-size:12px;">Experience Timeline</div>
+          <div class="mk-exp"><div class="yr">2025</div><div><div class="mk-line" style="width:60%"></div><div class="mk-stack"><div class="mk-line" style="width:92%"></div></div></div></div>
+          <div class="mk-exp"><div class="yr">2024</div><div><div class="mk-line" style="width:52%"></div><div class="mk-stack"><div class="mk-line" style="width:85%"></div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-col">
+      <div class="map-label is-after"><span class="dot"></span>Plain deletion</div>
+      <div class="map">
+        <div class="mk mk-dark">
+          <div class="mk-tag">hero-dark · unchanged</div>
+          <div class="mk-row mk-side">
+            <div class="mk-cell">
+              <div class="mk-name">Abba<br>Ndomo.</div>
+              <div class="mk-stack"><div class="mk-line" style="width:96%"></div><div class="mk-line" style="width:78%"></div></div>
+              <div class="mk-btns"><span class="mk-btn">View Projects</span><span class="mk-btn ghost">Resume</span><span class="mk-btn ghost">LinkedIn</span></div>
+            </div>
+            <div class="mk-cell"><div class="mk-line" style="height:74px;border-radius:8px;"></div></div>
+          </div>
+        </div>
+        <div class="mk">
+          <div class="mk-tag">hero-widget-row · still 1fr 1fr</div>
+          <div class="mk-row mk-2col">
+            <div class="mk-cell">
+              <div class="mk-hole"><span>empty column<br>~50% of the row</span></div>
+            </div>
+            <div class="mk-cell">
+              <div style="font-family:var(--display);font-weight:700;font-size:12px;margin-bottom:2px;">Now Playing</div>
+              <div style="font-size:9.5px;color:var(--fg-3);margin-bottom:8px;">A music CLI</div>
+              <div class="mk-term">
+                <div class="bar"><i></i><i></i><i></i><span>abba@portfolio — zsh</span></div>
+                <div class="body">
+                  <div class="dim">[boot] terminal-mu v0.4.2</div>
+                  <div class="dim">type <span class="acc">help</span> to see what i respond to</div>
+                  <div><span class="cur">›</span> <span class="dim">play 3</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mk">
+          <div class="mk-tag">section · experience</div>
+          <div style="font-family:var(--display);font-weight:700;font-size:12px;">Experience Timeline</div>
+          <div class="mk-exp"><div class="yr">2025</div><div><div class="mk-line" style="width:60%"></div><div class="mk-stack"><div class="mk-line" style="width:92%"></div></div></div></div>
+          <div class="mk-exp"><div class="yr">2024</div><div><div class="mk-line" style="width:52%"></div><div class="mk-stack"><div class="mk-line" style="width:85%"></div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h3>The catch</h3>
+    <p><code>.hero-widget-row</code> is <code>grid-template-columns: 1fr 1fr</code> (<code>styles.css:825</code>) with exactly two unnamed <code>&lt;div&gt;</code> children (<code>index.html:83–118</code>). Delete the shelf and the terminal keeps its half; the other half goes blank. So this change can’t stop at removal — the row has to be re-conceived.</p>
+    <p>Also load-bearing: <code>animations.js:156</code> reveals <code>.hero-widget-row &gt; div</code> by that exact structural selector, and <code>.tile</code> is in the same list.</p>
+  </div>
+</section>
+
+<!-- ============ ALSO FOUND ============ -->
+<section>
+  <div class="sec-head">
+    <h2>Three things worth knowing before you cut</h2>
+    <div class="sub">Verified against the source</div>
+  </div>
+  <div class="finds">
+    <div class="find">
+      <div class="k">Safe</div>
+      <h4>The project data isn’t going anywhere</h4>
+      <p><code>PROJECT_FILES</code> (<code>app.js:5</code>) also drives the Projects IDE — file tree, tabs, prev/next. Only <code>tile()</code> (<code>app.js:205</code>) and the two append lines at <code>app.js:222–223</code> become dead. The array stays.</p>
+    </div>
+    <div class="find">
+      <div class="k">Intended</div>
+      <h4>Home loses its only imagery</h4>
+      <p>The four tiles carry the generative preview art (<code>styles.css:502–625</code>, one treatment per project ID). You’ve called this a gain, not a loss: the descriptions and results should carry the projects. Home becomes a headshot, a prompt, and a record.</p>
+    </div>
+    <div class="find">
+      <div class="k">Drive-by</div>
+      <h4>There’s already a dead section below</h4>
+      <p>The heatmap block at <code>index.html:173–198</code> carries <code>style="display:none;"</code>. If you’re trimming home, delete it in the same pass rather than leaving hidden markup behind.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPTIONS ============ -->
+<section>
+  <div class="sec-head">
+    <h2>What the CLI becomes</h2>
+    <div class="sub">Three directions for the space the shelf vacates</div>
+  </div>
+  <p class="lede">All three assume the shelf is gone. They differ in how much you’re willing to promote the terminal — which is, after all, the one thing on this site nobody else has.</p>
+
+  <div class="opts">
+
+    <!-- A -->
+    <div class="opt">
+      <div class="opt-top"><div class="opt-k">Option A</div></div>
+      <h3>Let it go full width</h3>
+      <div class="opt-wire">
+        <div class="mk" style="border-bottom:0;">
+          <div class="mk-term">
+            <div class="bar"><i></i><i></i><i></i><span>abba@portfolio — zsh</span></div>
+            <div class="body" style="padding-bottom:26px;">
+              <div class="dim">[boot] terminal-mu v0.4.2</div>
+              <div><span class="cur">›</span> <span class="dim">play 3</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>Collapse the row to one column. The terminal spans the full 1240px content width and its body grows taller to compensate.</p>
+      <div class="tradeoff">
+        <div class="tr up"><span class="s">+</span><span>Smallest change. One CSS line, one markup deletion.</span></div>
+        <div class="tr dn"><span class="s">−</span><span>Monospace lines are short. A 1240px-wide shell is mostly empty space on the right.</span></div>
+        <div class="tr dn"><span class="s">−</span><span>Solves the hole without saying anything new.</span></div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="opt">
+      <div class="opt-top"><div class="opt-k">Option B</div></div>
+      <h3>Pair it with a command legend</h3>
+      <div class="opt-wire">
+        <div class="mk" style="border-bottom:0;">
+          <div class="mk-row" style="grid-template-columns:minmax(0,.62fr) minmax(0,1fr);">
+            <div class="mk-cell" style="font-family:var(--mono);font-size:9px;line-height:2.1;color:var(--fg-3);">
+              <div><span style="color:var(--accent-dark)">play 3</span></div>
+              <div><span style="color:var(--accent-dark)">shuffle</span></div>
+              <div><span style="color:var(--accent-dark)">cd projects</span></div>
+              <div><span style="color:var(--accent-dark)">whoami</span></div>
+            </div>
+            <div class="mk-cell">
+              <div class="mk-term">
+                <div class="bar"><i></i><i></i><i></i></div>
+                <div class="body"><div class="dim">[boot] v0.4.2</div><div><span class="cur">›</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>Keep two columns, reweight them. Left becomes a short list of what you can type; right stays the shell.</p>
+      <div class="tradeoff">
+        <div class="tr up"><span class="s">+</span><span>Fills the column with something functional.</span></div>
+        <div class="tr dn"><span class="s">−</span><span>Redundant. The boot sequence already prints “type <code>help</code>” (<code>terminal.js:90</code>) and <code>help</code> already lists every command (<code>terminal.js:21</code>).</span></div>
+        <div class="tr dn"><span class="s">−</span><span>Trades a grid of projects for a grid of instructions.</span></div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="opt rec">
+      <div class="opt-top"><div class="opt-k">Option C</div><span class="pick">Chosen</span></div>
+      <h3>Fold it into the hero</h3>
+      <div class="opt-wire">
+        <div class="mk mk-dark" style="border-bottom:0;">
+          <div class="mk-row mk-side" style="grid-template-columns:minmax(0,1fr) minmax(0,86px);">
+            <div class="mk-cell">
+              <div class="mk-name" style="font-size:15px;">Abba<br>Ndomo.</div>
+              <div class="mk-stack"><div class="mk-line" style="width:92%"></div></div>
+              <div class="mk-btns"><span class="mk-btn">View Projects</span><span class="mk-btn ghost">Resume</span></div>
+            </div>
+            <div class="mk-cell"><div class="mk-line" style="height:56px;border-radius:6px;"></div></div>
+          </div>
+          <div class="mk-term" style="margin-top:12px;border-color:var(--dark-fg-4);">
+            <div class="bar"><i></i><i></i><i></i><span>abba@portfolio — zsh</span></div>
+            <div class="body"><div class="dim">type <span class="acc">help</span> to see what i respond to</div><div><span class="cur">›</span> <span class="dim">play 3</span></div></div>
+          </div>
+        </div>
+      </div>
+      <p>Move the terminal inside <code>.hero-dark</code>. The dark island becomes one continuous unit: you read the name, then you’re handed a prompt. Timeline is then the only light section.</p>
+      <div class="tradeoff">
+        <div class="tr up"><span class="s">+</span><span>Makes the CLI the hero’s payoff instead of a widget in a row.</span></div>
+        <div class="tr up"><span class="s">+</span><span>Home becomes two blocks: one dark, one light. Nothing left to look empty.</span></div>
+        <div class="tr dn"><span class="s">−</span><span>Biggest change. Hero grows tall — needs care at ≤767px, where <code>.hero-photo</code> is already hidden.</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <h3>Why C over A</h3>
+    <p>A is the safe answer and it would ship today. But the shelf’s removal is really an admission that home was trying to be a directory. Once you accept that, home’s job is: say who you are, hand over one memorable interaction, show the track record. C is the layout that says that out loud — the dark island stops being a banner and becomes the whole introduction.</p>
+    <p>If you’d rather not touch the hero yet, A is a clean stepping stone; C stays reachable from it.</p>
+  </div>
+</section>
+
+<!-- ============ CHANGES ============ -->
+<section>
+  <div class="sec-head">
+    <h2>The change list</h2>
+    <div class="sub">Assuming Option C</div>
+  </div>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>File</th><th>Action</th><th>What changes</th></tr></thead>
+      <tbody>
+        <tr><td><code>index.html:82–94</code></td><td><span class="act del">Delete</span></td><td>The shelf wrapper <code>&lt;div&gt;</code>, its <code>section-head</code> (“Projects / Selected work / See all →”), and <code>div.shelf#featured-shelf</code>.</td></tr>
+        <tr><td><code>index.html:83–118</code></td><td><span class="act mod">Restructure</span></td><td>Dissolve <code>.hero-widget-row</code>. Move <code>.np-widget#terminal</code> inside <code>.hero-dark</code> as a full-width row beneath <code>.hero-inner</code>. <b>Drop its <code>.section-head</code></b> — the shell title bar labels it.</td></tr>
+        <tr><td><code>index.html:65–68</code></td><td><span class="act mod">Trim</span></td><td>Cut the “shipped projects” and “internships” <code>.hero-stat</code> items. Two remain: countries lived, languages.</td></tr>
+        <tr><td><code>index.html:173–198</code></td><td><span class="act del">Delete</span></td><td>The <code>display:none</code> heatmap section. Separate commit.</td></tr>
+        <tr><td><code>app.js:205–223</code></td><td><span class="act del">Delete</span></td><td><code>tile()</code> and the <code>getElementById('featured-shelf')</code> block. <b>Keep</b> <code>PROJECT_FILES</code> and <code>window.__ICONS</code> — the IDE needs both.</td></tr>
+        <tr><td><code>styles.css:438–680</code></td><td><span class="act del">Delete</span></td><td><code>.shelf</code>, <code>.tile</code>, <code>.art</code>, <code>.play-overlay</code> and all six <code>.tile .art[data-pid]</code> treatments. Verified home-only — <code>tile()</code> is the sole renderer, so this pulls the preview art site-wide.</td></tr>
+        <tr><td><code>app.js:13, 27</code></td><td><span class="act keep">Flag</span></td><td>The two <code>preview:</code> fields go dead, orphaning <code>perchance.webp</code> and <code>altura.webp</code>. Leaving both the fields and the files in place — your call whether to prune.</td></tr>
+        <tr><td><code>animations.css:164–179</code></td><td><span class="act del">Delete</span></td><td><code>.tile:hover</code>, <code>.tile::after</code> and their reduced-motion overrides at <code>:256–258</code>.</td></tr>
+        <tr><td><code>styles.css</code> hero</td><td><span class="act mod">Add</span></td><td>A full-width terminal row inside the dark island, sharing <code>.hero-inner</code>’s max-width and padding so the shell aligns with the name above it.</td></tr>
+        <tr><td><code>styles.css:825</code></td><td><span class="act mod">Rework</span></td><td><code>.hero-widget-row</code> retires. The terminal inherits the hero’s inner width and padding instead.</td></tr>
+        <tr><td><code>animations.js:156</code></td><td><span class="act mod">Update</span></td><td>Drop <code>.tile</code> and <code>.hero-widget-row &gt; div</code> from the reveal selector; add whatever wrapper the terminal lands in.</td></tr>
+        <tr><td><code>animations.js:169</code></td><td><span class="act keep">Check</span></td><td>The <code>.section-head .sub</code> typewriter skips subs with child elements. “Selected work” was typed; “Now Playing” isn’t. Confirm the hero-embedded head behaves as intended.</td></tr>
+        <tr><td><code>mobile.css:36, 176, 194</code></td><td><span class="act mod">Clean</span></td><td>Remove the <code>.hero-widget-row</code> and <code>.shelf</code> overrides; give the hero-embedded terminal its stacked treatment at ≤767px.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section>
+  <div class="sec-head">
+    <h2>Decided</h2>
+    <div class="sub">Your calls, folded into the build above</div>
+  </div>
+  <div class="qs">
+    <div class="q">
+      <h4>No heading above the terminal</h4>
+      <p>The “Now Playing / A music CLI” <code>.section-head</code> comes out entirely — it would have needed a dark-palette variant to survive inside the hero anyway. The shell’s own title bar, <code>abba@portfolio — zsh</code>, does the labeling. One element, one job.</p>
+    </div>
+    <div class="q">
+      <h4>Hero stats trimmed to two</h4>
+      <p>Keeping <b>6 countries lived</b> and <b>5 languages</b>. “6 shipped projects” is already the Projects page’s whole argument, and “2 internships” is on the résumé and the timeline directly below. The two that stay are the only ones the rest of the page never says. Say the word if you’d rather swap one for internships.</p>
+    </div>
+    <div class="q">
+      <h4>Project imagery pulled everywhere</h4>
+      <p>You were right that the IDE never showed it — I checked: <code>preview</code> and every <code>.art</code> node are rendered only inside <code>tile()</code> (<code>app.js:210–211</code>), which is home-only. So deleting the tile CSS removes the art from the whole site in one move. Descriptions and results carry the projects.</p>
+      <p style="margin-top:9px;"><b>One consequence:</b> <code>perchance.webp</code> and <code>altura.webp</code> become unreferenced, and the two <code>preview:</code> fields in <code>PROJECT_FILES</code> go dead. Those were compressed two commits ago — I’ll leave the files on disk and flag them rather than deleting your assets.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>What building it surfaced</h2>
+    <div class="sub">Found by driving the real page, not by reading the diff</div>
+  </div>
+  <div class="finds">
+    <div class="find">
+      <div class="k">Fixed</div>
+      <h4>The prompt was landing below the fold</h4>
+      <p>First build: on a 1440×900 laptop only <b>164px of the 407px shell</b> was visible — the payoff was off-screen, which defeats the whole argument for C. Tightened the hero (padding 72/80 → 52/56, name clamp 88 → 76px, photo 340 → 280px, row margin 56 → 34px). Now <b>236px</b> shows, with a deliberate scroll cue.</p>
+    </div>
+    <div class="find">
+      <div class="k">Fixed</div>
+      <h4>Phone spent 155px on three stacked buttons</h4>
+      <p>The ≤767px rule stacked all three actions full-width. Now “View Projects” spans the row and Resume + LinkedIn share the line below it. Terminal visibility on a 390px phone went <b>101px → 171px</b> of 281px.</p>
+    </div>
+    <div class="find">
+      <div class="k">Aligned</div>
+      <h4>The photo sat 10px inside the shell’s edge</h4>
+      <p><code>.hero-photo-wrap</code> centred its image in a wider column. Switched to <code>flex-end</code> so the headshot’s right edge and the terminal’s now form one line.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h3>Verified end to end</h3>
+    <p>Drove the real page in Chromium at 1440×900 and 390×844: no console errors, no horizontal overflow at either width. Typed <code>cd projects</code> into the live CLI — it navigates, and the Projects IDE renders all six entries with tree, tabs, and STAR cards intact. Confirmed <code>.hero-terminal-row</code> resolves to <code>opacity: 1</code> under <code>prefers-reduced-motion: reduce</code>.</p>
+    <p>Also removed in passing: the dead <code>display:none</code> heatmap — its markup, its ~90 lines of JS (including a GitHub fetch that never ran), and its CSS.</p>
+  </div>
+</section>
+
+<section>
+  <p class="hint">Nothing staged or committed — all changes are local edits for you to review.</p>
+</section>
+
+</div>
+</body>
+</html>

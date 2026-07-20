@@ -1,4 +1,4 @@
-/* App glue v2: navigation, shelves, IDE, heatmap, langs, player. */
+/* App glue v3: navigation, IDE explorer, langs. */
 (function () {
   const PROJECTS = (window.__term && window.__term.TRACKS) || [];
 
@@ -118,7 +118,7 @@
     a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
   });
 
-  // Delegated terminal-command triggers (player controls, shuffle "more" button)
+  // Delegated terminal-command triggers (the Projects "Shuffle" button)
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-cmd]');
     if (el && window.__term) window.__term.runCmd(el.dataset.cmd);
@@ -127,51 +127,6 @@
   // Nav logo click
   document.querySelector('.nav-logo')?.addEventListener('click', () => navigate('home'));
 
-  // Cosmetic toggles (e.g. Repeat) — keep aria-pressed in sync where declared
-  document.querySelectorAll('[data-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('active');
-      if (btn.hasAttribute('aria-pressed')) {
-        btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
-      }
-    });
-  });
-
-  // Like button — toggle ♡↔♥, persist per-track in localStorage
-  const likeBtn = document.getElementById('np-like');
-  const likeKey = (id) => 'portfolio:liked:' + id;
-  function getCurrentTrackId() {
-    if (window.__term && typeof window.__term.getCurrent === 'function') {
-      const idx = window.__term.getCurrent();
-      const tracks = window.__term.TRACKS || [];
-      const t = tracks[idx];
-      return t && t.n;
-    }
-    return null;
-  }
-  function refreshLike() {
-    if (!likeBtn) return;
-    const id = getCurrentTrackId();
-    if (!id) return;
-    const liked = !!localStorage.getItem(likeKey(id));
-    likeBtn.classList.toggle('liked', liked);
-    likeBtn.textContent = liked ? '♥' : '♡';
-    likeBtn.setAttribute('aria-pressed', String(liked));
-  }
-  if (likeBtn) {
-    likeBtn.addEventListener('click', () => {
-      const id = getCurrentTrackId();
-      if (!id) return;
-      const isLiked = !!localStorage.getItem(likeKey(id));
-      if (isLiked) localStorage.removeItem(likeKey(id));
-      else localStorage.setItem(likeKey(id), '1');
-      refreshLike();
-    });
-  }
-  window.addEventListener('np-update', refreshLike);
-  // Initial state once the terminal has booted
-  setTimeout(refreshLike, 300);
-  window.addEventListener('navigate', (e) => navigate(e.detail));
   const hash = (location.hash || '').replace('#', '');
   if (['home', 'projects', 'about', 'contact'].includes(hash)) navigate(hash);
 
@@ -202,26 +157,6 @@
     '06': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>',
   };
   window.__ICONS = ICONS;
-  function tile(p) {
-    const el = document.createElement('button');
-    el.type = 'button';
-    el.className = 'tile';
-    el.innerHTML = `
-      <div class="art${p.preview ? ' art--preview' : ''}" data-pid="${p.id}">
-        ${p.preview ? `<img class="art-preview" src="${p.preview}" alt="${p.title}" loading="lazy" width="220" height="220" />` : '<div class="play-overlay"></div>'}
-      </div>
-      <div class="title">${p.title}</div>
-      <div class="sub">${p.sub.split('.')[0]}</div>
-    `;
-    el.addEventListener('click', () => {
-      navigate('projects');
-      setTimeout(() => openTab(p.id), 220);
-    });
-    return el;
-  }
-  const featured = document.getElementById('featured-shelf');
-  if (featured) PROJECT_FILES.slice(0, 4).forEach(p => featured.appendChild(tile(p)));
-
   // ----------- File tree + IDE tabs -----------
   const tree = document.getElementById('file-tree');
   if (tree) {
@@ -325,11 +260,11 @@
   }
   window.__openTab = openTab;
 
-  // Initial IDE/player sync: execute silently so no stray `play 1` block
+  // Initial IDE sync: execute silently so no stray `play 1` block
   // prints above the terminal boot intro.
   openTab(PROJECT_FILES[0].id, { silent: true });
-  // Sync the player bar to the initially-active project so the IDE
-  // and the player bar match on first render — independent of the
+  // Sync the terminal to the initially-active project so the IDE and the
+  // shell agree on first render — independent of the
   // terminal intro timing.
   window.dispatchEvent(new CustomEvent('np-update', { detail: { idx: 0 } }));
 
@@ -347,98 +282,6 @@
     openTab(t.n);
     syncingFromTerm = false;
   });
-
-  // ----------- Heatmap -----------
-  // Guard: skip all heatmap work (incl. fetches) while its section is hidden.
-  const hm = document.getElementById('heatmap');
-  if (hm && hm.offsetParent !== null) {
-    const GITHUB_USER = 'andomo3';
-    const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
-    function renderMockHeatmap(el) {
-      for (let w = 0; w < 53; w++) {
-        for (let d = 0; d < 7; d++) {
-          const recencyBoost = (w / 53) * 1.8;
-          const weekday = (d >= 1 && d <= 5) ? 1.0 : 0.45;
-          const score = (Math.random() * weekday + recencyBoost * 0.4);
-          let cls = '';
-          if (score > 1.4) cls = 'l4';
-          else if (score > 1.0) cls = 'l3';
-          else if (score > 0.65) cls = 'l2';
-          else if (score > 0.35) cls = 'l1';
-          const cell = document.createElement('div');
-          cell.className = 'cell ' + cls;
-          cell.title = `week ${w + 1} · ${DAYS[d]} · ${cls ? Math.round(score * 7) : 0} commits`;
-          el.appendChild(cell);
-        }
-      }
-    }
-
-    function renderHeatmap(grid) {
-      let totalCommits = 0, activeDays = 0, maxStreak = 0, curStreak = 0;
-      hm.innerHTML = '';
-      const flat = grid.flat();
-      const max = Math.max(...flat, 1);
-      grid.forEach((week, wi) => {
-        week.forEach((count, di) => {
-          totalCommits += count;
-          if (count > 0) { activeDays++; curStreak++; maxStreak = Math.max(maxStreak, curStreak); }
-          else curStreak = 0;
-          const lvl = count === 0 ? '' : count < max * 0.25 ? 'l1' : count < max * 0.5 ? 'l2' : count < max * 0.75 ? 'l3' : 'l4';
-          const cell = document.createElement('div');
-          cell.className = 'cell ' + lvl;
-          cell.title = `week ${wi + 1} · ${DAYS[di]} · ${count} commits`;
-          hm.appendChild(cell);
-        });
-      });
-      const statsEl = hm.closest('.heatmap-wrap') && hm.closest('.heatmap-wrap').querySelector('.heatmap-stats');
-      if (statsEl) {
-        const s = statsEl.querySelectorAll('.s');
-        if (s[0]) s[0].innerHTML = `<b>${totalCommits.toLocaleString()}</b>commits`;
-        if (s[1]) s[1].innerHTML = `<b>${activeDays}</b>active days`;
-        if (s[2]) s[2].innerHTML = `<b>${maxStreak}</b>day streak`;
-      }
-    }
-
-    async function fetchCommitActivity(repoName, retries = 3) {
-      for (let i = 0; i < retries; i++) {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${repoName}/stats/commit_activity`);
-        if (res.status === 202) {
-          await new Promise(r => setTimeout(r, 2000));
-          continue;
-        }
-        if (!res.ok) return [];
-        const data = await res.json();
-        return Array.isArray(data) ? data : [];
-      }
-      return [];
-    }
-
-    async function buildHeatmapLive() {
-      const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`);
-      if (!reposRes.ok) throw new Error(`GitHub repos fetch failed: ${reposRes.status}`);
-      const repos = await reposRes.json();
-      const weekMaps = await Promise.all(repos.map(r => fetchCommitActivity(r.name).catch(() => [])));
-      const grid = Array.from({ length: 52 }, () => new Array(7).fill(0));
-      for (const weeks of weekMaps) {
-        weeks.forEach((wk, wi) => {
-          if (wi < 52 && Array.isArray(wk.days)) {
-            wk.days.forEach((count, di) => { grid[wi][di] += count; });
-          }
-        });
-      }
-      return grid;
-    }
-
-    fetch('data/github-commits.json')
-      .then(r => r.ok ? r.json() : Promise.reject('no static file'))
-      .then(renderHeatmap)
-      .catch(() =>
-        buildHeatmapLive()
-          .then(renderHeatmap)
-          .catch(err => { console.warn('[heatmap] falling back to mock:', err); renderMockHeatmap(hm); })
-      );
-  }
 
   // ----------- Languages -----------
   const langsEl = document.getElementById('langs');
@@ -478,65 +321,4 @@
       .catch(renderFallbackArtists);
   }
 
-  // ----------- Player sync -----------
-  const npTitle = document.getElementById('np-title');
-  const npArtist = document.getElementById('np-artist');
-  const npFill = document.getElementById('np-fill');
-  const npElapsed = document.getElementById('np-elapsed');
-  const npTotal = document.getElementById('np-total');
-
-  function fmtTime(s) {
-    const m = Math.floor(s / 60), r = Math.floor(s % 60);
-    return m + ':' + String(r).padStart(2, '0');
-  }
-
-  let trackElapsed = 84;
-  let trackTotal = 222;
-  let isPlaying = true;
-  const playBtn = document.getElementById('np-play');
-  if (playBtn) playBtn.addEventListener('click', () => {
-    isPlaying = !isPlaying;
-    playBtn.textContent = isPlaying ? '❚❚' : '▶';
-    playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
-  });
-
-  window.addEventListener('np-update', (e) => {
-    const idx = e.detail.idx;
-    const t = PROJECTS[idx];
-    if (!t) return;
-    if (npTitle) npTitle.textContent = t.title;
-    if (npArtist) npArtist.textContent = t.artist;
-    const [m, s] = t.dur.split(':').map(Number);
-    trackTotal = m * 60 + s;
-    trackElapsed = 0;
-    if (npTotal) npTotal.textContent = t.dur;
-  });
-
-  function onProjectsPage() {
-    const p = document.querySelector('.page[data-page="projects"]');
-    return !!(p && p.classList.contains('active'));
-  }
-
-  setInterval(() => {
-    if (!isPlaying) return;
-    // While the user is reading a project, scroll drives the seek bar — skip auto-tick.
-    if (onProjectsPage()) return;
-    trackElapsed = (trackElapsed + 1) % trackTotal;
-    if (npFill) npFill.style.width = (trackElapsed / trackTotal * 100) + '%';
-    if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
-  }, 1000);
-
-  // Scroll → seek: as the user scrolls through the Projects page, fill the seek bar.
-  const mainEl = document.querySelector('.main');
-  if (mainEl) {
-    mainEl.addEventListener('scroll', () => {
-      if (!onProjectsPage()) return;
-      const total = mainEl.scrollHeight - mainEl.clientHeight;
-      if (total <= 0) return;
-      const pct = Math.min(1, Math.max(0, mainEl.scrollTop / total));
-      trackElapsed = pct * trackTotal;
-      if (npFill) npFill.style.width = (pct * 100) + '%';
-      if (npElapsed) npElapsed.textContent = fmtTime(trackElapsed);
-    }, { passive: true });
-  }
 })();
