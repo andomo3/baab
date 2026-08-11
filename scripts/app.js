@@ -6,7 +6,7 @@
     {
       id: '01', file: 'perchance.py', icon: '🏀', art: 'a1', title: 'PerChance',
       sub: 'Open-source player analytics platform — behavioral profiling, edge calibration, and opponent exploitability for NBA props.',
-      metrics: [['Players Profiled', '450+'], ['Intelligence Views', '5'], ['API Latency', '<200ms'], ['Seasons Backtested', '3']],
+      metrics: [['Daily Users', '500+'], ['Daily API Calls', '500K+'], ['p95 Latency', '<200ms'], ['Uptime', '99.5%']],
       stack: ['XGBoost', 'CatBoost', 'SHAP', 'Django', 'React', 'Airflow', 'Spark', 'Redis', 'Docker'],
       github: 'https://github.com/andomo3/nbaPropsPrediction',
       liveUrl: 'https://nba-props-prediction.vercel.app/',
@@ -15,7 +15,7 @@
         situation: 'Sportsbooks publish lines. Nobody tells you when a player is genuinely predictable — or why performance shifts by rest, form, and matchup.',
         task: 'Build an open-source platform with full player behavioral profiles: calibrated edge, output distributions, opponent splits, and a predictability fingerprint.',
         action: 'Built a Django REST API with XGBoost/CatBoost regressors per player/stat and SHAP explainability. Wired Airflow DAGs for nightly ingestion, Spark for scale, Redis for caching. Built a React frontend with five intelligence views and a composite predictability leaderboard.',
-        result: 'Five views per player per stat. Leaderboard ranks all tracked players across seasons. Self-hostable end-to-end with a single Docker Compose up.'
+        result: 'Serves 500+ daily active users and 500,000+ daily API calls at sub-200ms p95, with 99.5% uptime over 6 months and zero production incidents. Self-hostable end-to-end with a single Docker Compose up.'
       }
     },
     {
@@ -48,7 +48,7 @@
       id: '04', file: 'doc_intelligence.py', icon: '📄', art: 'a4', title: 'Document Intelligence System',
       sub: 'Production classifier processing 10,000+ documents monthly for 50+ auditors.',
       metrics: [['Precision', '95%'], ['Latency', '45s → 8s'], ['Volume', '10K docs/mo'], ['Error Rate', '40% → 5%']],
-      stack: ['Python', 'PostgreSQL', 'NLP', 'A/B Testing', 'PyTest'],
+      stack: ['Python', 'PostgreSQL', 'NLP', 'Multiprocessing', 'PyTest'],
       star: {
         situation: '50+ auditors processed 10,000+ documents monthly through a pipeline running at 45s per doc with a 40% error rate. Real-time use had been abandoned.',
         task: 'Fix latency and accuracy without retraining the model or rebuilding the infrastructure.',
@@ -57,15 +57,15 @@
       }
     },
     {
-      id: '05', file: 'loan_default.py', icon: '💳', art: 'a5', title: 'Loan Default Risk Model',
-      sub: 'ML classifier to flag high-risk loan applications before approval.',
-      metrics: [['AUC', '0.80'], ['Recall', '82%'], ['Applications', '50,000+'], ['Decision Quality', '+10%']],
-      stack: ['XGBoost', 'SHAP', 'SQL', 'Python', 'SMOTE'],
+      id: '05', file: 'credit_classifier.py', icon: '💳', art: 'a5', title: 'Credit Classification System',
+      sub: 'Real-time credit risk API with a fully automated MLOps retraining loop.',
+      metrics: [['Inference p95', '<10ms'], ['Cache Hit Rate', '70%+'], ['Retraining', 'Weekly'], ['Drift Detection', 'KS-test']],
+      stack: ['FastAPI', 'XGBoost', 'Redis', 'Airflow', 'dbt', 'Great Expectations', 'MLflow', 'Docker'],
       star: {
-        situation: 'A lending team needed a regulatory-grade risk model. Black-box scores weren\'t deployable — auditors had to explain every denial in plain language.',
-        task: 'Build an interpretable classifier on 50,000+ applications with a tiered risk score auditors can defend to regulators.',
-        action: 'Engineered 15 features from credit bureau data via CTE-based SQL ETL. Applied SMOTE to fix a 20:1 class imbalance, trained XGBoost, and used SHAP to identify dominant predictors and build the tiered risk framework.',
-        result: '0.80 AUC, 82% recall. SHAP surfaced debt-to-income ratio as the primary driver — gave auditors a defensible narrative. Decision quality improved 10%.'
+        situation: 'A credit risk model is only useful if it answers at request time and stays calibrated as applicant distributions drift. Most models stop at a notebook and degrade silently in production.',
+        task: 'Build the full system: a real-time loan decision API, an automated retraining pipeline, and drift detection that catches degradation without manual intervention.',
+        action: 'Served XGBoost decisions via a FastAPI REST API with Redis caching on feature hash keys and Pydantic v2 input validation. Orchestrated a weekly Airflow pipeline: ingestion → dbt feature transformations → Great Expectations validation → retraining → MLflow registry promotion, gated on held-out AUC. Added KS-test drift detection on the output probability distribution against a rolling baseline.',
+        result: 'Sub-10ms p95 inference with a 70%+ cache hit rate. New models promote only when they beat the production model on AUC; drift alerts trigger automated retraining when p < 0.05, so distributional shift never degrades the model silently.'
       }
     },
     {

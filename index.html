@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Abba Ndomo — Data & ML Engineer</title>
-<meta name="description" content="Portfolio of Abba Ndomo — Data & ML engineer at Georgia Tech (ISyE + OR '27), building PerChance and shipping production pipelines." />
+<meta name="description" content="Portfolio of Abba Ndomo — Data & ML engineer at Georgia Tech (CS + ISyE '27), building PerChance and shipping production pipelines." />
 <meta name="author" content="Abba Ndomo" />
 <meta name="theme-color" content="#0C0B09" />
 <meta property="og:title" content="Abba Ndomo — Data & ML Engineer" />
-<meta property="og:description" content="Portfolio · Georgia Tech ISyE + OR '27 · building PerChance" />
+<meta property="og:description" content="Portfolio · Georgia Tech CS + ISyE '27 · building PerChance" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://andomo3.github.io/baab/headshot.jpeg" />
 <meta property="og:url" content="https://andomo3.github.io/baab/" />
@@ -48,7 +48,7 @@
       <button type="button" class="nav-item" data-nav="projects">Projects</button>
       <button type="button" class="nav-item" data-nav="about">About</button>
       <button type="button" class="nav-item" data-nav="contact">Contact</button>
-      <a class="nav-resume" href="resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
+      <a class="nav-resume" href="resume.pdf?v=20260811" target="_blank" rel="noopener">Resume ↗</a>
     </nav>
   </header>
 
@@ -64,13 +64,13 @@
           <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
           <!-- Masthead corner: anchors the right edge opposite the given name.
                Kept outside the h1 so it stays out of the heading's accessible name. -->
-          <p class="hero-name-corner"><span class="nc-n">(01)</span><span>Atlanta, GA</span><span>ISyE &rsquo;27</span></p>
+          <p class="hero-name-corner"><span class="nc-n">(01)</span><span>Atlanta, GA</span><span>CS + ISyE &rsquo;27</span></p>
         </div>
 
         <div class="hero-grid">
           <!-- What I do -->
           <div class="hero-col hero-col--bio">
-            <p class="hero-bio">Georgia Tech ISyE — Operations Research. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>
+            <p class="hero-bio">Georgia Tech CS + ISyE — Operations Research. I build ML systems and data pipelines that run in production. Quantitative foundations, engineering execution.</p>
             <div class="hero-pills">
               <span class="pill">ML Systems</span>
               <span class="pill">Data Engineering</span>
@@ -99,7 +99,7 @@
             </div>
             <div class="hero-cta-stack">
               <button class="cta cta--primary" data-nav="projects">View Projects <span aria-hidden="true">→</span></button>
-              <a class="cta cta--ghost" href="resume.pdf" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+              <a class="cta cta--ghost" href="resume.pdf?v=20260811" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
@@ -138,14 +138,14 @@
             <div class="loc">Atlanta, GA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">Data &amp; ML Engineer</div>
+            <div class="role-title-line">ML Intern</div>
             <ul class="role-bullets">
-              <li>Built a computer-vision pipeline that recovers cabinet linear footage from listing photos, replacing the on-site tape measure that capped how many properties could be bid — CLIP filters kitchen images, Grounding DINO detects fronts, MobileSAM splits multi-door units, zero-shot on CPU at 8–15s per image.</li>
-              <li>Established appliance-anchored scaling after disproving the obvious ruler: the refrigerator, assumed 36″, measured 33⅛″ in ground truth and is usually clipped by the frame. Ranges and dishwashers are dimensionally reliable and more often fully in shot.</li>
-              <li>Cut the precision requirement by mining the domain — 112 cabinet types in a production schedule collapse to 20 widths, so a measurement only has to be close enough to snap to a standard size. Reached ±7% width error against CAD and hand-measured truth, with every delta traced to a named mechanical cause.</li>
+              <li>Built a computer-vision measurement pipeline that estimates cabinet linear footage and countertop area from listing photos, replacing the on-site tape measure that capped how many properties could be bid: CLIP zero-shot filtering feeds Grounding DINO open-vocabulary detection and SAM seam segmentation, with a Claude Vision fallback when no scale reference is recoverable.</li>
+              <li>Diagnosed scale-anchor selection, not detection quality, as the dominant term in the measurement error budget, then calibrated a 0.45 detection-confidence floor from 8 labeled anchor observations, cutting mean cabinet-width error from 44.5% to 18.2% on the like-for-like validation set.</li>
+              <li>Enforced a strict layered architecture (agents orchestrate, modules hold business logic, typed Pydantic models carry all data across boundaries) and lazy-imported the heavy ML dependencies, so the full 289-test suite runs in ~42 seconds with no network, model weights, or API keys.</li>
             </ul>
             <div class="stack">
-              <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Grounding DINO</span><span class="tag">SAM</span><span class="tag">CLIP</span><span class="tag">Supabase</span>
+              <span class="tag">Python</span><span class="tag">CLIP</span><span class="tag">Grounding DINO</span><span class="tag">SAM</span><span class="tag">Pydantic</span><span class="tag">Airflow</span>
             </div>
           </div>
           <div class="role-when">
@@ -163,8 +163,8 @@
             <div class="role-title-line">Quantitative Analyst</div>
             <ul class="role-bullets">
               <li>The first room where a model had to defend itself out loud: every thesis pitched, every assumption analyzed, every output validated before it moved a dollar of $500K in live capital.</li>
-              <li>Tripled ticker coverage 50 → 120 by building a Bloomberg Terminal screener, expanding the investable universe the team evaluated each week.</li>
-              <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks and validated sector-rotation strategies with ARIMA against historical regime data; the 8% downside surfaced held up under review and shaped the fund’s hedging position.</li>
+              <li>Expanded ticker coverage 50 → 120 (2.4x) by building a Bloomberg Terminal ingestion system with concurrent request batching and exponential-backoff retries, sustaining sub-minute data freshness across the investable universe the team evaluated each week.</li>
+              <li>Ran 10,000-iteration Monte Carlo simulations under macro shocks and validated sector-rotation strategies with ARIMA against historical regime data; the 8% downside surfaced held up under review, shaped the fund’s hedging position, and cut portfolio VaR by 15%.</li>
             </ul>
             <div class="stack">
               <span class="tag">Python</span><span class="tag">ARIMA</span><span class="tag">Monte Carlo</span><span class="tag">Bloomberg</span><span class="tag">NumPy</span>
@@ -179,21 +179,21 @@
         <article class="role-row">
           <div class="role-org">
             <div class="org">KPMG</div>
-            <div class="loc">Atlanta, GA</div>
+            <div class="loc">Mumbai, India</div>
           </div>
           <div class="role-body">
             <div class="role-title-line">Software Engineering Intern</div>
             <ul class="role-bullets">
-              <li>Cut classification latency 45s → 8s by swapping an O(n²) matching loop for an O(n+m) hash-join — no model retraining, no infra changes.</li>
-              <li>Hit 95% precision on 10,000+ docs/month by building a 50+ check distributional validation framework to kill label noise before production.</li>
-              <li>Shipped an A/B testing framework with bootstrapped confidence intervals and multiple-comparison corrections to govern future model updates.</li>
+              <li>Cut classification latency 45s → 8s (82%) by swapping an O(n²) matching loop for an O(n+m) hash-join, parallelizing batches with Python multiprocessing, and restructuring queries behind composite indexes.</li>
+              <li>Hit 95% classification precision on 10,000+ docs/month, serving 50+ concurrent auditors across 3 continents; 120,000+ documents processed over 14 months with zero production incidents and $62K in annual savings.</li>
+              <li>Engineered a data quality framework with 50+ automated validation checks (distributional tests, Z-score outlier detection, referential integrity) that cut downstream data errors 40% → 5% and prevented 12+ cascade failures.</li>
             </ul>
             <div class="stack">
-              <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">PostgreSQL</span><span class="tag">A/B Testing</span><span class="tag">CI/CD</span>
+              <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">PostgreSQL</span><span class="tag">Multiprocessing</span><span class="tag">CI/CD</span>
             </div>
           </div>
           <div class="role-when">
-            <div class="dates">Jun 2024 — Aug 2024</div>
+            <div class="dates">Jun 2024 — Jan 2025</div>
             <div class="kind">Internship</div>
           </div>
         </article>
@@ -214,14 +214,15 @@
             <div class="loc">Atlanta, GA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">B.S. Industrial &amp; Systems Engineering</div>
-            <div class="role-sub">Operations Research track</div>
+            <div class="role-title-line">B.S. Computer Science + Industrial &amp; Systems Engineering</div>
+            <div class="role-sub">Operations Research track · Major GPA 3.41</div>
             <ul class="role-bullets">
-              <li>Coursework: Machine Learning, Stochastic Processes, Data Structures &amp; Algorithms, Linear Programming, Statistical Modeling.</li>
+              <li>Coursework: Machine Learning, Stochastic Processes, Linear &amp; Non-Linear Optimization, Database Systems, Data Structures &amp; Algorithms, Simulations.</li>
+              <li>Dean's List · Peer Inspiration Award @ ISyE x CASE · 3rd Place @ OKSEF International Engineering Fair.</li>
             </ul>
           </div>
           <div class="role-when">
-            <div class="dates">Expected 2027</div>
+            <div class="dates">Expected Dec 2027</div>
             <div class="kind">Undergraduate</div>
           </div>
         </article>
@@ -284,7 +285,7 @@
             <div class="card">
               <div class="card-label">Identity</div>
               <h3>Abba Ndomo</h3>
-              <div style="color: var(--fg-3); font-size: 13.5px; margin-bottom: 14px;">Data & ML Engineer · ISyE + OR · Georgia Tech '27</div>
+              <div style="color: var(--fg-3); font-size: 13.5px; margin-bottom: 14px;">Data & ML Engineer · CS + ISyE (OR) · Georgia Tech '27</div>
               <p style="color: var(--fg-2); margin: 0 0 12px;">
                 I have lived across <b style="color: var(--fg);">six countries</b> and am proficient in English, Kiswahili, Spanish, Russian, and Azerbaijani. I build production ML systems and data pipelines — from a live NBA intelligence platform to automated pricing infrastructure
               </p>
@@ -304,8 +305,8 @@
             <div class="card">
               <div class="card-label">Facts</div>
               <div class="kv-list">
-                <div class="row"><div class="k">School</div><div class="v">Georgia Tech '27 · ISyE + OR</div></div>
-                <div class="row"><div class="k">Currently</div><div class="v">Building PerChance · Data & ML Engineer @ Altura</div></div>
+                <div class="row"><div class="k">School</div><div class="v">Georgia Tech '27 · CS + ISyE (OR)</div></div>
+                <div class="row"><div class="k">Currently</div><div class="v">Building PerChance · ML Intern @ Altura</div></div>
                 <div class="row"><div class="k">Languages</div><div class="v">EN · SW · ES · RU · AZ</div></div>
               </div>
             </div>
@@ -340,10 +341,10 @@
             <p style="color: var(--fg-3); margin: 0 0 28px; font-size: 14px;">Open to MLE and data engineering roles — full-time, internship, or contract. Fastest response via email or LinkedIn.</p>
 
             <div class="contact-icons">
-              <a class="contact-icon" href="mailto:abbandomo@gmail.com" title="Email">@</a>
+              <a class="contact-icon" href="mailto:abba.ndomo@gmail.com" title="Email">@</a>
               <a class="contact-icon" href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener" title="LinkedIn">in</a>
               <a class="contact-icon" href="https://github.com/andomo3" target="_blank" rel="noopener" title="GitHub"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.59 2 12.25c0 4.53 2.87 8.36 6.84 9.72.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.59 17.52 2 12 2z"/></svg></a>
-              <a class="contact-icon" href="resume.pdf" target="_blank" rel="noopener" title="Resume">↗</a>
+              <a class="contact-icon" href="resume.pdf?v=20260811" target="_blank" rel="noopener" title="Resume">↗</a>
             </div>
           </div>
 
@@ -352,8 +353,8 @@
               <div class="card-label">Availability</div>
               <pre class="code" style="margin: 0;"><span class="ln"> 1</span><span class="kw">export const</span> <span class="var">availability</span> = {
 <span class="ln"> 2</span>  <span class="fn">role</span>: [<span class="str">'MLE'</span>, <span class="str">'data engineering'</span>],
-<span class="ln"> 3</span>  <span class="fn">visa</span>: <span class="str">'F-1 · CPT authorized'</span>,
-<span class="ln"> 4</span>  <span class="fn">start</span>: <span class="str">'Summer 2026'</span>,
+<span class="ln"> 3</span>  <span class="fn">visa</span>: <span class="str">'F-1 · CPT now · STEM OPT eligible'</span>,
+<span class="ln"> 4</span>  <span class="fn">start</span>: <span class="str">'Immediately'</span>,
 <span class="ln"> 5</span>  <span class="fn">location</span>: [<span class="str">'atlanta'</span>, <span class="str">'remote'</span>, <span class="str">'on-site'</span>],
 <span class="ln"> 6</span>  <span class="fn">timezone</span>: <span class="str">'ET'</span>, <span class="com">// flexible ±5h</span>
 <span class="ln"> 7</span>  <span class="fn">openTo</span>: { <span class="fn">coffee</span>: <span class="num">true</span>, <span class="fn">cold_email</span>: <span class="num">true</span> },

@@ -10,10 +10,10 @@
   // ---------- Data ----------
   const TRACKS = [
     { n: '01', title: 'PerChance — NBA Props Intelligence',    artist: 'Founder',              dur: '4:18', plays: '1.1M', stack: ['XGBoost','CatBoost','Django','React'] },
-    { n: '02', title: 'Altura — Renovation Cost Estimator',   artist: 'Data & ML Engineer',   dur: '3:55', plays: '847K', stack: ['PySpark','Airflow','DuckDB','Next.js'] },
+    { n: '02', title: 'Altura — Renovation Cost Estimator',   artist: 'ML Intern',            dur: '3:55', plays: '847K', stack: ['PySpark','Airflow','DuckDB','Next.js'] },
     { n: '03', title: 'GTSF — Portfolio Risk Analysis',       artist: 'Quantitative Analyst', dur: '4:11', plays: '512K', stack: ['Python','Bloomberg','ARIMA','Monte Carlo'] },
-    { n: '04', title: 'Document Intelligence System',         artist: 'Data Science Intern',  dur: '3:42', plays: '673K', stack: ['Python','PostgreSQL','NLP'] },
-    { n: '05', title: 'Loan Default Risk Model',              artist: 'Credit Risk Analyst',  dur: '4:36', plays: '512K', stack: ['XGBoost','SHAP','SQL'] },
+    { n: '04', title: 'Document Intelligence System',         artist: 'SWE Intern',           dur: '3:42', plays: '673K', stack: ['Python','PostgreSQL','NLP'] },
+    { n: '05', title: 'Credit Classification System',         artist: 'MLOps',                dur: '4:36', plays: '512K', stack: ['FastAPI','XGBoost','MLflow'] },
     { n: '06', title: 'Hospital Operations Database',         artist: 'Systems Design',       dur: '3:28', plays: '198K', stack: ['PostgreSQL','Python','CTEs'] },
   ];
 
@@ -80,7 +80,7 @@
     { delay: 240, html: `<span class="dim">[ok]   stack profiler online</span>`, cls: 'out' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">whoami</span>` , cls: 'cmd', type: true },
-    { delay: 200, html: `<span style="color:var(--dark-fg)">abba ndomo</span> · <span class="dim">georgia tech '27</span> · <span class="dim">ISyE + OR</span>`, cls: 'out' },
+    { delay: 200, html: `<span style="color:var(--dark-fg)">abba ndomo</span> · <span class="dim">georgia tech '27</span> · <span class="dim">CS + ISyE (OR)</span>`, cls: 'out' },
     { delay: 100, html: `<span class="dim">data & ml engineer · building perchance · CPT available · f-1 visa</span>`, cls: 'dim' },
     { delay: 320, html: `&nbsp;` },
     { delay: 200, html: `${promptHTML()} <span class="cmd">play 1</span>`, cls: 'cmd', type: true },
@@ -236,7 +236,7 @@
     },
     whoami() {
       lineHTML(`<span style="color:var(--dark-fg)">abba ndomo</span> · data & ml engineer · georgia tech '27`, 'out');
-      lineHTML(`<span class="dim">ISyE + OR · building perchance · CPT available · f-1 visa</span>`, 'dim');
+      lineHTML(`<span class="dim">CS + ISyE (OR) · building perchance · CPT available · f-1 visa</span>`, 'dim');
     },
     fortune() {
       const fortunes = [
@@ -253,7 +253,7 @@
     },
     contact() {
       lineHTML(`<span class="dim">use </span><span style="color:var(--accent)">cd contact</span><span class="dim"> or:</span>`, 'dim');
-      lineHTML(`  email   · <a style="color:var(--accent)" href="mailto:abbandomo@gmail.com">abbandomo@gmail.com</a>`, 'out');
+      lineHTML(`  email   · <a style="color:var(--accent)" href="mailto:abba.ndomo@gmail.com">abba.ndomo@gmail.com</a>`, 'out');
       lineHTML(`  github  · <a style="color:var(--accent)" target="_blank" href="https://github.com/andomo3">github.com/andomo3</a>`, 'out');
       lineHTML(`  linkedin · <a style="color:var(--accent)" target="_blank" href="https://linkedin.com/in/AbbaNdomo">linkedin.com/in/AbbaNdomo</a>`, 'out');
     },
