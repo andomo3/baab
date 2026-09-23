@@ -253,7 +253,7 @@
     },
     contact() {
       lineHTML(`<span class="dim">use </span><span style="color:var(--accent)">cd contact</span><span class="dim"> or:</span>`, 'dim');
-      lineHTML(`  email   · <a style="color:var(--accent)" href="mailto:abba.ndomo@gmail.com">abba.ndomo@gmail.com</a>`, 'out');
+      lineHTML(`  email   · <a style="color:var(--accent)" href="mailto:andomo3@gatech.edu">andomo3@gatech.edu</a>`, 'out');
       lineHTML(`  github  · <a style="color:var(--accent)" target="_blank" href="https://github.com/andomo3">github.com/andomo3</a>`, 'out');
       lineHTML(`  linkedin · <a style="color:var(--accent)" target="_blank" href="https://linkedin.com/in/AbbaNdomo">linkedin.com/in/AbbaNdomo</a>`, 'out');
     },
