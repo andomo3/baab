@@ -12,10 +12,10 @@
       liveUrl: 'https://nba-props-prediction.vercel.app/',
       preview: 'perchance.webp',
       star: {
-        situation: 'Sportsbooks publish lines. Nobody tells you when a player is genuinely predictable — or why performance shifts by rest, form, and matchup.',
-        task: 'Build an open-source platform with full player behavioral profiles: calibrated edge, output distributions, opponent splits, and a predictability fingerprint.',
-        action: 'Built a Django REST API with XGBoost/CatBoost regressors per player/stat and SHAP explainability. Wired Airflow DAGs for nightly ingestion, Spark for scale, Redis for caching. Built a React frontend with five intelligence views and a composite predictability leaderboard.',
-        result: 'Serves 500+ daily active users and 500,000+ daily API calls at sub-200ms p95, with 99.5% uptime over 6 months and zero production incidents. Self-hostable end-to-end with a single Docker Compose up.'
+        situation: 'Sportsbooks publish lines, but nobody tells you when a player is actually predictable.',
+        task: 'Profile every player: calibrated edge, output distributions, and matchup splits.',
+        action: 'XGBoost/CatBoost models behind a Django API, fed by nightly Airflow jobs, with a React frontend.',
+        result: '500+ daily users at sub-200ms p95 and 99.5% uptime.'
       }
     },
     {
@@ -26,10 +26,10 @@
       liveUrl: 'https://altura-orcin.vercel.app/',
       preview: 'altura.webp',
       star: {
-        situation: 'A 101-unit property operator priced renovations from nested Excel matrices no off-the-shelf tool could parse. One estimate took most of a workday.',
-        task: 'Automate the full extraction and pricing flow so the client receives an itemized estimate in seconds, not hours.',
-        action: 'Built a PySpark + Airflow ETL to extract Excel matrices into Parquet tables, added a DuckDB validation layer for data quality, and wired the output into a Next.js 4-step configuration interface.',
-        result: 'Estimate time dropped from hours to 5 seconds. Schema is PySpark-ready for multi-property expansion — no code changes required.'
+        situation: 'Renovation pricing lived in nested Excel sheets; one estimate took most of a workday.',
+        task: 'Turn that into an itemized estimate in seconds.',
+        action: 'PySpark + Airflow ETL into Parquet, DuckDB validation, and a Next.js front end.',
+        result: 'Estimates went from hours to 5 seconds.'
       }
     },
     {
@@ -38,10 +38,10 @@
       metrics: [['Portfolio', '$500K live'], ['VaR Reduction', '15%'], ['Coverage', '50 → 120 stocks'], ['Simulations', '10,000 runs']],
       stack: ['Python', 'Bloomberg Terminal', 'ARIMA', 'NumPy', 'Statsmodels', 'Monte Carlo'],
       star: {
-        situation: 'The GT Student Fund manages $500K in live equity with model outputs driving real allocations. Coverage sat at 50 tickers with no macro stress-testing, and nothing reached a position without being pitched and defended first.',
-        task: 'Triple the investable universe and build a quantitative risk framework that surfaces tail risk before positions are sized — and that holds up in the room it is presented to.',
-        action: 'Built a Bloomberg screener to expand coverage. Ran 10,000-iteration Monte Carlo simulations under macro shocks. Implemented ARIMA models to validate sector-rotation strategies against historical regime data. Every output was pitched, analyzed, and validated before it informed an allocation.',
-        result: 'Coverage expanded from 50 to 120 tickers. Simulations surfaced 8% downside risk that survived review and directly shaped the fund\'s hedging position. Portfolio VaR reduced 15%.'
+        situation: 'A $500K live fund covered 50 tickers with no macro stress testing.',
+        task: 'Widen coverage and surface tail risk before positions are sized.',
+        action: 'Bloomberg screener, 10,000-run Monte Carlo under macro shocks, and ARIMA backtests.',
+        result: 'Coverage grew to 120 tickers and portfolio VaR fell 15%.'
       }
     },
     {
@@ -50,10 +50,10 @@
       metrics: [['Precision', '95%'], ['Latency', '45s → 8s'], ['Volume', '10K docs/mo'], ['Error Rate', '40% → 5%']],
       stack: ['Python', 'PostgreSQL', 'NLP', 'Multiprocessing', 'PyTest'],
       star: {
-        situation: '50+ auditors processed 10,000+ documents monthly through a pipeline running at 45s per doc with a 40% error rate. Real-time use had been abandoned.',
-        task: 'Fix latency and accuracy without retraining the model or rebuilding the infrastructure.',
-        action: 'Profiled the pipeline, identified an O(n²) matching loop, and swapped it for an O(n+m) hash-join — no model changes. Built a statistical validation framework with 50+ distributional checks to catch label noise upstream.',
-        result: 'Latency cut from 45s to 8s. Precision hit 95%. Error rate fell from 40% to 5%. The pipeline now supports real-time use during live audits.'
+        situation: 'Auditors waited 45s per document, with a 40% error rate.',
+        task: 'Fix speed and accuracy without new infrastructure.',
+        action: 'Replaced an O(n²) loop with a hash-join and added 50+ data validation checks.',
+        result: '8s per document, 95% precision, errors down to 5%.'
       }
     },
     {
@@ -62,10 +62,10 @@
       metrics: [['Inference p95', '<10ms'], ['Cache Hit Rate', '70%+'], ['Retraining', 'Weekly'], ['Drift Detection', 'KS-test']],
       stack: ['FastAPI', 'XGBoost', 'Redis', 'Airflow', 'dbt', 'Great Expectations', 'MLflow', 'Docker'],
       star: {
-        situation: 'A credit risk model is only useful if it answers at request time and stays calibrated as applicant distributions drift. Most models stop at a notebook and degrade silently in production.',
-        task: 'Build the full system: a real-time loan decision API, an automated retraining pipeline, and drift detection that catches degradation without manual intervention.',
-        action: 'Served XGBoost decisions via a FastAPI REST API with Redis caching on feature hash keys and Pydantic v2 input validation. Orchestrated a weekly Airflow pipeline: ingestion → dbt feature transformations → Great Expectations validation → retraining → MLflow registry promotion, gated on held-out AUC. Added KS-test drift detection on the output probability distribution against a rolling baseline.',
-        result: 'Sub-10ms p95 inference with a 70%+ cache hit rate. New models promote only when they beat the production model on AUC; drift alerts trigger automated retraining when p < 0.05, so distributional shift never degrades the model silently.'
+        situation: 'Most credit models stop at a notebook and drift silently in production.',
+        task: 'Serve decisions in real time and retrain automatically.',
+        action: 'FastAPI + Redis serving, a weekly Airflow retraining pipeline, and KS-test drift alerts.',
+        result: 'Sub-10ms p95 inference; new models ship only if they beat production.'
       }
     },
     {
@@ -74,10 +74,10 @@
       metrics: [['Tables', '15'], ['Records', '50,000+'], ['Redundancy', '-20%'], ['Query Time', '3s → 200ms']],
       stack: ['PostgreSQL', 'Python', 'CTEs', 'Window Functions'],
       star: {
-        situation: 'A hospital operations team ran every query through bespoke scripts on an unnormalized schema. The primary bed utilization report took 3 seconds — treated as overnight batch.',
-        task: 'Redesign the schema for correctness and make the critical utilization query fast enough for morning standups.',
-        action: 'Redesigned to 3NF across 15 tables with FK enforcement and composite indexes targeting the utilization query. Rewrote rolling analysis using window functions to replace all bespoke scripts.',
-        result: 'Query time dropped from 3s to 200ms. Data redundancy cut 20%. The overnight batch report became a real-time operational tool.'
+        situation: 'An unnormalized schema made the key bed-utilization report an overnight batch job.',
+        task: 'Make it fast enough for morning standups.',
+        action: '3NF redesign across 15 tables, composite indexes, and window functions.',
+        result: 'Query time from 3s to 200ms; redundancy down 20%.'
       }
     },
   ];
