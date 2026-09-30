@@ -139,7 +139,7 @@
   }
   .hero-grid { margin-top: 28px; }
   .hero-col { padding: 24px 0; }
-  .hero-bio { font-size: 19px; margin-bottom: 20px; }
+  .hero-bio { font-size: 19px; }
   .cta { padding: 15px 20px; text-align: center; }
 
   /* Role rows collapse: org, then body, then dates left-aligned under it. */

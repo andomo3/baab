@@ -366,17 +366,7 @@ button { font-family: inherit; }
   color: var(--fg);
   max-width: 30ch;
   text-wrap: balance;
-  margin: 0 0 28px;
-}
-.hero-pills { display: flex; gap: 10px; flex-wrap: wrap; }
-.pill {
-  font-size: 11px;
-  padding: 5px 12px;
-  border: 1px solid var(--hairline-2);
-  border-radius: var(--r-pill);
-  color: var(--fg-3);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+  margin: 0;
 }
 
 /* Status + CTAs */
