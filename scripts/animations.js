@@ -9,7 +9,6 @@
 
   function triggerHero() {
     if (heroDark) heroDark.classList.add('hero-loaded');
-    startStatCounters();
     setTimeout(typeTagline, 250);
   }
 
@@ -23,26 +22,6 @@
     }, 1400);
   } else {
     requestAnimationFrame(triggerHero);
-  }
-
-  // ---------- Stat counters ----------
-  function startStatCounters() {
-    if (REDUCED_MOTION) return; // markup already holds the final numbers
-    document.querySelectorAll('.hstat-n').forEach(el => {
-      const raw = el.textContent.trim();
-      const num = parseInt(raw.replace(/\D/g, ''), 10);
-      if (isNaN(num)) return;
-      const suffix = raw.replace(/[\d]/g, '');
-      const duration = 1200;
-      const start = performance.now();
-      function tick(now) {
-        const p = Math.min((now - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(ease * num) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    });
   }
 
   // ---------- Typewriter core ----------

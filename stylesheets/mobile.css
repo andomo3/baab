@@ -27,10 +27,8 @@
 
   /* Hero */
   .hero-v3 { padding: 44px 28px 0; }
-  .hero-grid { grid-template-columns: minmax(0,1fr); }
-  /* Stacked: the vertical rules become horizontal ones between rows. */
-  .hero-col { padding: 28px 0; border-right: 0 !important; border-bottom: 1px solid var(--hairline); }
-  .hero-col--cta { border-bottom: 0; }
+  .hero-grid { grid-template-columns: minmax(0,1fr); gap: 0; }
+  .hero-col { padding: 28px 0; }
   .rule-section, .site-footer { padding-left: 28px; padding-right: 28px; }
   .nav-role { display: none; }
 
@@ -91,7 +89,7 @@
     background: color-mix(in srgb, var(--dark-bg) 96%, transparent);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border-top: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.35), 0 -12px 32px -16px rgba(0,0,0,0.7);
     z-index: 100;
   }
   .mob-tab {
@@ -141,10 +139,7 @@
   }
   .hero-grid { margin-top: 28px; }
   .hero-col { padding: 24px 0; }
-  .hero-bio { font-size: 15px; margin-bottom: 20px; }
-  /* 2×2 holds at phone width — four short numerals, not four columns. */
-  .hero-col--stats { gap: 24px 20px; }
-  .hstat-n { font-size: 40px; }
+  .hero-bio { font-size: 19px; margin-bottom: 20px; }
   .cta { padding: 15px 20px; text-align: center; }
 
   /* Role rows collapse: org, then body, then dates left-aligned under it. */
@@ -152,7 +147,7 @@
   .role-when { text-align: left; }
   .role-bullets li { font-size: 14.5px; }
   .rule-section, .site-footer { padding-left: 20px; padding-right: 20px; }
-  .rule-section { margin-top: 48px; }
+  .rule-section { margin-top: 72px; }
   .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .footer-links { gap: 18px; }
 
