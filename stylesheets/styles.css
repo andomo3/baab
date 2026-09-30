@@ -32,6 +32,13 @@
   --hairline:   rgba(255,255,255,0.07);
   --hairline-2: rgba(255,255,255,0.14);
 
+  /* Elevation replaces section borders. A near-invisible ring keeps the edge
+     crisp; the two shadows (direct + ambient) do the separating. */
+  --shadow-1: 0 0 0 1px rgba(255,255,255,0.035),
+              0 1px 2px rgba(0,0,0,0.45),
+              0 10px 28px -10px rgba(0,0,0,0.6);
+  --shadow-nav: 0 1px 0 rgba(0,0,0,0.35), 0 12px 32px -16px rgba(0,0,0,0.7);
+
   /* How far the surname and the masthead corner stop short of the right edge.
      Shared so the two always align on the same vertical. */
   --name-inset: 6%;
@@ -148,7 +155,7 @@ button { font-family: inherit; }
   gap: 0;
   padding: 0 40px;
   background: var(--bg);
-  border-bottom: 1px solid var(--hairline);
+  box-shadow: var(--shadow-nav);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -340,22 +347,25 @@ button { font-family: inherit; }
 }
 .hero-name-corner .nc-n { color: var(--accent); }
 
-/* ---------- Three columns under the name ---------- */
+/* ---------- Two columns under the name ----------
+   No rules between them: whitespace and type size carry the separation. */
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);
-  border-top: 1px solid var(--hairline);
-  margin-top: 48px;
+  grid-template-columns: minmax(0,1.6fr) minmax(0,1fr);
+  gap: 96px;
+  margin-top: 56px;
 }
-.hero-col { min-width: 0; padding: 40px 48px 56px; }
-.hero-col--bio  { padding-left: 0; border-right: 1px solid var(--hairline); }
-.hero-col--stats { border-right: 1px solid var(--hairline); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-content: start; }
-.hero-col--cta  { padding-right: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
+.hero-col { min-width: 0; padding: 24px 0 40px; }
+.hero-col--cta  { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
 
+/* The bio is the lead: second in the hierarchy after the name. */
 .hero-bio {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--fg-2);
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  max-width: 30ch;
+  text-wrap: balance;
   margin: 0 0 28px;
 }
 .hero-pills { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -367,27 +377,6 @@ button { font-family: inherit; }
   color: var(--fg-3);
   letter-spacing: 0.04em;
   white-space: nowrap;
-}
-
-/* Stats — 2×2 */
-.hstat { min-width: 0; }
-.hstat-n {
-  display: block;
-  font-family: var(--display);
-  font-size: 52px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.hstat-l {
-  display: block;
-  font-size: 11px;
-  color: var(--fg-3);
-  margin-top: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 /* Status + CTAs */
@@ -416,18 +405,19 @@ button { font-family: inherit; }
 }
 .cta--primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
 .cta--ghost {
-  background: transparent;
+  background: var(--bg-2);
   color: var(--fg);
-  border: 1px solid var(--hairline-2);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-1);
   font-weight: 400;
 }
-.cta--ghost:hover { border-color: var(--fg-3); background: var(--bg-2); }
+.cta--ghost:hover { background: var(--bg-3); }
 
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {
   display: block;
   max-width: 1312px;
-  margin: 80px auto 0;
+  margin: 128px auto 0;
   padding: 0 64px;
 }
 .rule-head {
@@ -435,21 +425,20 @@ button { font-family: inherit; }
   align-items: baseline;
   justify-content: space-between;
   gap: 20px;
-  padding: 28px 0;
-  border-top: 1px solid var(--hairline-2);
+  padding: 0 0 8px;
 }
 .rule-title { display: flex; align-items: baseline; gap: 20px; }
 /* The numerals are a real sequence — Work precedes Education on the page and
    in time — so they carry order, not decoration. */
 .rule-num {
   font-size: 11px;
-  color: var(--fg-3);
+  color: var(--accent);
   letter-spacing: 0.18em;
   font-variant-numeric: tabular-nums;
 }
 .rule-head h2 {
   font-family: var(--display);
-  font-size: 22px;
+  font-size: clamp(28px, 3vw, 40px);
   font-weight: 700;
   color: var(--fg);
   letter-spacing: -0.02em;
@@ -463,8 +452,7 @@ button { font-family: inherit; }
   grid-template-columns: 200px minmax(0,1fr) 240px;
   gap: 32px;
   align-items: start;
-  padding: 44px 0;
-  border-top: 1px solid var(--hairline);
+  padding: 36px 0;
 }
 .role-org .org {
   font-size: 13px;
@@ -519,14 +507,13 @@ button { font-family: inherit; }
 /* ---------- Footer ---------- */
 .site-footer {
   max-width: 1184px; /* = 1312 - 2*64, so this rule lines up with .rule-head's */
-  margin: 80px auto 0;
+  margin: 128px auto 0;
   padding: 36px 0 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   flex-wrap: wrap;
-  border-top: 1px solid var(--hairline);
 }
 .site-footer .copy { font-size: 13px; color: var(--fg-3); }
 .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
@@ -537,8 +524,8 @@ button { font-family: inherit; }
 /* ---------- Now-playing terminal widget (refined) ---------- */
 .np-widget {
   border-radius: var(--r-md);
-  background: var(--dark-bg);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--bg-2);
+  box-shadow: var(--shadow-1);
   overflow: hidden;
 }
 .np-widget-head {
@@ -697,13 +684,12 @@ button { font-family: inherit; }
   display: grid;
   grid-template-columns: 240px 1fr;
   background: var(--surface);
-  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-1);
   border-radius: var(--r-md);
   overflow: hidden;
   min-height: 580px;
 }
 .ide-side {
-  border-right: 1px solid rgba(255,255,255,0.07);
   padding: 16px 0;
   background: var(--dark-bg);
   font-size: 13px;
@@ -880,7 +866,7 @@ button { font-family: inherit; }
 }
 .star-item {
   background: var(--bg-2);
-  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-1);
   border-radius: var(--r-md);
   padding: 18px 20px;
 }
@@ -911,7 +897,7 @@ button { font-family: inherit; }
 }
 .card {
   background: var(--surface);
-  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-1);
   border-radius: var(--r-md);
   padding: 22px 26px;
 }

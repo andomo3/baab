@@ -62,7 +62,7 @@
 }
 
 /* ---------- Hero entrance stagger ----------
-   One orchestrated beat: the name lands, the three columns arrive left to
+   One orchestrated beat: the name lands, the two columns arrive left to
    right behind it, and the prompt closes the sequence. */
 .hero-name-xl,
 .hero-name-corner,
@@ -77,8 +77,7 @@
 /* The corner settles just after the name it sits opposite. */
 .hero-v3.hero-loaded .hero-name-corner      { opacity: 1; transform: none; transition-delay: 0.18s; }
 .hero-v3.hero-loaded .hero-col--bio         { opacity: 1; transform: none; transition-delay: 0.26s; }
-.hero-v3.hero-loaded .hero-col--stats       { opacity: 1; transform: none; transition-delay: 0.36s; }
-.hero-v3.hero-loaded .hero-col--cta         { opacity: 1; transform: none; transition-delay: 0.46s; }
+.hero-v3.hero-loaded .hero-col--cta         { opacity: 1; transform: none; transition-delay: 0.38s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
 
