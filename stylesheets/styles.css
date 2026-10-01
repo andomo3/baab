@@ -347,17 +347,19 @@ button { font-family: inherit; }
 }
 .hero-name-corner .nc-n { color: var(--accent); }
 
-/* ---------- Under the name: the bio alone ---------- */
-.hero-grid { margin-top: 56px; }
-.hero-col { min-width: 0; padding: 24px 0 40px; }
-
-/* The bio is the lead: second in the hierarchy after the name. */
+/* Caption — fills the pocket under the given name, left of the surname, and
+   sits on the surname's baseline so the two read as one lockup. The surname
+   starts ~40% across at every width (both scale with vw), so a percentage
+   width keeps the caption clear of it. */
 .hero-bio {
-  font-size: clamp(20px, 1.9vw, 26px);
-  line-height: 1.45;
+  position: absolute;
+  left: 0;
+  bottom: 0.4em;
+  width: 34%;
+  font-size: clamp(16px, 1.6vw, 24px);
+  line-height: 1.4;
   letter-spacing: -0.015em;
   color: var(--fg);
-  max-width: 30ch;
   text-wrap: balance;
   margin: 0;
 }
@@ -608,7 +610,7 @@ button { font-family: inherit; }
 }
 
 /* ---------- Hero terminal row ----------
-   Sits below .hero-grid and shares the hero's own max-width, so the shell's
+   Sits below the name and shares the hero's own max-width, so the shell's
    left edge lines up with the name above it. */
 .hero-terminal-row {
   max-width: 1100px;
