@@ -51,7 +51,7 @@
   // ---------- Hero tagline typewriter ----------
   function typeTagline() {
     const el = document.querySelector('.hero-bio');
-    if (!el) return;
+    if (!el || el.hidden) return;
     if (REDUCED_MOTION) return; // full text is already in the markup
     const text = el.textContent.trim();
     typewriter(el, text, 14, (cursor) => {
