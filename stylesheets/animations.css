@@ -65,7 +65,7 @@
    One orchestrated beat: the name lands, then the bio settles in behind it. */
 .hero-name-xl,
 .hero-name-corner,
-.hero-col,
+.hero-bio,
 .hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
@@ -75,7 +75,7 @@
 .hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
 /* The corner settles just after the name it sits opposite. */
 .hero-v3.hero-loaded .hero-name-corner      { opacity: 1; transform: none; transition-delay: 0.18s; }
-.hero-v3.hero-loaded .hero-col--bio         { opacity: 1; transform: none; transition-delay: 0.26s; }
+.hero-v3.hero-loaded .hero-bio             { opacity: 1; transform: none; transition-delay: 0.26s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
 
@@ -202,7 +202,7 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-name-xl, .hero-name-corner, .hero-col,
+  .hero-name-xl, .hero-name-corner, .hero-bio,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }

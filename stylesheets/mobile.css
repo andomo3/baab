@@ -27,7 +27,8 @@
 
   /* Hero */
   .hero-v3 { padding: 44px 28px 0; }
-  .hero-col { padding: 28px 0; }
+  /* Too little slack beside the surname here; the caption drops below. */
+  .hero-bio { position: static; width: auto; max-width: 30ch; margin-top: 32px; font-size: 20px; }
   .rule-section, .site-footer { padding-left: 28px; padding-right: 28px; }
   .nav-role { display: none; }
 
@@ -136,9 +137,7 @@
     font-size: 10px;
     padding-top: 14px;
   }
-  .hero-grid { margin-top: 28px; }
-  .hero-col { padding: 24px 0; }
-  .hero-bio { font-size: 19px; }
+  .hero-bio { margin-top: 24px; font-size: 19px; }
 
   /* Role rows collapse: org, then body, then dates left-aligned under it. */
   .role-row { grid-template-columns: minmax(0,1fr); gap: 14px; padding: 32px 0; }
