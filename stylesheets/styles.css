@@ -180,24 +180,9 @@ button { font-family: inherit; }
 }
 .nav-logo:hover { color: var(--accent-dark); }
 
-/* Centred role label — states what the site is before the visitor reads a word
-   of it. Decorative rules flank it; hidden from AT since the hero says it too. */
-.nav-role {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 11px;
-  color: var(--fg-3);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.nav-role .dash { width: 24px; height: 1px; background: var(--hairline-2); }
-
 .nav-links {
   display: flex;
+  margin-left: auto;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
