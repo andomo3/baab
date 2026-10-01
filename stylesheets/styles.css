@@ -347,16 +347,9 @@ button { font-family: inherit; }
 }
 .hero-name-corner .nc-n { color: var(--accent); }
 
-/* ---------- Two columns under the name ----------
-   No rules between them: whitespace and type size carry the separation. */
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0,1.6fr) minmax(0,1fr);
-  gap: 96px;
-  margin-top: 56px;
-}
+/* ---------- Under the name: the bio alone ---------- */
+.hero-grid { margin-top: 56px; }
 .hero-col { min-width: 0; padding: 24px 0 40px; }
-.hero-col--cta  { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
 
 /* The bio is the lead: second in the hierarchy after the name. */
 .hero-bio {
@@ -366,52 +359,9 @@ button { font-family: inherit; }
   color: var(--fg);
   max-width: 30ch;
   text-wrap: balance;
-  margin: 0 0 28px;
-}
-.hero-pills { display: flex; gap: 10px; flex-wrap: wrap; }
-.pill {
-  font-size: 11px;
-  padding: 5px 12px;
-  border: 1px solid var(--hairline-2);
-  border-radius: var(--r-pill);
-  color: var(--fg-3);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+  margin: 0;
 }
 
-/* Status + CTAs */
-.hero-status { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; font-size: 12.5px; color: var(--fg-2); }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); flex-shrink: 0; }
-.hero-where { font-size: 14px; line-height: 1.6; color: var(--fg-3); margin: 0; }
-
-.hero-cta-stack { display: flex; flex-direction: column; gap: 10px; }
-.cta {
-  display: block;
-  width: 100%;
-  padding: 17px 26px;
-  border-radius: var(--r-sm);
-  font-family: var(--sans);
-  font-size: 14px;
-  text-align: left;
-  cursor: pointer;
-  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
-}
-.cta--primary {
-  background: var(--accent);
-  color: var(--on-accent);
-  border: 1px solid var(--accent);
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-.cta--primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
-.cta--ghost {
-  background: var(--bg-2);
-  color: var(--fg);
-  border: 1px solid transparent;
-  box-shadow: var(--shadow-1);
-  font-weight: 400;
-}
-.cta--ghost:hover { background: var(--bg-3); }
 
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {
