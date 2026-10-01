@@ -26,7 +26,7 @@
   }
 
   /* Hero */
-  .hero-v3 { padding: 44px 28px 40px; }
+  .hero-v3 { padding: 40px 28px; }
   .rule-section, .site-footer { padding-left: 28px; padding-right: 28px; }
   .nav-role { display: none; }
 
@@ -120,7 +120,7 @@
   .mob-tab:active { opacity: 0.7; }
 
   /* ── Hero ── */
-  .hero-v3 { padding: 24px 20px 32px; }
+  .hero-v3 { padding: 28px 20px; }
   .hero-name-xl { letter-spacing: -0.045em; }
   /* At 64px there is barely 150px of slack between the two names — an inset on
      top of that reads as a stray indent, so the surname goes flush right. */

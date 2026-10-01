@@ -281,17 +281,17 @@ button { font-family: inherit; }
 /* ============================================================
    HERO — the name carries the page
    ============================================================ */
-/* The hero owns the first screen: name at the top, caption on the bottom
-   edge, and the work starts below the fold. */
+/* The hero owns the first screen with the name centred in it; the work
+   starts below the fold. Equal top/bottom padding keeps the centre true. */
 .hero-v3 {
   max-width: 1312px;
   margin: 0 auto;
-  padding: 64px 64px 56px;
+  padding: 56px 64px;
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100dvh - var(--header-h));
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   gap: 48px;
 }
 
