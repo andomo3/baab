@@ -281,10 +281,18 @@ button { font-family: inherit; }
 /* ============================================================
    HERO — the name carries the page
    ============================================================ */
+/* The hero owns the first screen: name at the top, caption on the bottom
+   edge, and the work starts below the fold. */
 .hero-v3 {
   max-width: 1312px;
   margin: 0 auto;
-  padding: 64px 64px 0;
+  padding: 64px 64px 56px;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100dvh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
 }
 
 /* The name and its masthead corner share a positioning context. */
@@ -335,16 +343,10 @@ button { font-family: inherit; }
 }
 .hero-name-corner .nc-n { color: var(--accent); }
 
-/* Caption — fills the pocket under the given name, left of the surname, and
-   sits on the surname's baseline so the two read as one lockup. The surname
-   starts ~40% across at every width (both scale with vw), so a percentage
-   width keeps the caption clear of it. */
+/* Caption — below the name, on the hero's bottom edge. */
 .hero-bio {
-  position: absolute;
-  left: 0;
-  bottom: 0.4em;
-  width: 34%;
-  font-size: clamp(16px, 1.6vw, 24px);
+  max-width: 32ch;
+  font-size: clamp(20px, 1.9vw, 26px);
   line-height: 1.4;
   letter-spacing: -0.015em;
   color: var(--fg);
