@@ -125,7 +125,6 @@
     /* The tab bar takes a row of the shell here, so the first screen is shorter. */
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));
   }
-  .hero-caption { font-size: 26px; }
   /* Phones get a handful of logos, smaller, in their own spots. */
   .hero-logo--wide { display: none; }
   .hero-logo {

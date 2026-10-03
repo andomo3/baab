@@ -62,9 +62,8 @@
 }
 
 /* ---------- Hero entrance stagger ----------
-   One orchestrated beat: the name lands, then the bio settles in behind it. */
+   The name lands; the logos follow (see below). */
 .hero-name-xl,
-.hero-caption,
 .hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
@@ -72,7 +71,6 @@
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
-.hero-v3.hero-loaded .hero-caption         { opacity: 1; transform: none; transition-delay: 0.26s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
 
@@ -213,7 +211,7 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-name-xl, .hero-caption,
+  .hero-name-xl,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .hero-logo { opacity: 0.9; animation: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }

@@ -306,21 +306,6 @@ button { font-family: inherit; }
   margin-top: 0.12em;
 }
 
-/* Caption — steps down and right under the surname, continuing the name's
-   diagonal; the second line is set in italic and indented a further step. */
-.hero-caption {
-  align-self: flex-end;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  font-size: clamp(26px, 3vw, 46px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  color: var(--fg);
-}
-.hero-caption em { font-style: italic; padding-left: 1.6em; }
-
 /* ---------- Hero stage + scattered logos ----------
    The stage spans the full width of the page so the logos can reach the
    screen edges while the name keeps the content column. */
