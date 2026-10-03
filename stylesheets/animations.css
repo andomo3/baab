@@ -64,7 +64,7 @@
 /* ---------- Hero entrance stagger ----------
    One orchestrated beat: the name lands, then the bio settles in behind it. */
 .hero-name-xl,
-.hero-bio,
+.hero-caption,
 .hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
@@ -72,9 +72,23 @@
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
-.hero-v3.hero-loaded .hero-bio             { opacity: 1; transform: none; transition-delay: 0.26s; }
+.hero-v3.hero-loaded .hero-caption         { opacity: 1; transform: none; transition-delay: 0.26s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
+
+/* ---------- Hero logos ----------
+   They fade in once the name has landed, then drift on a slow, out-of-phase
+   bob: each has its own duration and a negative delay so none move in step. */
+.hero-logo {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  animation: logo-drift var(--dur, 8s) ease-in-out var(--d, 0s) infinite;
+}
+.hero-stage:has(.hero-loaded) .hero-logo { opacity: 0.9; transition-delay: 0.5s; }
+@keyframes logo-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -10px, 0); }
+}
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -199,8 +213,9 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-name-xl, .hero-bio,
+  .hero-name-xl, .hero-caption,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
+  .hero-logo { opacity: 0.9; animation: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }

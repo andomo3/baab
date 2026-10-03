@@ -57,28 +57,50 @@
     <section class="page active" data-page="home" data-screen-label="01 Home">
 
       <!-- ── HERO: the name is the thesis ── -->
-      <div class="hero-v3">
-        <div class="hero-namebox">
-          <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
-        </div>
+      <div class="hero-stage">
+        <!-- Stack logos scattered around the name. Decorative: the stack is
+             listed in About, so these stay out of the accessibility tree.
+             Marks from Simple Icons (CC0); trademarks belong to their owners.
+             --x/--y place each one on desktop, --mx/--my on phones (logos
+             without them are hidden there). -->
+        <ul class="hero-logos" aria-hidden="true">
+          <li class="hero-logo" style="--x:6%;--y:11%;--s:72px;--r:-8deg;--d:0s;--dur:7.0s;--mx:11%;--my:9%"><img src="logos/python.svg" alt="" width="72" height="72"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:29%;--y:8%;--s:50px;--r:10deg;--d:-1.7s;--dur:8.5s"><img src="logos/pytorch.svg" alt="" width="50" height="50"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:57%;--y:11%;--s:56px;--r:-6deg;--d:-3.4s;--dur:10.0s"><img src="logos/airflow.svg" alt="" width="56" height="56"></li>
+          <li class="hero-logo" style="--x:81%;--y:9%;--s:66px;--r:8deg;--d:-5.1s;--dur:11.5s;--mx:74%;--my:9%"><img src="logos/docker.svg" alt="" width="66" height="66"></li>
+          <li class="hero-logo" style="--x:94%;--y:30%;--s:48px;--r:-10deg;--d:-6.8s;--dur:7.0s;--mx:86%;--my:32%"><img src="logos/spark.svg" alt="" width="48" height="48"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:73%;--y:33%;--s:40px;--r:-4deg;--d:-8.5s;--dur:8.5s"><img src="logos/duckdb.svg" alt="" width="40" height="40"></li>
+          <li class="hero-logo" style="--x:53%;--y:36%;--s:60px;--r:6deg;--d:-1.2s;--dur:10.0s;--mx:40%;--my:12%"><img src="logos/postgresql.svg" alt="" width="60" height="60"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:3%;--y:50%;--s:46px;--r:12deg;--d:-2.9s;--dur:11.5s"><img src="logos/react.svg" alt="" width="46" height="46"></li>
+          <li class="hero-logo" style="--x:15%;--y:71%;--s:56px;--r:-6deg;--d:-4.6s;--dur:7.0s;--mx:10%;--my:80%"><img src="logos/pandas.svg" alt="" width="56" height="56"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:33%;--y:66%;--s:52px;--r:8deg;--d:-6.3s;--dur:8.5s"><img src="logos/scikitlearn.svg" alt="" width="52" height="52"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:7%;--y:89%;--s:44px;--r:-10deg;--d:-8.0s;--dur:10.0s"><img src="logos/jupyter.svg" alt="" width="44" height="44"></li>
+          <li class="hero-logo" style="--x:30%;--y:87%;--s:48px;--r:6deg;--d:-0.7s;--dur:11.5s;--mx:46%;--my:88%"><img src="logos/mlflow.svg" alt="" width="48" height="48"></li>
+          <li class="hero-logo hero-logo--wide" style="--x:51%;--y:91%;--s:40px;--r:10deg;--d:-2.4s;--dur:7.0s"><img src="logos/numpy.svg" alt="" width="40" height="40"></li>
+          <li class="hero-logo" style="--x:94%;--y:87%;--s:56px;--r:-8deg;--d:-4.1s;--dur:8.5s;--mx:82%;--my:78%"><img src="logos/fastapi.svg" alt="" width="56" height="56"></li>
+        </ul>
+        <div class="hero-v3">
+          <div class="hero-namebox">
+            <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
+          </div>
 
-        <!-- Caption hidden for now; drop the attribute to bring it back. -->
-        <p class="hero-bio" hidden>I start with the people who'll use a tool, then build the ML and data systems behind it.</p>
+          <p class="hero-caption"><span>Welcome to</span> <em>my domain</em></p>
 
-        <!-- The shell: labelled by its own title bar, not a heading.
-             Hidden for now; drop the attribute to bring it back. -->
-        <div class="hero-terminal-row" hidden>
-          <div class="np-widget" id="terminal">
-            <div class="np-widget-head">
-              <div class="lights"><span></span><span></span><span></span></div>
-              <div class="title">abba@portfolio — zsh</div>
-              <div class="right" title="Press / to focus">/</div>
-            </div>
-            <div class="np-widget-body" id="term-body" aria-live="polite"></div>
-            <div class="np-widget-input" id="term-input-row">
-              <span class="prompt">›</span>
-              <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
-              <span class="hint">↵ run · ↑↓ history</span>
+          <!-- The shell: labelled by its own title bar, not a heading.
+               Hidden for now; drop the attribute to bring it back. -->
+          <div class="hero-terminal-row" hidden>
+            <div class="np-widget" id="terminal">
+              <div class="np-widget-head">
+                <div class="lights"><span></span><span></span><span></span></div>
+                <div class="title">abba@portfolio — zsh</div>
+                <div class="right" title="Press / to focus">/</div>
+              </div>
+              <div class="np-widget-body" id="term-body" aria-live="polite"></div>
+              <div class="np-widget-input" id="term-input-row">
+                <span class="prompt">›</span>
+                <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
+                <span class="hint">↵ run · ↑↓ history</span>
+              </div>
             </div>
           </div>
         </div>
