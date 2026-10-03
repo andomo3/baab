@@ -121,9 +121,6 @@
   /* ── Hero ── */
   .hero-v3 { padding: 28px 20px; }
   .hero-name-xl { letter-spacing: -0.045em; }
-  /* At 64px there is barely 150px of slack between the two names — an inset on
-     top of that reads as a stray indent, so the surname goes flush right. */
-  .hero-namebox { --name-inset: 0; }
   .hero-v3 {
     /* The tab bar takes a row of the shell here, so the first screen is shorter. */
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));

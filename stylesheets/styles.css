@@ -39,9 +39,6 @@
               0 10px 28px -10px rgba(0,0,0,0.6);
   --shadow-nav: 0 1px 0 rgba(0,0,0,0.35), 0 12px 32px -16px rgba(0,0,0,0.7);
 
-  /* How far the surname stops short of the right edge. */
-  --name-inset: 6%;
-
   /* Dark-island aliases — the old two-palette system collapsed into one.
      Kept so existing selectors keep resolving until each is ported. */
   --dark-bg:   var(--bg);
@@ -268,7 +265,7 @@ button { font-family: inherit; }
 /* The hero owns the first screen with the name centred in it; the work
    starts below the fold. Equal top/bottom padding keeps the centre true. */
 .hero-v3 {
-  max-width: 1312px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 56px 64px;
   min-height: calc(100vh - var(--header-h));
@@ -283,7 +280,7 @@ button { font-family: inherit; }
 
 .hero-name-xl {
   font-family: var(--display);
-  font-size: clamp(64px, 12.4vw, 186px);
+  font-size: clamp(64px, 13.5vw, 240px);
   font-weight: 700;
   line-height: 0.85;
   letter-spacing: -0.055em;
@@ -303,16 +300,17 @@ button { font-family: inherit; }
 .hero-name-xl .surname {
   align-self: flex-end;
   color: rgba(255,255,255,0.38);
-  /* Inset, not flush: a surname jammed into the corner reads as an accident
-     rather than a choice. */
-  margin-right: var(--name-inset);
+  /* Air between the two names: the surname drops a step below the given
+     name, and sits flush right so the diagonal between them is as long as
+     the hero allows. */
+  margin-top: 0.12em;
 }
 
 /* Caption — steps down and right under the surname, continuing the name's
    diagonal; the second line is set in italic and indented a further step. */
 .hero-caption {
   align-self: flex-end;
-  margin: 0 var(--name-inset) 0 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   font-size: clamp(26px, 3vw, 46px);
