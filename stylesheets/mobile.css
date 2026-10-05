@@ -120,7 +120,6 @@
 
   /* ── Hero ── */
   .hero-v3 { padding: 28px 20px; }
-  .hero-name-xl { letter-spacing: -0.045em; }
   .hero-v3 {
     /* The tab bar takes a row of the shell here, so the first screen is shorter. */
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));
