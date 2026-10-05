@@ -27,6 +27,10 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
+<!-- Site backdrop: warm glows and grain behind every page, pinned to the
+     viewport so content scrolls over it. Decorative. -->
+<div class="site-bg" aria-hidden="true"><span></span><span></span></div>
+
 <!-- Loading screen -->
 <div id="loader">
   <div class="loader-inner">
@@ -57,27 +61,25 @@
     <section class="page active" data-page="home" data-screen-label="01 Home">
 
       <!-- ── HERO: the name is the thesis ── -->
-      <div class="hero-stage">
-        <div class="hero-v3">
-          <div class="hero-namebox">
-            <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
-          </div>
+      <div class="hero-v3">
+        <div class="hero-namebox">
+          <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
+        </div>
 
-          <!-- The shell: labelled by its own title bar, not a heading.
-               Hidden for now; drop the attribute to bring it back. -->
-          <div class="hero-terminal-row" hidden>
-            <div class="np-widget" id="terminal">
-              <div class="np-widget-head">
-                <div class="lights"><span></span><span></span><span></span></div>
-                <div class="title">abba@portfolio — zsh</div>
-                <div class="right" title="Press / to focus">/</div>
-              </div>
-              <div class="np-widget-body" id="term-body" aria-live="polite"></div>
-              <div class="np-widget-input" id="term-input-row">
-                <span class="prompt">›</span>
-                <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
-                <span class="hint">↵ run · ↑↓ history</span>
-              </div>
+        <!-- The shell: labelled by its own title bar, not a heading.
+             Hidden for now; drop the attribute to bring it back. -->
+        <div class="hero-terminal-row" hidden>
+          <div class="np-widget" id="terminal">
+            <div class="np-widget-head">
+              <div class="lights"><span></span><span></span><span></span></div>
+              <div class="title">abba@portfolio — zsh</div>
+              <div class="right" title="Press / to focus">/</div>
+            </div>
+            <div class="np-widget-body" id="term-body" aria-live="polite"></div>
+            <div class="np-widget-input" id="term-input-row">
+              <span class="prompt">›</span>
+              <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
+              <span class="hint">↵ run · ↑↓ history</span>
             </div>
           </div>
         </div>
