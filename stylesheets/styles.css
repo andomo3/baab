@@ -97,6 +97,11 @@
   /* The page's side gutter, from the hero design. The nav, hero, home
      sections and footer all use it, so they share one left and right edge. */
   --gutter: clamp(20px, 5vw, 72px);
+  /* Ultra-wide cap: past --content-max the side padding grows instead of
+     the content, so everything stays a fixed width, centred. 100% resolves
+     against each full-width container that uses it. */
+  --content-max: 1440px;
+  --page-pad: max(var(--gutter), calc((100% - var(--content-max)) / 2));
   --header-h: 60px;
   --mob-nav-h: 62px;
 }
@@ -202,7 +207,7 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 0 var(--gutter);
+  padding: 0 var(--page-pad);
   /* See-through, so the backdrop runs behind the nav too. Content never
      passes beneath it (it scrolls inside .main), so it needs no fill. */
   background: transparent;
@@ -300,7 +305,7 @@ button { font-family: inherit; }
 
 .section {
   /* Same side gutter as the nav and the home page. */
-  padding: 32px var(--gutter);
+  padding: 32px var(--page-pad);
 }
 
 .section-head {
@@ -339,7 +344,7 @@ button { font-family: inherit; }
   min-height: calc(100dvh - var(--header-h));
   display: flex;
   flex-direction: column;
-  padding: 0 var(--gutter);
+  padding: 0 var(--page-pad);
   color: var(--hero-text);
   font-family: var(--hero-font-sans);
   /* The design was built on browser defaults, not the site's 14px / 1.55. */
@@ -451,7 +456,7 @@ button { font-family: inherit; }
 .rule-section {
   display: block;
   margin: 128px 0 0;
-  padding: 0 var(--gutter);
+  padding: 0 var(--page-pad);
 }
 .rule-head {
   display: flex;
@@ -543,7 +548,7 @@ button { font-family: inherit; }
 /* ---------- Footer ---------- */
 .site-footer {
   margin: 128px 0 0;
-  padding: 36px var(--gutter) 56px;
+  padding: 36px var(--page-pad) 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
