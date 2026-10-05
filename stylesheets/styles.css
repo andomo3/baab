@@ -65,6 +65,9 @@
   --sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --display:  'Space Grotesk', -apple-system, system-ui, sans-serif;
   --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  /* The hero name only: a high-contrast serif italic, so plain type on the
+     backdrop carries some drama against the grotesk everywhere else. */
+  --serif-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
 
   /* Text that sits ON the accent. White on #D4A464 is 2.2:1; the near-black
      is 9.6:1 and matches how the design draws its primary button. */
@@ -327,11 +330,14 @@ button { font-family: inherit; }
 .hero-namebox { position: relative; }
 
 .hero-name-xl {
-  font-family: var(--display);
-  font-size: clamp(64px, 13.5vw, 240px);
-  font-weight: 700;
+  font-family: var(--serif-display);
+  font-style: italic;
+  /* The serif sets smaller and narrower than the grotesk did, so it runs
+     larger to hold the same presence. */
+  font-size: clamp(80px, 17vw, 300px);
+  font-weight: 400;
   line-height: 0.85;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.02em;
   color: var(--fg);
   margin: 0;
   /* 0.85 line-height clips descenders on some faces; reserve the space. */
@@ -343,11 +349,12 @@ button { font-family: inherit; }
 }
 .hero-name-xl .given { align-self: flex-start; }
 /* The surname recedes so "Abba" reads first. The source design set this at
-   18% white (1.6:1) which renders the family name near-invisible; 38% holds
-   the same hierarchy while clearing the 3:1 floor for large text. */
+   18% white (1.6:1) which renders the family name near-invisible; 42% holds
+   the same hierarchy while clearing the 3:1 floor for large text, with a
+   little extra for the serif's hairline strokes. */
 .hero-name-xl .surname {
   align-self: flex-end;
-  color: rgba(255,255,255,0.38);
+  color: rgba(255,255,255,0.42);
   /* Air between the two names: the surname drops a step below the given
      name, and sits flush right so the diagonal between them is as long as
      the hero allows. */
