@@ -80,6 +80,9 @@
   --r-pill: 100px;
 
   /* Layout */
+  /* The page's side gutter, from the hero design. The nav, hero, home
+     sections and footer all use it, so they share one left and right edge. */
+  --gutter: clamp(20px, 5vw, 72px);
   --header-h: 60px;
   --mob-nav-h: 62px;
 }
@@ -185,9 +188,7 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 0;
-  /* Same side padding as the hero, so the wordmark and the links sit on the
-     hero's left and right edges. */
-  padding: 0 clamp(20px, 5vw, 72px);
+  padding: 0 var(--gutter);
   /* See-through, so the backdrop runs behind the nav too. Content never
      passes beneath it (it scrolls inside .main), so it needs no fill. */
   background: transparent;
@@ -338,7 +339,7 @@ button { font-family: inherit; }
   min-height: calc(100dvh - var(--header-h));
   display: flex;
   flex-direction: column;
-  padding: 0 clamp(20px, 5vw, 72px);
+  padding: 0 var(--gutter);
   color: var(--hero-text);
   font-family: var(--hero-font-sans);
   /* The design was built on browser defaults, not the site's 14px / 1.55. */
@@ -449,9 +450,8 @@ button { font-family: inherit; }
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {
   display: block;
-  max-width: 1312px;
-  margin: 128px auto 0;
-  padding: 0 64px;
+  margin: 128px 0 0;
+  padding: 0 var(--gutter);
 }
 .rule-head {
   display: flex;
@@ -525,6 +525,9 @@ button { font-family: inherit; }
   border-radius: 50%;
   background: var(--accent);
 }
+/* The sections now run as wide as the hero; cap the text column at the
+   width it had before so lines stay a comfortable length on wide screens. */
+.role-body { max-width: 680px; }
 .role-body .stack { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
 
 .role-when { text-align: right; }
@@ -539,9 +542,8 @@ button { font-family: inherit; }
 
 /* ---------- Footer ---------- */
 .site-footer {
-  max-width: 1184px; /* = 1312 - 2*64, so this rule lines up with .rule-head's */
-  margin: 128px auto 0;
-  padding: 36px 0 56px;
+  margin: 128px 0 0;
+  padding: 36px var(--gutter) 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
