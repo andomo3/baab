@@ -58,12 +58,14 @@
   --glass-strong:rgba(255,255,255,0.08);
 
   /* Type */
-  /* One family carries the site. --display and --sans both point at it;
-     they stay as separate names so weight/size intent remains legible.
-     --mono is reserved for the five places advance width is load-bearing:
-     the terminal body and input, .code, and the .code .ln gutter. */
+  /* Three faces, one job each, taken from the hero:
+       --display  Instrument Serif: the name and every heading (always 400;
+                  the face has no bold, so never ask it for one)
+       --sans     Space Grotesk: text and UI
+       --mono     JetBrains Mono: only where it is code (the terminal, .code,
+                  file names and paths) */
   --sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --display:  'Space Grotesk', -apple-system, system-ui, sans-serif;
+  --display:  'Instrument Serif', 'Times New Roman', serif;
   --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
 
   /* Text that sits ON the accent. White on #D4A464 is 2.2:1; the near-black
@@ -225,11 +227,11 @@ button { font-family: inherit; }
 }
 
 .nav-logo {
-  font-family: var(--display);
-  font-size: 15px;
-  font-weight: 700;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 500;
   color: var(--fg);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   cursor: pointer;
   margin-right: 40px;
   flex-shrink: 0;
@@ -247,8 +249,9 @@ button { font-family: inherit; }
   flex-shrink: 0;
 }
 .nav-item {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--fg-3);
   padding: 6px 12px;
   border-radius: var(--r-sm);
@@ -316,9 +319,10 @@ button { font-family: inherit; }
   margin: 32px 0 18px;
 }
 .section-head h2 {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 400;
   font-family: var(--display);
+  line-height: 1;
   letter-spacing: -0.02em;
   margin: 0;
   color: var(--fg);
@@ -476,8 +480,9 @@ button { font-family: inherit; }
 }
 .rule-head h2 {
   font-family: var(--display);
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 700;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1;
   color: var(--fg);
   letter-spacing: -0.02em;
   margin: 0;
@@ -807,9 +812,11 @@ button { font-family: inherit; }
 .code .var { color: var(--dark-fg); }
 
 .project-detail h2 {
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-family: var(--display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   margin: 0 0 6px;
 }
 .project-detail .crumb {
@@ -949,9 +956,11 @@ button { font-family: inherit; }
   margin: 0 0 14px;
 }
 .card h2, .card h3 {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   margin: 0 0 6px;
 }
 

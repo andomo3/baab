@@ -118,7 +118,7 @@
   align-items: center;
 }
 .setlist-bar .label {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   color: var(--fg-4);
   letter-spacing: 0.1em;
@@ -126,7 +126,7 @@
   margin-right: 6px;
 }
 .setlist-pill {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   padding: 6px 12px;
   border-radius: 999px;
@@ -166,7 +166,7 @@
 .setlist-intro.show { display: block; animation: slIntro 320ms ease; }
 .setlist-intro b { color: var(--fg); font-weight: 600; }
 .setlist-intro .for {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   color: var(--fg-3);
   letter-spacing: 0.08em;
