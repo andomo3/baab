@@ -79,6 +79,20 @@
   --r-xl: 14px;
   --r-pill: 100px;
 
+  /* Hero palette, from the approved hero design. Used by the hero and the
+     loading screen; the rest of the site keeps the tokens above. */
+  --hero-text: #F4F1EA;
+  --hero-text-soft: #E4DDD0;
+  --hero-muted: #A8A29A;
+  --hero-accent: #C8A27C;
+  --hero-rule: rgba(244, 241, 234, 0.16);
+  --hero-ink: #121110; /* text on the light CTA pill */
+  --hero-font-sans: 'Space Grotesk', 'IBM Plex Sans', 'Helvetica Neue', Helvetica, sans-serif;
+  --hero-font-display: 'Instrument Serif', 'Times New Roman', serif;
+  /* Instrument Serif has no Cyrillic: the Russian line falls through to
+     Cormorant Garamond. */
+  --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
+
   /* Layout */
   /* The page's side gutter, from the hero design. The nav, hero, home
      sections and footer all use it, so they share one left and right edge. */
@@ -285,9 +299,8 @@ button { font-family: inherit; }
 }
 
 .section {
-  padding: 32px 36px;
-  max-width: 1240px;
-  margin: 0 auto;
+  /* Same side gutter as the nav and the home page. */
+  padding: 32px var(--gutter);
 }
 
 .section-head {
@@ -316,24 +329,11 @@ button { font-family: inherit; }
 /* ============================================================
    HERO — "Polyglot"
    Ported from the approved reference build (polyglot-hero.html). Colours,
-   type sizes and spacing are the design's own and are kept as given, so
-   its palette is scoped to the hero rather than mixed into the site
-   tokens. The background is the site's backdrop (.site-bg); the nav is
+   type sizes and spacing are the design's own and are kept as given; its
+   palette is the --hero-* tokens in :root. The background is the site's backdrop (.site-bg); the nav is
    the site's top nav.
    ============================================================ */
 .hero {
-  --hero-text: #F4F1EA;
-  --hero-text-soft: #E4DDD0;
-  --hero-muted: #A8A29A;
-  --hero-accent: #C8A27C;
-  --hero-rule: rgba(244, 241, 234, 0.16);
-  --hero-ink: #121110; /* text on the light CTA pill */
-  --hero-font-sans: 'Space Grotesk', 'IBM Plex Sans', 'Helvetica Neue', Helvetica, sans-serif;
-  --hero-font-display: 'Instrument Serif', 'Times New Roman', serif;
-  /* Instrument Serif has no Cyrillic: the Russian line falls through to
-     Cormorant Garamond. */
-  --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
-
   /* Fills the first screen below the nav. */
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100dvh - var(--header-h));
@@ -1021,7 +1021,9 @@ button { font-family: inherit; }
 /* ---------- Contact ---------- */
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 0.85fr;
+  /* minmax(0, …): the availability code block scrolls inside its card
+     instead of stretching the column past the screen. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
   gap: 24px;
 }
 

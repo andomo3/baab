@@ -29,8 +29,8 @@
 
   /* Content sections */
   .hero-terminal-row { margin-top: 40px; }
-  .section { padding: 24px; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .section { padding-top: 24px; padding-bottom: 24px; }
+  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
 
   /* IDE */
   .ide { grid-template-columns: 1fr; min-height: 500px; }
@@ -131,7 +131,7 @@
   .footer-links { gap: 18px; }
 
   /* ── Sections ── */
-  .section { padding: 20px 20px; }
+  .section { padding-top: 20px; padding-bottom: 20px; }
   .section-head { margin-bottom: 14px; }
   .section-head h2 { font-size: 18px; }
 
@@ -173,7 +173,7 @@
   .star-grid { grid-template-columns: 1fr; gap: 10px; }
 
   /* ── About / Contact grids ── */
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .card { padding: 16px; }
 
 }
