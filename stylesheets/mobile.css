@@ -133,7 +133,6 @@
   /* ── Sections ── */
   .section { padding-top: 20px; padding-bottom: 20px; }
   .section-head { margin-bottom: 14px; }
-  .section-head h2 { font-size: 18px; }
 
   /* ── Hero terminal ── */
   .hero-terminal-row { margin-top: 32px; }
@@ -168,7 +167,7 @@
   .ide-content { padding: 20px; }
 
   /* Project detail */
-  .project-detail h2 { font-size: 18px; }
+  .project-detail h2 { font-size: 32px; }
   .meta-grid { grid-template-columns: 1fr; gap: 4px; }
   .star-grid { grid-template-columns: 1fr; gap: 10px; }
 
