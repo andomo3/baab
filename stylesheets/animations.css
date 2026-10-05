@@ -3,10 +3,11 @@
    ============================================================ */
 
 /* ---------- Loading screen ---------- */
+/* Styled like the hero: its serif name on the site backdrop. */
 #loader {
   position: fixed;
   inset: 0;
-  background: var(--dark-bg);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +18,8 @@
   animation: loader-fade-out 0.45s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 .loader-inner {
+  position: relative;
+  z-index: 1; /* above the loader's backdrop copy */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -25,20 +28,22 @@
 }
 .loader-line {
   display: flex;
-  gap: 0.22em;
+  font-size: clamp(64px, 11vw, 160px); /* the hero name's size; the gap below is a word space at it */
+  gap: 0.25em;
   overflow: hidden;
+  /* Room for the italic's overhang, which the rise mask would clip. */
+  padding-right: 0.1em;
 }
 .loader-word {
-  font-family: var(--display);
-  font-size: clamp(52px, 9vw, 100px);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: var(--dark-fg);
+  font-family: var(--hero-font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--hero-text);
   display: block;
   transform: translateY(110%);
   animation: word-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.loader-word.accent { color: var(--accent); }
+.loader-word--italic { font-style: italic; }
 .loader-word:nth-child(1) { animation-delay: 0.05s; }
 .loader-word:nth-child(2) { animation-delay: 0.18s; }
 .loader-sub {
