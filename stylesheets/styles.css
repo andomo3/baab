@@ -65,9 +65,6 @@
   --sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --display:  'Space Grotesk', -apple-system, system-ui, sans-serif;
   --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
-  /* The hero name only: a high-contrast serif italic, so plain type on the
-     backdrop carries some drama against the grotesk everywhere else. */
-  --serif-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
 
   /* Text that sits ON the accent. White on #D4A464 is 2.2:1; the near-black
      is 9.6:1 and matches how the design draws its primary button. */
@@ -311,55 +308,138 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
-   HERO — the name carries the page
+   HERO — "Polyglot"
+   Ported from the approved reference build (polyglot-hero.html). Colours,
+   type sizes and spacing are the design's own and are kept as given, so
+   its palette is scoped to the hero rather than mixed into the site
+   tokens. The background is the site's backdrop (.site-bg); the nav is
+   the site's top nav.
    ============================================================ */
-/* The hero owns the first screen with the name centred in it; the work
-   starts below the fold. Equal top/bottom padding keeps the centre true. */
-.hero-v3 {
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: 56px 64px;
+.hero {
+  --hero-text: #F4F1EA;
+  --hero-text-soft: #E4DDD0;
+  --hero-muted: #A8A29A;
+  --hero-accent: #C8A27C;
+  --hero-rule: rgba(244, 241, 234, 0.16);
+  --hero-ink: #121110; /* text on the light CTA pill */
+  --hero-font-sans: 'Space Grotesk', 'IBM Plex Sans', 'Helvetica Neue', Helvetica, sans-serif;
+  --hero-font-display: 'Instrument Serif', 'Times New Roman', serif;
+  /* Instrument Serif has no Cyrillic: the Russian line falls through to
+     Cormorant Garamond. */
+  --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
+
+  /* Fills the first screen below the nav. */
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100dvh - var(--header-h));
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 48px;
+  padding: 0 clamp(20px, 5vw, 72px);
+  color: var(--hero-text);
+  font-family: var(--hero-font-sans);
+  /* The design was built on browser defaults, not the site's 14px / 1.55. */
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: normal;
 }
 
-.hero-namebox { position: relative; }
-
-.hero-name-xl {
-  font-family: var(--serif-display);
-  font-style: italic;
-  /* The serif sets smaller and narrower than the grotesk did, so it runs
-     larger to hold the same presence. */
-  font-size: clamp(80px, 17vw, 300px);
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-  margin: 0;
-  /* 0.85 line-height clips descenders on some faces; reserve the space. */
-  padding-bottom: 0.04em;
-  /* Given name and surname swing to opposite edges. This replaces a hard <br>,
-     so the two-line stack is now layout-driven rather than baked into markup. */
+/* Body: anchored to the bottom of the screen */
+.hero__main {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  gap: 40px;
+  padding: 96px 0 56px;
 }
-.hero-name-xl .given { align-self: flex-start; }
-/* The surname recedes so "Abba" reads first. The source design set this at
-   18% white (1.6:1) which renders the family name near-invisible; 42% holds
-   the same hierarchy while clearing the 3:1 floor for large text, with a
-   little extra for the serif's hairline strokes. */
-.hero-name-xl .surname {
-  align-self: flex-end;
-  color: rgba(255,255,255,0.42);
-  /* Air between the two names: the surname drops a step below the given
-     name, and sits flush right so the diagonal between them is as long as
-     the hero allows. */
-  margin-top: 0.12em;
+.hero__intro { display: flex; flex-direction: column; gap: 24px; }
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hero-muted);
 }
+.hero__eyebrow::before { content: ""; flex: none; width: 28px; height: 1px; background: var(--hero-accent); }
+.hero__name {
+  margin: 0;
+  font-family: var(--hero-font-display);
+  font-weight: 400;
+  font-size: clamp(64px, 11vw, 160px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.hero__name em { font-style: italic; }
+
+.hero__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px 64px;
+}
+
+/* The translating line: all four share one grid cell */
+.hero__line {
+  margin: 0;
+  flex: 1 1 420px;
+  max-width: 860px;
+  display: grid;
+  font-family: var(--hero-font-line);
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 44px);
+  line-height: 1.18;
+  color: var(--hero-text-soft);
+  text-wrap: balance;
+}
+.hero__line > span {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+.hero__line > span.is-on { opacity: 1; visibility: visible; }
+.hero__line > span[lang="ru"] { font-weight: 500; font-size: 1.08em; }
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--hero-text);
+  color: var(--hero-ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+.hero__cta:hover { color: var(--hero-ink); }
+
+/* Language strip */
+.hero__langs { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.hero__lang {
+  flex: 1 1 140px;
+  min-height: 52px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 14px 0 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--hero-rule);
+  border-radius: 0;
+  color: var(--hero-muted);
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.hero__lang:hover { color: var(--hero-text); }
+.hero__lang[aria-pressed="true"] { color: var(--hero-text); border-top-color: var(--hero-accent); }
+.hero__lang:focus-visible { outline: 1px solid var(--hero-accent); outline-offset: 4px; }
+.hero__lang-tag { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hero-muted); }
 
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {
@@ -606,8 +686,7 @@ button { font-family: inherit; }
 }
 
 /* ---------- Hero terminal row ----------
-   Sits below the name and shares the hero's own max-width, so the shell's
-   left edge lines up with the name above it. */
+   Sits below the hero (hidden for now). */
 .hero-terminal-row {
   max-width: 1100px;
   margin: 34px auto 0;

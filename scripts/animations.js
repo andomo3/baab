@@ -5,11 +5,10 @@
 
   // ---------- Loading screen ----------
   const loader = document.getElementById('loader');
-  const heroDark = document.querySelector('.hero-v3');
+  const hero = document.querySelector('[data-hero]');
 
   function triggerHero() {
-    if (heroDark) heroDark.classList.add('hero-loaded');
-    setTimeout(typeTagline, 250);
+    if (hero) hero.classList.add('hero-loaded');
   }
 
   if (loader) {
@@ -46,17 +45,6 @@
       }
     }
     tick();
-  }
-
-  // ---------- Hero tagline typewriter ----------
-  function typeTagline() {
-    const el = document.querySelector('.hero-bio');
-    if (!el || el.hidden) return;
-    if (REDUCED_MOTION) return; // full text is already in the markup
-    const text = el.textContent.trim();
-    typewriter(el, text, 14, (cursor) => {
-      setTimeout(() => cursor.classList.add('tw-cursor-done'), 1200);
-    });
   }
 
   // ---------- Scroll reveal ----------

@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@1,500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D4A464'/></svg>" />
 <link rel="stylesheet" href="stylesheets/styles.css" />
 <link rel="stylesheet" href="stylesheets/enhancements.css" />
@@ -60,27 +60,57 @@
     <!-- ============== HOME ============== -->
     <section class="page active" data-page="home" data-screen-label="01 Home">
 
-      <!-- ── HERO: the name is the thesis ── -->
-      <div class="hero-v3">
-        <div class="hero-namebox">
-          <h1 class="hero-name-xl"><span class="given">Abba</span><span class="surname">Ndomo</span></h1>
-        </div>
+      <!-- ── HERO: polyglot ──
+           The name stays put; the italic line under it cycles through four
+           languages (scripts/hero.js). The strip below lists them: picking one
+           shows it and stops the rotation for the rest of the visit. All four
+           lines share one grid cell, so the block keeps the tallest line's
+           height and the layout never jumps. -->
+      <div class="hero" data-hero>
+        <div class="hero__main">
+          <div class="hero__intro">
+            <div class="hero__eyebrow">Industrial &amp; Systems Engineering, Georgia Tech</div>
+            <h1 class="hero__name">Abba <em>Ndomo</em></h1>
+          </div>
 
-        <!-- The shell: labelled by its own title bar, not a heading.
-             Hidden for now; drop the attribute to bring it back. -->
-        <div class="hero-terminal-row" hidden>
-          <div class="np-widget" id="terminal">
-            <div class="np-widget-head">
-              <div class="lights"><span></span><span></span><span></span></div>
-              <div class="title">abba@portfolio — zsh</div>
-              <div class="right" title="Press / to focus">/</div>
-            </div>
-            <div class="np-widget-body" id="term-body" aria-live="polite"></div>
-            <div class="np-widget-input" id="term-input-row">
-              <span class="prompt">›</span>
-              <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
-              <span class="hint">↵ run · ↑↓ history</span>
-            </div>
+          <div class="hero__row">
+            <p class="hero__line">
+              <span data-line lang="en" class="is-on">I study how systems work, then build the software that makes them work better.</span>
+              <span data-line lang="sw">Ninachunguza jinsi mifumo inavyofanya kazi, kisha ninaunda programu zinazoiboresha.</span>
+              <span data-line lang="es">Estudio cómo funcionan los sistemas y luego construyo el software que los hace funcionar mejor.</span>
+              <span data-line lang="ru">Я учу русский. Пока медленно.</span>
+            </p>
+            <a class="hero__cta" href="#projects" data-nav="projects">View projects
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+            </a>
+          </div>
+
+          <div class="hero__langs" role="group" aria-label="Language">
+            <button class="hero__lang" type="button" data-lang lang="en" aria-pressed="true">English</button>
+            <button class="hero__lang" type="button" data-lang lang="sw" aria-pressed="false">Kiswahili</button>
+            <button class="hero__lang" type="button" data-lang lang="es" aria-pressed="false">Español</button>
+            <button class="hero__lang" type="button" data-lang aria-pressed="false">
+              <span lang="ru">Русский</span>
+              <span class="hero__lang-tag">Learning</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- The shell: labelled by its own title bar, not a heading.
+           Hidden for now; drop the attribute to bring it back. -->
+      <div class="hero-terminal-row" hidden>
+        <div class="np-widget" id="terminal">
+          <div class="np-widget-head">
+            <div class="lights"><span></span><span></span><span></span></div>
+            <div class="title">abba@portfolio — zsh</div>
+            <div class="right" title="Press / to focus">/</div>
+          </div>
+          <div class="np-widget-body" id="term-body" aria-live="polite"></div>
+          <div class="np-widget-input" id="term-input-row">
+            <span class="prompt">›</span>
+            <input id="term-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="try: play 3, shuffle, cd projects" aria-label="Terminal command" />
+            <span class="hint">↵ run · ↑↓ history</span>
           </div>
         </div>
       </div>
@@ -350,6 +380,7 @@
 
 <script src="scripts/terminal.js"></script>
 <script src="scripts/app.js"></script>
+<script src="scripts/hero.js"></script>
 <script src="scripts/enhancements.js"></script>
 <script src="scripts/animations.js"></script>
 

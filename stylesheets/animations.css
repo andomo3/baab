@@ -61,18 +61,15 @@
   to { opacity: 0; }
 }
 
-/* ---------- Hero entrance stagger ----------
-   The name lands first. */
-.hero-name-xl,
+/* ---------- Hero terminal entrance ----------
+   The (currently hidden) terminal rises in once the loader clears. */
 .hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
-/* The prompt is the last beat — it arrives after everything else has settled. */
-.hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
+.hero.hero-loaded ~ .hero-terminal-row { opacity: 1; transform: none; transition-delay: 0.62s; }
 
 /* ---------- Site backdrop drift ----------
    The two glows wander slowly on long, out-of-step loops, so the light
@@ -216,7 +213,6 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-name-xl,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .site-bg span:nth-child(n) { animation: none; } /* matches the drift rules' specificity */
   .reveal { opacity: 1; transform: none; transition: none; }
