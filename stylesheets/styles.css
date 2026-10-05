@@ -299,9 +299,8 @@ button { font-family: inherit; }
 }
 
 .section {
-  padding: 32px 36px;
-  max-width: 1240px;
-  margin: 0 auto;
+  /* Same side gutter as the nav and the home page. */
+  padding: 32px var(--gutter);
 }
 
 .section-head {
