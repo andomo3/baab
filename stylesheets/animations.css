@@ -62,7 +62,7 @@
 }
 
 /* ---------- Hero entrance stagger ----------
-   The name lands; the logos follow (see below). */
+   The name lands first. */
 .hero-name-xl,
 .hero-terminal-row {
   opacity: 0;
@@ -73,20 +73,6 @@
 .hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
-
-/* ---------- Hero logos ----------
-   They fade in once the name has landed, then drift on a slow, out-of-phase
-   bob: each has its own duration and a negative delay so none move in step. */
-.hero-logo {
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  animation: logo-drift var(--dur, 8s) ease-in-out var(--d, 0s) infinite;
-}
-.hero-stage:has(.hero-loaded) .hero-logo { opacity: 0.9; transition-delay: 0.5s; }
-@keyframes logo-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50%      { transform: translate3d(0, -10px, 0); }
-}
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -213,7 +199,6 @@
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
   .hero-name-xl,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
-  .hero-logo { opacity: 0.9; animation: none; transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }

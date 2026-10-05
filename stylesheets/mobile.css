@@ -125,15 +125,6 @@
     /* The tab bar takes a row of the shell here, so the first screen is shorter. */
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));
   }
-  /* Phones get a handful of logos, smaller, in their own spots. */
-  .hero-logo--wide { display: none; }
-  .hero-logo {
-    left: var(--mx);
-    top: var(--my);
-    width: calc(var(--s) * 0.6);
-    height: calc(var(--s) * 0.6);
-    margin: calc(var(--s) * -0.3) 0 0 calc(var(--s) * -0.3);
-  }
 
   /* Role rows collapse: org, then body, then dates left-aligned under it. */
   .role-row { grid-template-columns: minmax(0,1fr); gap: 14px; padding: 32px 0; }

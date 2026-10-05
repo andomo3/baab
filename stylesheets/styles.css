@@ -306,34 +306,11 @@ button { font-family: inherit; }
   margin-top: 0.12em;
 }
 
-/* ---------- Hero stage + scattered logos ----------
-   The stage spans the full width of the page so the logos can reach the
-   screen edges while the name keeps the content column. */
+/* ---------- Hero stage ----------
+   Full-width wrapper around the hero so its background can run edge to edge
+   while the name keeps its column. */
 .hero-stage { position: relative; overflow: hidden; }
 .hero-stage .hero-v3 { position: relative; z-index: 1; }
-.hero-logos {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  pointer-events: none; /* decoration only — nothing here should look clickable */
-}
-.hero-logo {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--s);
-  height: var(--s);
-  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); /* centre on (x, y) */
-}
-.hero-logo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: rotate(var(--r));
-}
-
 
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {
