@@ -30,7 +30,7 @@
   /* Content sections */
   .hero-terminal-row { margin-top: 40px; }
   .section { padding-top: 24px; padding-bottom: 24px; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
 
   /* IDE */
   .ide { grid-template-columns: 1fr; min-height: 500px; }
@@ -173,7 +173,7 @@
   .star-grid { grid-template-columns: 1fr; gap: 10px; }
 
   /* ── About / Contact grids ── */
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .card { padding: 16px; }
 
 }
