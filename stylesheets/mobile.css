@@ -64,7 +64,7 @@
   }
 
   /* ── Top nav mobile collapse ── */
-  .top-nav { padding: 0 16px; gap: 12px; }
+  .top-nav { gap: 12px; }
   .nav-links { display: none; }
   .nav-pill { display: none; }
 

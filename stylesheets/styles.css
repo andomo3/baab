@@ -185,7 +185,9 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 0 40px;
+  /* Same side padding as the hero, so the wordmark and the links sit on the
+     hero's left and right edges. */
+  padding: 0 clamp(20px, 5vw, 72px);
   /* See-through, so the backdrop runs behind the nav too. Content never
      passes beneath it (it scrolls inside .main), so it needs no fill. */
   background: transparent;
@@ -217,6 +219,9 @@ button { font-family: inherit; }
 .nav-links {
   display: flex;
   margin-left: auto;
+  /* The links' 12px side padding would leave "Contact" short of the hero's
+     right edge; pull the row out by that much so the text lines up. */
+  margin-right: -12px;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
