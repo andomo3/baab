@@ -37,10 +37,6 @@
   --shadow-1: 0 0 0 1px rgba(255,255,255,0.035),
               0 1px 2px rgba(0,0,0,0.45),
               0 10px 28px -10px rgba(0,0,0,0.6);
-  --shadow-nav: 0 1px 0 rgba(0,0,0,0.35), 0 12px 32px -16px rgba(0,0,0,0.7);
-
-  /* How far the surname stops short of the right edge. */
-  --name-inset: 6%;
 
   /* Dark-island aliases — the old two-palette system collapsed into one.
      Kept so existing selectors keep resolving until each is ported. */
@@ -110,6 +106,43 @@ body {
   overflow-x: hidden;
 }
 
+/* ---------- Site backdrop ----------
+   One gradient field behind every page: two warm glows on the page colour,
+   pinned to the viewport so it stays put while content scrolls over it.
+   The grain on top breaks up the banding dark gradients show on 8-bit
+   screens. */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.site-bg span {
+  position: absolute;
+  width: 80vmax;
+  height: 80vmax;
+}
+/* Gold, from the top-left. */
+.site-bg span:nth-child(1) {
+  left: -25vmax;
+  top: -30vmax;
+  background: radial-gradient(closest-side, rgba(212,164,100,0.20), transparent);
+}
+/* Dimmer bronze, from the bottom-right. */
+.site-bg span:nth-child(2) {
+  right: -25vmax;
+  bottom: -35vmax;
+  background: radial-gradient(closest-side, rgba(176,131,74,0.14), transparent);
+}
+.site-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 ::selection { background: var(--accent); color: var(--on-accent); }
 
 a { color: inherit; text-decoration: none; }
@@ -139,7 +172,7 @@ button { font-family: inherit; }
   height: 100vh;
   height: 100dvh; /* dvh fallback pattern — avoids iOS URL-bar clipping */
   overflow: hidden;
-  background: var(--bg);
+  /* No fill: the site backdrop sits behind the whole shell. */
   color: var(--fg);
 }
 
@@ -153,8 +186,9 @@ button { font-family: inherit; }
   align-items: center;
   gap: 0;
   padding: 0 40px;
-  background: var(--bg);
-  box-shadow: var(--shadow-nav);
+  /* See-through, so the backdrop runs behind the nav too. Content never
+     passes beneath it (it scrolls inside .main), so it needs no fill. */
+  background: transparent;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -218,7 +252,18 @@ button { font-family: inherit; }
   overflow-y: auto;
   padding: 0 0 60px;
   scroll-behavior: smooth;
-  background: var(--bg);
+  /* No fill, so the backdrop shows through. With a see-through nav above,
+     content would be sliced off at this box's top edge, so it fades out
+     over the top 24px instead. The second layer keeps the scrollbar gutter
+     (where there is one) fully opaque. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24px), linear-gradient(#000, #000);
+          mask-image: linear-gradient(to bottom, transparent, #000 24px), linear-gradient(#000, #000);
+  -webkit-mask-size: calc(100% - 20px) 100%, 20px 100%;
+          mask-size: calc(100% - 20px) 100%, 20px 100%;
+  -webkit-mask-position: left top, right top;
+          mask-position: left top, right top;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
 }
 
 .page { display: none; }
@@ -268,7 +313,7 @@ button { font-family: inherit; }
 /* The hero owns the first screen with the name centred in it; the work
    starts below the fold. Equal top/bottom padding keeps the centre true. */
 .hero-v3 {
-  max-width: 1312px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 56px 64px;
   min-height: calc(100vh - var(--header-h));
@@ -283,7 +328,7 @@ button { font-family: inherit; }
 
 .hero-name-xl {
   font-family: var(--display);
-  font-size: clamp(64px, 12.4vw, 186px);
+  font-size: clamp(64px, 13.5vw, 240px);
   font-weight: 700;
   line-height: 0.85;
   letter-spacing: -0.055em;
@@ -303,22 +348,11 @@ button { font-family: inherit; }
 .hero-name-xl .surname {
   align-self: flex-end;
   color: rgba(255,255,255,0.38);
-  /* Inset, not flush: a surname jammed into the corner reads as an accident
-     rather than a choice. */
-  margin-right: var(--name-inset);
+  /* Air between the two names: the surname drops a step below the given
+     name, and sits flush right so the diagonal between them is as long as
+     the hero allows. */
+  margin-top: 0.12em;
 }
-
-/* Caption — below the name, on the hero's bottom edge. */
-.hero-bio {
-  max-width: 32ch;
-  font-size: clamp(20px, 1.9vw, 26px);
-  line-height: 1.4;
-  letter-spacing: -0.015em;
-  color: var(--fg);
-  text-wrap: balance;
-  margin: 0;
-}
-
 
 /* ---------- Numbered rule sections (01 Work, 02 Education) ---------- */
 .rule-section {

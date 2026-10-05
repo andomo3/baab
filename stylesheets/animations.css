@@ -62,9 +62,8 @@
 }
 
 /* ---------- Hero entrance stagger ----------
-   One orchestrated beat: the name lands, then the bio settles in behind it. */
+   The name lands first. */
 .hero-name-xl,
-.hero-bio,
 .hero-terminal-row {
   opacity: 0;
   transform: translateY(22px);
@@ -72,9 +71,27 @@
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hero-v3.hero-loaded .hero-name-xl          { opacity: 1; transform: none; transition-delay: 0.06s; }
-.hero-v3.hero-loaded .hero-bio             { opacity: 1; transform: none; transition-delay: 0.26s; }
 /* The prompt is the last beat — it arrives after everything else has settled. */
 .hero-v3.hero-loaded .hero-terminal-row     { opacity: 1; transform: none; transition-delay: 0.62s; }
+
+/* ---------- Site backdrop drift ----------
+   The two glows wander slowly on long, out-of-step loops, so the light
+   across the site keeps shifting without anything reading as motion. Each
+   leg eases in, then out, so a glow only slows where it turns round.
+   Transform only, so the compositor does the work. */
+.site-bg span { will-change: transform; }
+.site-bg span:nth-child(1) { animation: glow-drift-a 70s infinite alternate; }
+.site-bg span:nth-child(2) { animation: glow-drift-b 90s infinite alternate; }
+@keyframes glow-drift-a {
+  0%   { transform: translate3d(0, 0, 0) scale(1);            animation-timing-function: ease-in; }
+  50%  { transform: translate3d(34vw, 12vh, 0) scale(1.12);   animation-timing-function: ease-out; }
+  100% { transform: translate3d(46vw, 46vh, 0) scale(0.94); }
+}
+@keyframes glow-drift-b {
+  0%   { transform: translate3d(0, 0, 0) scale(1);            animation-timing-function: ease-in; }
+  50%  { transform: translate3d(-30vw, -18vh, 0) scale(0.92); animation-timing-function: ease-out; }
+  100% { transform: translate3d(-52vw, -44vh, 0) scale(1.1); }
+}
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -199,8 +216,9 @@
 @media (prefers-reduced-motion: reduce) {
   #loader { display: none !important; }
   .loader-word, .loader-sub { animation: none; transform: none; opacity: 1; }
-  .hero-name-xl, .hero-bio,
+  .hero-name-xl,
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
+  .site-bg span:nth-child(n) { animation: none; } /* matches the drift rules' specificity */
   .reveal { opacity: 1; transform: none; transition: none; }
   .kv-list .row { opacity: 1; transform: none; transition: none; }
   .tw-cursor { animation: none; display: none; }
