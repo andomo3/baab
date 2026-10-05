@@ -26,7 +26,6 @@
   }
 
   /* Hero */
-  .hero-v3 { padding: 40px 28px; }
   .rule-section, .site-footer { padding-left: 28px; padding-right: 28px; }
 
   /* Content sections */
@@ -119,8 +118,7 @@
   .mob-tab:active { opacity: 0.7; }
 
   /* ── Hero ── */
-  .hero-v3 { padding: 28px 20px; }
-  .hero-v3 {
+  .hero {
     /* The tab bar takes a row of the shell here, so the first screen is shorter. */
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));
   }

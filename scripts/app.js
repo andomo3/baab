@@ -115,7 +115,15 @@
   window.__navigate = navigate;
 
   document.querySelectorAll('.nav-item, .nav-logo, .mob-tab, [data-nav]').forEach(a => {
-    a.addEventListener('click', () => { if (a.dataset.nav) navigate(a.dataset.nav); });
+    a.addEventListener('click', (e) => {
+      if (!a.dataset.nav) return;
+      if (a.tagName === 'A') {
+        // Modified clicks open the link's href (#page) in a new tab as usual.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault(); // navigate() sets the hash itself, without a history entry
+      }
+      navigate(a.dataset.nav);
+    });
   });
 
   // Delegated terminal-command triggers (the Projects "Shuffle" button)
