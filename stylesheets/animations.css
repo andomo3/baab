@@ -80,8 +80,8 @@
    leg eases in, then out, so a glow only slows where it turns round.
    Transform only, so the compositor does the work. */
 .site-bg span { will-change: transform; }
-.site-bg span:nth-child(1) { animation: glow-drift-a 70s infinite alternate; }
-.site-bg span:nth-child(2) { animation: glow-drift-b 90s infinite alternate; }
+.site-bg span:nth-child(1) { animation: glow-drift-a 45s infinite alternate; }
+.site-bg span:nth-child(2) { animation: glow-drift-b 60s infinite alternate; }
 @keyframes glow-drift-a {
   0%   { transform: translate3d(0, 0, 0) scale(1);            animation-timing-function: ease-in; }
   50%  { transform: translate3d(34vw, 12vh, 0) scale(1.12);   animation-timing-function: ease-out; }
