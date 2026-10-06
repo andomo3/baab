@@ -33,7 +33,9 @@
   .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
 
   /* IDE */
-  .ide { grid-template-columns: 1fr; min-height: 500px; }
+  /* The list is hidden here, so give the page title room before the
+     project's own serif title. */
+  .ide { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
   .ide-side { display: none; }
 
 }
@@ -156,20 +158,10 @@
   .mob-tab { min-height: 48px; }
 
 
-  /* ── IDE ── */
-  .ide {
-    grid-template-columns: 1fr;
-    min-height: 420px;
-    border-radius: var(--r-md);
-  }
-  .ide-side { display: none; }
-  .ide-main { min-width: 0; }
-  .ide-content { padding: 20px; }
-
   /* Project detail */
   .project-detail h2 { font-size: 32px; }
   .meta-grid { grid-template-columns: 1fr; gap: 4px; }
-  .star-grid { grid-template-columns: 1fr; gap: 10px; }
+  .star-grid { grid-template-columns: 1fr; gap: 24px; }
 
   /* ── About / Contact grids ── */
   .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }

@@ -198,35 +198,34 @@
     const prev = PROJECT_FILES[idx - 1];
     const next = PROJECT_FILES[idx + 1];
     const links = [
-      p.github ? `<a class="proj-link" href="${p.github}" target="_blank" rel="noopener noreferrer"><span class="proj-link-icon">⌥</span>GitHub</a>` : '',
-      p.liveUrl ? `<a class="proj-link" href="${p.liveUrl}" target="_blank" rel="noopener noreferrer"><span class="proj-link-icon">↗</span>Live Site</a>` : '',
+      p.github ? `<a class="proj-link" href="${p.github}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>` : '',
+      p.liveUrl ? `<a class="proj-link" href="${p.liveUrl}" target="_blank" rel="noopener noreferrer">Live site <span aria-hidden="true">↗</span></a>` : '',
     ].filter(Boolean).join('');
     const star = p.star;
     return `
       <div class="project-detail">
-        <div class="crumb">~/projects/${p.file}</div>
         <h2>${p.title}</h2>
         <div class="sub">${p.sub}</div>
         <div class="proj-actions">
-          <div class="stack-row">${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+          <p class="stack-line">${p.stack.join(' · ')}</p>
           ${links ? `<div class="proj-links">${links}</div>` : ''}
         </div>
         ${star ? `
         <div class="star-grid">
           <div class="star-item">
-            <div class="star-label"><span class="star-letter">S</span>ituation</div>
+            <div class="star-label">Situation</div>
             <p>${star.situation}</p>
           </div>
           <div class="star-item">
-            <div class="star-label"><span class="star-letter">T</span>ask</div>
+            <div class="star-label">Task</div>
             <p>${star.task}</p>
           </div>
           <div class="star-item">
-            <div class="star-label"><span class="star-letter">A</span>ction</div>
+            <div class="star-label">Action</div>
             <p>${star.action}</p>
           </div>
           <div class="star-item">
-            <div class="star-label"><span class="star-letter">R</span>esult</div>
+            <div class="star-label">Result</div>
             <p>${star.result}</p>
           </div>
         </div>
