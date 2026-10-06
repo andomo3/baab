@@ -3,25 +3,10 @@
   // Shared reduced-motion flag — every JS-driven animation checks this.
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Loading screen ----------
-  const loader = document.getElementById('loader');
+  // ---------- Hero ready ----------
+  // No loading screen: the page shows as soon as it paints.
   const hero = document.querySelector('[data-hero]');
-
-  function triggerHero() {
-    if (hero) hero.classList.add('hero-loaded');
-  }
-
-  if (loader) {
-    setTimeout(() => {
-      loader.classList.add('exit');
-      setTimeout(() => {
-        loader.remove();
-        triggerHero();
-      }, 450);
-    }, 1400);
-  } else {
-    requestAnimationFrame(triggerHero);
-  }
+  requestAnimationFrame(() => { if (hero) hero.classList.add('hero-loaded'); });
 
   // ---------- Typewriter core ----------
   function typewriter(el, text, speed, onDone) {
