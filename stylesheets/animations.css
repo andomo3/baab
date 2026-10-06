@@ -31,12 +31,32 @@
   100% { transform: translate3d(-52vw, -44vh, 0) scale(1.1); }
 }
 
+/* ---------- Load sequence ----------
+   Runs once, on first paint. The backdrop lights up, the nav settles, then
+   the hero comes in top to bottom: eyebrow, name, line, strip. Opacity and
+   a 12px rise only, on one slow ease-out, so it reads as the page arriving
+   rather than as animation. */
+@keyframes enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.site-bg      { animation: fade-in 1.6s ease-out both; }
+.top-nav      { animation: fade-in 0.8s var(--ease-out) 0.1s both; }
+.hero__eyebrow { animation: enter 0.9s var(--ease-out) 0.2s both; }
+.hero__name    { animation: enter 1s   var(--ease-out) 0.3s both; }
+.hero__row     { animation: enter 1s   var(--ease-out) 0.5s both; }
+.hero__langs   { animation: enter 0.9s var(--ease-out) 0.65s both; }
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(16px);
+  transition: opacity 0.8s var(--ease-out),
+              transform 0.8s var(--ease-out);
 }
 .reveal.visible {
   opacity: 1;
@@ -73,7 +93,7 @@
 
 /* ---------- IDE tab content fade ---------- */
 .ide-content {
-  animation: ide-content-in 0.2s ease both;
+  animation: ide-content-in 0.4s var(--ease-out) both;
 }
 @keyframes ide-content-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -118,6 +138,8 @@
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .site-bg span:nth-child(n) { animation: none; } /* matches the drift rules' specificity */
   .reveal { opacity: 1; transform: none; transition: none; }
+  .site-bg, .top-nav, .hero__eyebrow, .hero__name, .hero__row, .hero__langs,
+  .page.active, .page.leaving, .ide-content { animation: none; }
   .tw-cursor { animation: none; display: none; }
   .term-cursor { animation: none !important; }
   .eq span { animation: none !important; }

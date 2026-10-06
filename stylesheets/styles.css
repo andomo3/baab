@@ -101,6 +101,8 @@
   /* The page's side gutter, from the hero design. The nav, hero, home
      sections and footer all use it, so they share one left and right edge. */
   --gutter: clamp(20px, 5vw, 72px);
+  /* One curve for the site's motion: quick to start, long soft landing. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   /* Ultra-wide cap: past --content-max the side padding grows instead of
      the content, so everything stays a fixed width, centred. 100% resolves
      against each full-width container that uses it. */
@@ -297,10 +299,10 @@ button { font-family: inherit; }
 }
 
 .page { display: none; }
-.page.active { display: block; animation: fadeIn 220ms cubic-bezier(.2,.7,.2,1) both; }
+.page.active { display: block; animation: fadeIn 480ms var(--ease-out) both; }
 .page.leaving { display: block; animation: fadeOut 160ms cubic-bezier(.4,0,.6,1) both; }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes fadeOut {
@@ -567,10 +569,18 @@ button { font-family: inherit; }
   gap: 24px;
   flex-wrap: wrap;
 }
+/* One quiet line: the full contact details live on the Contact page. */
 .site-footer .copy { font-size: 13px; color: var(--fg-3); }
-.footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
-.footer-links a { font-size: 13px; color: var(--fg-3); transition: color 140ms; }
-.footer-links a:hover { color: var(--accent); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 13px;
+  color: var(--fg-3);
+  transition: color 200ms var(--ease-out);
+}
+.footer-links a:hover { color: var(--fg); }
 
 
 /* ---------- Now-playing terminal widget (refined) ---------- */
