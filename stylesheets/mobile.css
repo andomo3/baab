@@ -30,7 +30,10 @@
   /* Content sections */
   .hero-terminal-row { margin-top: 40px; }
   .section { padding-top: 24px; padding-bottom: 24px; }
-  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .about-row { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; }
+  .artist-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts > div { grid-template-columns: 96px minmax(0, 1fr); }
 
   /* IDE */
   /* The list is hidden here, so give the page title room before the
@@ -127,7 +130,7 @@
   /* Role rows collapse: org, then body, then dates left-aligned under it. */
   .role-row { grid-template-columns: minmax(0,1fr); gap: 14px; padding: 32px 0; }
   .role-when { text-align: left; }
-  .role-bullets li { font-size: 14.5px; }
+  .role-bullets li { font-size: 15px; }
   .rule-section { margin-top: 72px; }
   .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .footer-links { gap: 18px; }
@@ -164,7 +167,7 @@
   .star-grid { grid-template-columns: 1fr; gap: 24px; }
 
   /* ── About / Contact grids ── */
-  .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .card { padding: 16px; }
 
 }

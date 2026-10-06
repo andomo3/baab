@@ -303,29 +303,16 @@
     `).join('');
   }
 
-  // ----------- Artist grid -----------
+  // ----------- Top artists (a plain numbered list) -----------
   const ag = document.getElementById('artist-grid');
   if (ag) {
-    function renderFallbackArtists() {
-      const fallback = ['playboi carti', 'jaden smith', 'ken carson', 'yeat', '—', '—', '—', '—', '—', '—', '—', '—'];
-      ag.innerHTML = fallback.map((name, i) => {
-        const angle = (i * 30) % 360;
-        const flip = i % 2 === 0;
-        return `<div class="artist-tile" style="background:linear-gradient(${angle}deg,${flip ? 'var(--p1)' : 'var(--p3)'},${flip ? 'var(--p3)' : 'var(--p1)'})"><span>${name}</span></div>`;
-      }).join('');
-    }
-
+    const renderArtists = names => {
+      ag.innerHTML = names.map(n => `<li>${n}</li>`).join('');
+    };
     fetch('data/spotify-top-artists.json')
       .then(r => r.ok ? r.json() : Promise.reject())
-      .then(artists => {
-        ag.innerHTML = artists.slice(0, 12).map(a => {
-          const bg = a.image
-            ? `background-image:url(${a.image})`
-            : `background:linear-gradient(135deg,var(--p1),var(--p3))`;
-          return `<div class="artist-tile" style="${bg}"><span>${a.name}</span></div>`;
-        }).join('');
-      })
-      .catch(renderFallbackArtists);
+      .then(artists => renderArtists(artists.slice(0, 12).map(a => a.name)))
+      .catch(() => renderArtists(['Playboi Carti', 'Jaden', 'Ken Carson', 'Yeat']));
   }
 
 })();
