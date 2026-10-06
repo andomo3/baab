@@ -132,7 +132,7 @@
   .role-bullets li { font-size: 15px; }
   .rule-section { margin-top: 72px; }
   .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .footer-links { gap: 18px; }
+  .footer-links { gap: 20px; }
 
   /* ── Sections ── */
   .section { padding-top: 20px; padding-bottom: 20px; }

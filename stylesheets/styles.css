@@ -569,10 +569,18 @@ button { font-family: inherit; }
   gap: 24px;
   flex-wrap: wrap;
 }
+/* One quiet line: the full contact details live on the Contact page. */
 .site-footer .copy { font-size: 13px; color: var(--fg-3); }
-.footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
-.footer-links a { font-size: 13px; color: var(--fg-3); transition: color 140ms; }
-.footer-links a:hover { color: var(--accent); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 13px;
+  color: var(--fg-3);
+  transition: color 200ms var(--ease-out);
+}
+.footer-links a:hover { color: var(--fg); }
 
 
 /* ---------- Now-playing terminal widget (refined) ---------- */
