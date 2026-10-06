@@ -80,19 +80,6 @@
   to   { opacity: 1; transform: none; }
 }
 
-/* ---------- Card hover lift ---------- */
-.card {
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
-              background 200ms ease, border-color 200ms ease;
-}
-.card:hover {
-  transform: translateY(-3px);
-  /* On a dark field a black shadow does nothing. The lift reads through the
-     surface stepping up and the hairline brightening instead. */
-  background: var(--bg-3);
-  border-color: var(--hairline-2);
-}
-
 /* ---------- Star item entrance (IDE) ---------- */
 .star-item {
   animation: star-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;

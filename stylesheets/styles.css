@@ -64,8 +64,8 @@
        --display  Instrument Serif: the name and every heading (always 400;
                   the face has no bold, so never ask it for one)
        --sans     Space Grotesk: text and UI
-       --mono     JetBrains Mono: only where it is code (the terminal, .code,
-                  file names and paths) */
+       --mono     JetBrains Mono: only where it is code (the terminal, file
+                  names and paths) */
   --sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --display:  'Instrument Serif', 'Times New Roman', serif;
   --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
@@ -771,25 +771,6 @@ button { font-family: inherit; }
 .ide-content { overflow-wrap: break-word; word-break: break-word; }
 .project-detail p { overflow-wrap: break-word; }
 
-.code {
-  font-family: var(--mono);
-  background: var(--dark-bg);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--r-sm);
-  padding: 16px 18px;
-  font-size: 12.5px;
-  color: var(--dark-fg-2);
-  line-height: 1.7;
-  overflow-x: auto;
-}
-.code .ln { display: inline-block; width: 28px; color: var(--dark-fg-4); user-select: none; text-align: right; padding-right: 12px; }
-.code .kw { color: oklch(0.7 0.18 320); font-weight: 500; }
-.code .fn { color: #C49A6C; }
-.code .str { color: oklch(0.78 0.13 130); }
-.code .num { color: oklch(0.82 0.16 80); }
-.code .com { color: var(--dark-fg-3); font-style: italic; }
-.code .var { color: var(--dark-fg); }
-
 .project-detail h2 {
   font-family: var(--display);
   font-size: 44px;
@@ -885,10 +866,10 @@ button { font-family: inherit; }
   margin: 0;
 }
 
-/* ---------- About ----------
+/* ---------- About & Contact ----------
    No cards: a lead line like the hero's, then label | content rows in the
    same shape as the home page's Work rows. */
-.about-lead {
+.page-lead {
   margin: 8px 0 24px;
   max-width: 860px;
   font-family: var(--display);
@@ -898,15 +879,15 @@ button { font-family: inherit; }
   color: var(--hero-text-soft);
   text-wrap: balance;
 }
-.about-row {
+.info-row {
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
   gap: 32px;
   align-items: start;
   padding: 36px 0;
 }
-.about-row > :last-child { max-width: 680px; }
-.about-label {
+.info-row > :last-child { max-width: 680px; }
+.info-label {
   margin: 0;
   font-family: var(--sans);
   font-size: 13px;
@@ -916,7 +897,7 @@ button { font-family: inherit; }
   color: var(--fg);
   line-height: 1.4;
 }
-.about-label span {
+.info-label span {
   display: block;
   margin-top: 6px;
   font-weight: 400;
@@ -967,59 +948,19 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
-.card {
-  background: var(--surface);
-  box-shadow: var(--shadow-1);
-  border-radius: var(--r-md);
-  padding: 22px 26px;
+/* Contact links: one per line, underlined text like the project links. */
+.contact-links { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  font-size: 18px;
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline-2);
+  text-underline-offset: 6px;
+  transition: text-decoration-color 140ms;
 }
-.card .card-label {
-  font-size: 11.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--fg-4);
-  margin: 0 0 14px;
-}
-.card h2, .card h3 {
-  font-family: var(--display);
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  margin: 0 0 6px;
-}
-
-/* ---------- Contact ---------- */
-.contact-grid {
-  display: grid;
-  /* minmax(0, …): the availability code block scrolls inside its card
-     instead of stretching the column past the screen. */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  gap: 24px;
-}
-
-.contact-icons {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-.contact-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--hairline);
-  background: var(--bg-2);
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--fg-2);
-  text-decoration: none;
-  transition: background 140ms, border-color 140ms, color 140ms;
-}
-.contact-icon:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
+.contact-links a:hover { text-decoration-color: var(--accent); }
+.contact-links span { color: var(--fg-3); }
