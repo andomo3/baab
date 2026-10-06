@@ -17,12 +17,14 @@
      2.0:1 and 1.5:1 on --bg. The bottom two carried 11px uppercase labels.
      This ramp keeps that recessive feel but clears 4.5:1 down to --fg-3.
      --fg-4 is for rules, dividers and 40px+ numerals only — never body text. */
-  --fg:   #FFFFFF;  /* 21:1  — name, headings */
+  /* Headings, labels and the accent take the hero palette's values, so the
+     whole site reads in the hero's warm whites (see --hero-* below). */
+  --fg:   #F4F1EA;  /* = --hero-text   — name, headings */
   --fg-2: #B4ADA2;  /* 9.1:1 — body copy */
-  --fg-3: #8B8378;  /* 5.2:1 — labels, captions, small uppercase */
+  --fg-3: #A8A29A;  /* = --hero-muted  — labels, captions, small uppercase (7.5:1) */
   --fg-4: #6B655C;  /* 3.2:1 — non-text only */
 
-  --accent:      #D4A464;
+  --accent:      #C8A27C;  /* = --hero-accent */
   --accent-dark: #B0834A;
   --good: #5CB87A;
   --grad: linear-gradient(90deg, var(--accent), var(--accent-dark));
@@ -473,9 +475,9 @@ button { font-family: inherit; }
 /* The numerals are a real sequence — Work precedes Education on the page and
    in time — so they carry order, not decoration. */
 .rule-num {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   font-variant-numeric: tabular-nums;
 }
 .rule-head h2 {
@@ -487,7 +489,7 @@ button { font-family: inherit; }
   letter-spacing: -0.02em;
   margin: 0;
 }
-.rule-meta { font-size: 12px; color: var(--fg-3); white-space: nowrap; }
+.rule-meta { font-size: 13px; color: var(--fg-3); white-space: nowrap; }
 
 /* ---------- Role rows ---------- */
 .role-row {
@@ -497,31 +499,36 @@ button { font-family: inherit; }
   align-items: start;
   padding: 36px 0;
 }
+/* Rows speak the hero's language: the org is an eyebrow (13px, tracked
+   caps, no bold), the role is set in the display serif, and body and meta
+   text use the hero strip's 15-16px. */
 .role-org .org {
   font-size: 13px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  line-height: 1.35;
+  line-height: 1.4;
 }
-.role-org .loc { font-size: 11px; color: var(--fg-3); margin-top: 6px; }
+.role-org .loc { font-size: 13px; color: var(--fg-3); margin-top: 6px; }
 
 .role-title-line {
-  font-size: 18px;
-  font-weight: 600;
+  font-family: var(--display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.1;
   color: var(--fg);
-  letter-spacing: -0.015em;
-  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
 }
-.role-sub { font-size: 14px; color: var(--fg-3); margin-bottom: 12px; }
+.role-sub { font-size: 15px; color: var(--fg-3); margin-bottom: 12px; }
 
 .role-bullets { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .role-bullets li {
   position: relative;
   padding-left: 16px;
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--fg-2);
   text-wrap: pretty;
 }
@@ -541,12 +548,12 @@ button { font-family: inherit; }
 .role-body .stack { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
 
 .role-when { text-align: right; }
-.role-when .dates { font-size: 13px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.role-when .dates { font-size: 15px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
 .role-when .kind {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--fg-3);
   margin-top: 6px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
