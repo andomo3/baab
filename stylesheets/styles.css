@@ -723,73 +723,45 @@ button { font-family: inherit; }
   white-space: nowrap;
 }
 
-/* ---------- IDE / Projects detail ---------- */
+/* ---------- Projects: a plain list beside the open project ----------
+   No window chrome: the list and the project sit straight on the backdrop,
+   separated by space. */
 .ide {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  background: var(--surface);
-  box-shadow: var(--shadow-1);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  min-height: 580px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 64px;
+  margin-top: 8px;
 }
-.ide-side {
-  padding: 16px 0;
-  background: var(--dark-bg);
-  font-size: 13px;
-}
-.ide-section {
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  color: var(--dark-fg-4);
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 10px 18px 6px;
-}
-.ide-folder {
-  padding: 5px 18px;
-  color: var(--dark-fg-2);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
-.ide-children {
-  padding-left: 12px;
-}
+.ide-side { font-size: 13px; }
 .ide-item {
-  /* UA reset — tree rows are rendered as <button>s
-     (100% minus the 12px margin-right below, matching the old div box) */
-  width: calc(100% - 12px);
+  /* UA reset: list rows are <button>s */
+  width: 100%;
+  min-height: 36px;
   background: none;
   border: 0;
   text-align: left;
   line-height: inherit;
   letter-spacing: inherit;
-  padding: 5px 18px 5px 28px;
-  color: var(--dark-fg-3);
+  padding: 6px 0;
+  color: var(--fg-3);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  border-radius: 0 999px 999px 0;
-  margin-right: 12px;
+  font-family: var(--mono); /* file names */
+  font-size: 13px;
+  transition: color 140ms;
 }
-.ide-item:hover { background: rgba(255,255,255,0.06); color: var(--dark-fg); }
-.ide-item.active {
-  background: color-mix(in oklch, var(--accent) 18%, transparent);
-  color: var(--dark-fg);
-}
-.ide-item .glyph { color: var(--dark-fg-4); }
+.ide-item:hover { color: var(--fg); }
+.ide-item.active { color: var(--fg); }
+.ide-item .glyph { color: transparent; transition: color 140ms; }
 .ide-item.active .glyph { color: var(--accent); }
 
-.ide-main { min-width: 0; background: var(--surface); }
-.ide-content { padding: 28px 32px; overflow-wrap: break-word; word-break: break-word; }
+.ide-main { min-width: 0; }
+.ide-content { overflow-wrap: break-word; word-break: break-word; }
 .project-detail p { overflow-wrap: break-word; }
 
 .code {
@@ -819,13 +791,6 @@ button { font-family: inherit; }
   letter-spacing: -0.02em;
   margin: 0 0 6px;
 }
-.project-detail .crumb {
-  color: var(--fg-4);
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.04em;
-  margin-bottom: 8px;
-}
 .project-detail .sub { color: var(--fg-3); margin-bottom: 22px; font-size: 14.5px; }
 
 .project-detail p { color: var(--fg-2); }
@@ -834,32 +799,26 @@ button { font-family: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 36px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
+  margin-top: 48px;
   gap: 12px;
 }
 .proj-nav-btn {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-  color: var(--fg-2);
+  background: none;
+  border: 0;
+  color: var(--fg-3);
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 500;
-  padding: 9px 16px;
+  min-height: 36px;
+  padding: 0;
   cursor: pointer;
-  transition: 140ms;
+  transition: color 140ms;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 45%;
 }
-.proj-nav-btn:hover {
-  background: rgba(255,255,255,0.08);
-  color: var(--fg);
-  border-color: var(--hairline-2);
-}
+.proj-nav-btn:hover { color: var(--fg); }
 .project-detail h3 {
   margin-top: 28px;
   font-size: 12.5px;
@@ -872,64 +831,48 @@ button { font-family: inherit; }
 /* ---------- Project actions row ---------- */
 .proj-actions {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 12px 32px;
+  margin-bottom: 40px;
 }
-.stack-row { display: flex; gap: 6px; flex-wrap: wrap; }
-.proj-links { display: flex; gap: 8px; flex-shrink: 0; }
+/* The stack as one quiet line of text rather than a row of chips. */
+.stack-line { margin: 0; font-size: 13px; color: var(--fg-3); }
+.proj-links { display: flex; gap: 24px; flex-shrink: 0; }
 .proj-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg-2);
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
+  min-height: 32px;
   color: var(--fg-2);
-  font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
-  padding: 7px 13px;
-  text-decoration: none;
-  transition: background 140ms, color 140ms, border-color 140ms;
+  text-decoration: underline;
+  text-decoration-color: var(--hairline-2);
+  text-underline-offset: 6px;
+  transition: color 140ms, text-decoration-color 140ms;
   white-space: nowrap;
 }
-.proj-link:hover {
-  background: var(--bg-3);
-  color: var(--fg);
-  border-color: var(--hairline-2);
-}
-.proj-link-icon { font-style: normal; }
+.proj-link:hover { color: var(--fg); text-decoration-color: var(--accent); }
 
 /* ---------- STAR breakdown ---------- */
 .star-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 32px;
-}
-.star-item {
-  background: var(--bg-2);
-  box-shadow: var(--shadow-1);
-  border-radius: var(--r-md);
-  padding: 18px 20px;
+  gap: 32px 48px;
+  max-width: 880px;
 }
 .star-label {
-  font-size: 10.5px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--fg-4);
+  color: var(--fg-3);
   margin-bottom: 10px;
 }
-.star-letter {
-  color: var(--p1);
-  font-size: 11px;
-}
 .star-item p {
-  font-size: 13.5px;
+  font-size: 14.5px;
   line-height: 1.65;
   color: var(--fg-2);
   margin: 0;

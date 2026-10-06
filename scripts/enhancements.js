@@ -203,21 +203,8 @@
   // ====================================================================
   // 4. SETLISTS — reorder the IDE file tree on the Projects page
   // ====================================================================
-  const ideEl = document.querySelector('.page[data-page="projects"] .ide');
-  if (ideEl && ideEl.parentElement) {
-    const wrap = document.createElement('div');
-    wrap.innerHTML = `
-      <div class="setlist-bar">
-        <span class="label">Setlist</span>
-        <button class="setlist-pill active" data-setlist="default">All projects</button>
-        <button class="setlist-pill" data-setlist="ml-research">ML / Research</button>
-        <button class="setlist-pill" data-setlist="quant">Quant / Fintech</button>
-        <button class="setlist-pill" data-setlist="faang">FAANG SWE</button>
-      </div>
-      <div class="setlist-intro" id="setlist-intro"></div>
-    `;
-    ideEl.parentElement.insertBefore(wrap, ideEl);
-  }
+  // The pill bar that used to sit above the list was removed to keep the
+  // Projects page minimal; the `setlist` terminal command still reorders it.
 
   const setlistIntro = document.getElementById('setlist-intro');
   const fileTree = document.getElementById('file-tree');
