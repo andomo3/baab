@@ -77,7 +77,7 @@
   function observeRevealTargets() {
     document.querySelectorAll(
       // The hero terminal is excluded — the load stagger already reveals it.
-      '.section-head, .role-row, .rule-head, .card, .star-item, .np-widget:not(.hero-terminal-row .np-widget)'
+      '.section-head, .role-row, .about-row, .rule-head, .card, .star-item, .np-widget:not(.hero-terminal-row .np-widget)'
     ).forEach((el, i) => {
       if (el.classList.contains('reveal')) return;
       el.classList.add('reveal');

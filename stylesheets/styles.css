@@ -885,12 +885,88 @@ button { font-family: inherit; }
   margin: 0;
 }
 
-/* ---------- About ---------- */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 24px;
+/* ---------- About ----------
+   No cards: a lead line like the hero's, then label | content rows in the
+   same shape as the home page's Work rows. */
+.about-lead {
+  margin: 8px 0 24px;
+  max-width: 860px;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: 1.18;
+  color: var(--hero-text-soft);
+  text-wrap: balance;
 }
+.about-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  padding: 36px 0;
+}
+.about-row > :last-child { max-width: 680px; }
+.about-label {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+  line-height: 1.4;
+}
+.about-label span {
+  display: block;
+  margin-top: 6px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--fg-3);
+}
+
+.facts { margin: 0; display: grid; gap: 14px; }
+.facts > div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+.facts dt { font-size: 13px; color: var(--fg-3); }
+.facts dd { margin: 0; font-size: 16px; color: var(--fg); }
+
+.langs { display: grid; gap: 14px; }
+.langs .row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 16px;
+  font-size: 15px;
+  color: var(--fg-2);
+}
+.langs .bar { height: 2px; background: var(--hairline-2); }
+.langs .bar > span { display: block; height: 100%; background: var(--accent); }
+.langs .pct { text-align: right; color: var(--fg-3); font-variant-numeric: tabular-nums; font-size: 13px; }
+
+.artist-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: artist;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 32px;
+}
+.artist-list li {
+  counter-increment: artist;
+  font-size: 16px;
+  color: var(--fg-2);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.artist-list li::before {
+  content: counter(artist, decimal-leading-zero);
+  margin-right: 12px;
+  font-size: 13px;
+  color: var(--fg-3);
+  font-variant-numeric: tabular-nums;
+}
+
 .card {
   background: var(--surface);
   box-shadow: var(--shadow-1);
@@ -913,74 +989,6 @@ button { font-family: inherit; }
   letter-spacing: -0.01em;
   margin: 0 0 6px;
 }
-
-.kv-list .row {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--hairline);
-  gap: 12px;
-  font-size: 13.5px;
-}
-.kv-list .row:last-child { border-bottom: none; }
-.kv-list .k {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  font-weight: 600;
-}
-.kv-list .v { color: var(--fg); }
-
-.langs {
-  display: grid;
-  gap: 12px;
-}
-.langs .row {
-  display: grid;
-  grid-template-columns: 110px 1fr 50px;
-  align-items: center;
-  gap: 14px;
-  font-size: 13px;
-  color: var(--fg-2);
-}
-.langs .row .name { font-weight: 500; }
-.langs .bar {
-  height: 6px; border-radius: 3px;
-  background: rgba(255,255,255,0.06);
-  overflow: hidden;
-}
-.langs .bar > span {
-  display: block; height: 100%;
-  background: var(--grad);
-  border-radius: 3px;
-}
-.langs .pct { text-align: right; color: var(--fg-3); font-variant-numeric: tabular-nums; font-size: 12px; }
-
-.artist-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-.artist-tile {
-  aspect-ratio: 1;
-  border-radius: var(--r-sm);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  padding: 10px;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: white;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
-  letter-spacing: -0.005em;
-  cursor: pointer;
-  transition: transform 200ms;
-  background-size: cover;
-  background-position: center;
-}
-.artist-tile:hover { transform: scale(1.04); }
 
 /* ---------- Contact ---------- */
 .contact-grid {

@@ -261,48 +261,31 @@
 
       <div class="section">
         <div class="section-head" style="margin-top: 8px;">
-          <div>
-            <h2>About</h2>
-            <div class="sub">whoami --verbose</div>
-          </div>
+          <h2>About</h2>
         </div>
 
-        <div class="about-grid">
-          <div>
-            <div class="card">
-              <div class="card-label">Identity</div>
-              <h3>Abba Ndomo</h3>
-              <div style="color: var(--fg-3); font-size: 13.5px; margin-bottom: 14px;">Data & ML Engineer · CS + ISyE (OR) · Georgia Tech '27</div>
-              <p style="color: var(--fg-2); margin: 0;">
-                Lived in <b style="color: var(--fg);">six countries</b>. I like problems where the data is messy and the stakes are real.
-              </p>
-            </div>
+        <p class="about-lead">Lived in six countries. I like problems where the data is messy and the stakes are real.</p>
 
-            <div class="card" style="margin-top: 18px;">
-              <div class="card-label">Stack — recent commit volume</div>
-              <div class="langs" id="langs"></div>
-            </div>
+        <!-- Label | content rows, in the same shape as the home page's Work rows. -->
+        <section class="about-row" aria-labelledby="about-facts">
+          <h3 class="about-label" id="about-facts">Facts</h3>
+          <dl class="facts">
+            <div><dt>Role</dt><dd>Data &amp; ML Engineer</dd></div>
+            <div><dt>School</dt><dd>Georgia Tech '27 · CS + ISyE (OR)</dd></div>
+            <div><dt>Currently</dt><dd>Building PerChance · ML Intern @ Altura</dd></div>
+            <div><dt>Languages</dt><dd>EN · SW · ES · RU · AZ</dd></div>
+          </dl>
+        </section>
 
-          </div>
+        <section class="about-row" aria-labelledby="about-stack">
+          <h3 class="about-label" id="about-stack">Stack <span>Recent commit volume</span></h3>
+          <div class="langs" id="langs"></div>
+        </section>
 
-          <div>
-            <div class="card">
-              <div class="card-label">Facts</div>
-              <div class="kv-list">
-                <div class="row"><div class="k">School</div><div class="v">Georgia Tech '27 · CS + ISyE (OR)</div></div>
-                <div class="row"><div class="k">Currently</div><div class="v">Building PerChance · ML Intern @ Altura</div></div>
-                <div class="row"><div class="k">Languages</div><div class="v">EN · SW · ES · RU · AZ</div></div>
-              </div>
-            </div>
-
-            <div class="card" style="margin-top: 18px;">
-              <div class="card-label">Top Artists — Spotify, all time</div>
-              <div class="artist-grid" id="artist-grid"></div>
-              <div style="font-size: 11.5px; color: var(--fg-3); margin-top: 12px;">via Spotify · long term · all time</div>
-            </div>
-
-          </div>
-        </div>
+        <section class="about-row" aria-labelledby="about-artists">
+          <h3 class="about-label" id="about-artists">Top artists <span>Spotify, all time</span></h3>
+          <ol class="artist-list" id="artist-grid"></ol>
+        </section>
       </div>
 
     </section>
