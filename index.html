@@ -31,19 +31,6 @@
      viewport so content scrolls over it. Decorative. -->
 <div class="site-bg" aria-hidden="true"><span></span><span></span></div>
 
-<!-- Loading screen -->
-<div id="loader">
-  <!-- Its own copy of the site backdrop: same glows on the same clock, so
-       the loader fades straight into the page. -->
-  <div class="site-bg" aria-hidden="true"><span></span><span></span></div>
-  <div class="loader-inner">
-    <div class="loader-line">
-      <span class="loader-word">Abba</span>
-      <span class="loader-word loader-word--italic">Ndomo</span>
-    </div>
-  </div>
-</div>
-
 <div class="app">
 
   <!-- ============== TOP NAV ============== -->
@@ -264,11 +251,11 @@
           <h2>About</h2>
         </div>
 
-        <p class="about-lead">Lived in six countries. I like problems where the data is messy and the stakes are real.</p>
+        <p class="page-lead">Lived in six countries. I like problems where the data is messy and the stakes are real.</p>
 
         <!-- Label | content rows, in the same shape as the home page's Work rows. -->
-        <section class="about-row" aria-labelledby="about-facts">
-          <h3 class="about-label" id="about-facts">Facts</h3>
+        <section class="info-row" aria-labelledby="about-facts">
+          <h3 class="info-label" id="about-facts">Facts</h3>
           <dl class="facts">
             <div><dt>Role</dt><dd>Data &amp; ML Engineer</dd></div>
             <div><dt>School</dt><dd>Georgia Tech '27 · CS + ISyE (OR)</dd></div>
@@ -277,13 +264,13 @@
           </dl>
         </section>
 
-        <section class="about-row" aria-labelledby="about-stack">
-          <h3 class="about-label" id="about-stack">Stack <span>Recent commit volume</span></h3>
+        <section class="info-row" aria-labelledby="about-stack">
+          <h3 class="info-label" id="about-stack">Stack <span>Recent commit volume</span></h3>
           <div class="langs" id="langs"></div>
         </section>
 
-        <section class="about-row" aria-labelledby="about-artists">
-          <h3 class="about-label" id="about-artists">Top artists <span>Spotify, all time</span></h3>
+        <section class="info-row" aria-labelledby="about-artists">
+          <h3 class="info-label" id="about-artists">Top artists <span>Spotify, all time</span></h3>
           <ol class="artist-list" id="artist-grid"></ol>
         </section>
       </div>
@@ -295,40 +282,32 @@
 
       <div class="section">
         <div class="section-head" style="margin-top: 8px;">
-          <div>
-            <h2>Contact</h2>
-            <!-- <div class="sub">ssh abba@portfolio</div> -->
-          </div>
+          <h2>Contact</h2>
         </div>
 
-        <div class="contact-grid">
-          <div class="card">
-            <div class="card-label">Get in touch</div>
-            <h3 style="margin-bottom: 8px;">Let's work together.</h3>
-            <p style="color: var(--fg-3); margin: 0 0 28px; font-size: 14px;">Open to MLE and data engineering roles.</p>
+        <p class="page-lead">Let's work together. Open to MLE and data engineering roles.</p>
 
-            <div class="contact-icons">
-              <a class="contact-icon" href="mailto:andomo3@gatech.edu" title="Email">@</a>
-              <a class="contact-icon" href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener" title="LinkedIn">in</a>
-              <a class="contact-icon" href="https://github.com/andomo3" target="_blank" rel="noopener" title="GitHub"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.59 2 12.25c0 4.53 2.87 8.36 6.84 9.72.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.59 17.52 2 12 2z"/></svg></a>
-              <a class="contact-icon" href="resume.pdf?v=20260811" target="_blank" rel="noopener" title="Resume">↗</a>
-            </div>
-          </div>
+        <section class="info-row" aria-labelledby="contact-reach">
+          <h3 class="info-label" id="contact-reach">Reach me</h3>
+          <ul class="contact-links">
+            <li><a href="mailto:andomo3@gatech.edu">andomo3@gatech.edu</a></li>
+            <li><a href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://github.com/andomo3" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></li>
+            <li><a href="resume.pdf?v=20260811" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
 
-          <div>
-            <div class="card">
-              <div class="card-label">Availability</div>
-              <pre class="code" style="margin: 0;"><span class="ln"> 1</span><span class="kw">export const</span> <span class="var">availability</span> = {
-<span class="ln"> 2</span>  <span class="fn">role</span>: [<span class="str">'MLE'</span>, <span class="str">'data engineering'</span>],
-<span class="ln"> 3</span>  <span class="fn">visa</span>: <span class="str">'F-1 · CPT now · STEM OPT eligible'</span>,
-<span class="ln"> 4</span>  <span class="fn">start</span>: <span class="str">'Immediately'</span>,
-<span class="ln"> 5</span>  <span class="fn">location</span>: [<span class="str">'atlanta'</span>, <span class="str">'remote'</span>, <span class="str">'on-site'</span>],
-<span class="ln"> 6</span>  <span class="fn">timezone</span>: <span class="str">'ET'</span>, <span class="com">// flexible ±5h</span>
-<span class="ln"> 7</span>  <span class="fn">openTo</span>: { <span class="fn">coffee</span>: <span class="num">true</span>, <span class="fn">cold_email</span>: <span class="num">true</span> },
-<span class="ln"> 8</span>}</pre>
-            </div>
-          </div>
-        </div>
+        <section class="info-row" aria-labelledby="contact-availability">
+          <h3 class="info-label" id="contact-availability">Availability</h3>
+          <dl class="facts">
+            <div><dt>Roles</dt><dd>MLE · Data engineering</dd></div>
+            <div><dt>Start</dt><dd>Immediately</dd></div>
+            <div><dt>Visa</dt><dd>F-1 · CPT now · STEM OPT eligible</dd></div>
+            <div><dt>Location</dt><dd>Atlanta · Remote · On-site</dd></div>
+            <div><dt>Timezone</dt><dd>ET, flexible ±5h</dd></div>
+            <div><dt>Open to</dt><dd>Coffee chats · Cold emails</dd></div>
+          </dl>
+        </section>
       </div>
 
     </section>
