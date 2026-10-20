@@ -66,7 +66,7 @@
        --sans     Space Grotesk: text and UI
        --mono     JetBrains Mono: only where it is code (the terminal, file
                   names and paths) */
-  --sans:     'Space Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --sans:     'Space Grotesk', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --display:  'Instrument Serif', 'Times New Roman', serif;
   --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
 
@@ -96,6 +96,13 @@
   /* Instrument Serif has no Cyrillic: the Russian line falls through to
      Cormorant Garamond. */
   --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
+  /* The portrait: its frame, and the greeting tag that sits over it. */
+  --hero-photo-bg: #1E1B18; /* holds the frame while the photo loads */
+  --hero-photo-radius: 24px;
+  --hero-photo-shadow: 0 0 0 1px rgba(244, 241, 234, 0.10), 0 40px 80px -24px rgba(0, 0, 0, 0.65);
+  --hero-photo-scrim: linear-gradient(180deg, rgba(18, 17, 16, 0) 58%, rgba(18, 17, 16, 0.6) 100%);
+  --hero-tag-bg: rgba(18, 17, 16, 0.55);
+  --hero-tag-line: rgba(244, 241, 234, 0.14);
 
   /* Layout */
   /* The page's side gutter, from the hero design. The nav, hero, home
@@ -361,40 +368,41 @@ button { font-family: inherit; }
   letter-spacing: normal;
 }
 
-/* Body: a grid of named areas. The eyebrow, name, caption and button stack in
-   the left column, and the portrait fills the right column across the name
-   and the caption only, so its top edge lines up with the title and its
-   bottom edge with the caption. The two free rows above and below the stack
-   centre it between the nav and the language strip, which stays anchored to
-   the bottom of the screen. The wrappers .hero__intro and .hero__row only
-   group markup, so they generate no box and their children are grid items.
-   Spacing between blocks is margin, not gap, so the free rows can shrink to
-   nothing on short screens and the 40px after the name sits inside the
-   portrait's span while the 24px and 32px around it do not. */
+/* Boxes marked data-i18n-reserve (scripts/i18n.js): hidden copies of the string
+   in every language share the box's grid cell, so the box is as tall as the
+   tallest, and the live text lies over the cell without adding to it. */
+[data-i18n-reserve] { position: relative; display: grid; }
+[data-i18n-reserve] > * { grid-area: 1 / 1; }
+[data-i18n-reserve] > [data-i18n] { position: absolute; inset: 0; }
+.i18n-copy { visibility: hidden; pointer-events: none; user-select: none; }
+
+/* Body: the text column and the portrait share a row that wraps, so the
+   portrait drops below the text on narrow screens. The row sits centred
+   between the nav and the language strip (the two free grid rows), and the
+   strip stays anchored to the bottom of the screen. Spacing inside the text
+   column is margin, not gap, so the free rows can shrink to nothing on short
+   screens. */
 .hero__main {
-  --name-size: clamp(64px, 11vw, 160px);
-  --line-size: clamp(24px, 3vw, 44px);
-  /* About 4:5 against the name and caption block it spans (it tracks that
-     block's height, which scales with the viewport width). */
-  --portrait-w: clamp(112px, calc(16px + 13.6vw), 216px);
   flex-grow: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--portrait-w);
-  grid-template-rows: minmax(0, 1fr) repeat(4, auto) minmax(0, 1fr) auto;
-  grid-template-areas:
-    "top     top"
-    "eyebrow ."
-    "name    portrait"
-    "line    portrait"
-    "cta     ."
-    "bottom  bottom"
-    "langs   langs";
-  column-gap: 64px;
+  grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr) auto;
   padding: 48px 0 56px;
 }
-.hero__intro, .hero__row { display: contents; }
+.hero__row {
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px 72px;
+}
+.hero__text {
+  flex: 1 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
 .hero__eyebrow {
-  grid-area: eyebrow;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
@@ -405,69 +413,88 @@ button { font-family: inherit; }
   color: var(--hero-muted);
 }
 .hero__eyebrow::before { content: ""; flex: none; width: 28px; height: 1px; background: var(--hero-accent); }
+.hero__eyebrow-text { min-width: 0; }
 .hero__name {
-  grid-area: name;
   margin: 0;
   font-family: var(--hero-font-display);
   font-weight: 400;
-  font-size: var(--name-size);
+  font-size: clamp(64px, 11vw, 160px);
   line-height: 0.9;
   letter-spacing: -0.02em;
 }
 .hero__name em { font-style: italic; }
 
-/* Portrait: fills the right column across the title and caption rows, so it
-   is as tall as that block. The image is positioned inside the cell (not
-   sized by it), so the photo never changes the layout around it. Square
-   corners, with a hairline ring in the hero's rule colour.
-   The margins are an optical correction, in em so they scale with the type:
-   the top edge meets the tops of the name's tallest letters (they start
-   0.04em below the name's line box), and the bottom edge meets the last
-   baseline of the caption (0.255em above its line box). */
+/* Portrait: a 4:5 frame with rounded corners and a soft drop shadow. The photo
+   is graded warm to sit in the palette, and a scrim darkens its foot for the
+   greeting tag. The frame is what is sized, not the image, so the photo never
+   moves the layout around it. */
 .hero__portrait {
-  grid-area: portrait;
   position: relative;
-  min-height: 0;
-  margin-top: calc(var(--name-size) * 0.04);
-  margin-bottom: calc(var(--line-size) * 0.255);
+  flex: 0 0 auto;
+  width: clamp(200px, 23vw, 336px);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  border-radius: var(--hero-photo-radius);
+  overflow: hidden;
+  background: var(--hero-photo-bg);
+  box-shadow: var(--hero-photo-shadow);
 }
 .hero__portrait img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 45% 40%;
-  background: var(--hero-rule); /* holds the shape while the photo loads */
-  box-shadow: 0 0 0 1px var(--hero-rule);
+  object-position: 62% 30%; /* keeps the face in the upper third */
+  filter: saturate(0.82) contrast(1.04) sepia(0.08);
 }
+.hero__portrait::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-photo-scrim);
+  pointer-events: none;
+}
+.hero__hello {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--hero-tag-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--hero-tag-line);
+  font-size: 14px;
+  color: var(--hero-text);
+}
+.hero__hello::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--hero-accent); }
 
-/* The translating line: all four share one grid cell */
+/* The translating line. Its min-height holds two lines, and its
+   data-i18n-reserve box (above) holds the tallest translation, so the block
+   does not jump between languages. */
 .hero__line {
-  grid-area: line;
   margin: 40px 0 0;
-  width: 100%;
   max-width: 860px;
-  display: grid;
+  min-height: 2.36em;
   font-family: var(--hero-font-line);
   font-style: italic;
-  font-size: var(--line-size);
+  font-size: clamp(24px, 3vw, 44px);
   line-height: 1.18;
   color: var(--hero-text-soft);
   text-wrap: balance;
 }
-.hero__line > span {
-  grid-area: 1 / 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.6s ease, visibility 0.6s;
-}
-.hero__line > span.is-on { opacity: 1; visibility: visible; }
-.hero__line > span[lang="ru"] { font-weight: 500; font-size: 1.08em; }
+/* Cormorant, the Cyrillic fallback, runs small beside Instrument Serif, so the
+   Russian line is set 8% larger: its hidden copy always, and the live text once
+   it has finished decoding into Russian (growing sooner would re-wrap the old
+   text and shift the page). */
+.hero__line .i18n-copy:lang(ru),
+html:lang(ru):not([data-decoding]) .hero__line-text { font-weight: 500; font-size: 1.08em; }
 
 .hero__cta {
-  grid-area: cta;
-  justify-self: start;
+  align-self: flex-start;
   margin-top: 32px;
   display: inline-flex;
   align-items: center;
@@ -483,13 +510,16 @@ button { font-family: inherit; }
 .hero__cta:hover { color: var(--hero-ink); }
 
 /* Language strip */
-.hero__langs { grid-area: langs; margin-top: 40px; display: flex; flex-wrap: wrap; gap: 0 24px; }
+.hero__langs { grid-row: 4; margin-top: 40px; display: flex; flex-wrap: wrap; gap: 0 24px; }
 .hero__lang {
   flex: 1 1 140px;
   min-height: 52px;
   display: flex;
+  /* The learning tag may drop under the name on a very narrow strip, so a long
+     translation of it never widens the button and re-wraps the strip. */
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 10px;
+  gap: 0 10px;
   padding: 14px 0 0;
   background: none;
   border: 0;
@@ -954,7 +984,7 @@ button { font-family: inherit; }
   color: var(--fg);
   line-height: 1.4;
 }
-.info-label span {
+.info-label .sub {
   display: block;
   margin-top: 6px;
   font-weight: 400;
@@ -1020,4 +1050,4 @@ button { font-family: inherit; }
   transition: text-decoration-color 140ms;
 }
 .contact-links a:hover { text-decoration-color: var(--accent); }
-.contact-links span { color: var(--fg-3); }
+.contact-links [aria-hidden="true"] { color: var(--fg-3); }
