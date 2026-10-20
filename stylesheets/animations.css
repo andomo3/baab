@@ -48,6 +48,7 @@
 .top-nav      { animation: fade-in 0.8s var(--ease-out) 0.1s both; }
 .hero__eyebrow { animation: enter 0.9s var(--ease-out) 0.2s both; }
 .hero__name    { animation: enter 1s   var(--ease-out) 0.3s both; }
+.hero__portrait img { animation: enter 1.1s var(--ease-out) 0.45s both; }
 .hero__row     { animation: enter 1s   var(--ease-out) 0.5s both; }
 .hero__langs   { animation: enter 0.9s var(--ease-out) 0.65s both; }
 
@@ -138,7 +139,7 @@
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .site-bg span:nth-child(n) { animation: none; } /* matches the drift rules' specificity */
   .reveal { opacity: 1; transform: none; transition: none; }
-  .site-bg, .top-nav, .hero__eyebrow, .hero__name, .hero__row, .hero__langs,
+  .site-bg, .top-nav, .hero__eyebrow, .hero__name, .hero__portrait img, .hero__row, .hero__langs,
   .page.active, .page.leaving, .ide-content { animation: none; }
   .tw-cursor { animation: none; display: none; }
   .term-cursor { animation: none !important; }
