@@ -361,16 +361,21 @@ button { font-family: inherit; }
   letter-spacing: normal;
 }
 
-/* Body: anchored to the bottom of the screen */
+/* Body: anchored to the bottom of the screen. A grid, so the portrait can
+   take whatever space the text leaves free above it: row 1 is that free
+   space, then the name block, the line and the language strip, each at its
+   natural height. The 40px between blocks is margin, not gap, so an empty
+   row 1 adds nothing. */
 .hero__main {
+  --portrait-w: clamp(200px, 26vw, 380px);
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--portrait-w);
+  grid-template-rows: minmax(0, 1fr) auto auto auto;
+  column-gap: 40px;
   padding: 96px 0 56px;
 }
-.hero__intro { display: flex; flex-direction: column; gap: 24px; }
+.hero__intro { grid-column: 1 / -1; grid-row: 2; display: flex; flex-direction: column; gap: 24px; }
 .hero__eyebrow {
   display: flex;
   align-items: center;
@@ -392,11 +397,50 @@ button { font-family: inherit; }
 .hero__name em { font-style: italic; }
 
 .hero__row {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  margin-top: 40px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: 32px 64px;
+}
+
+/* Portrait: sits to the right of the name block, level with the name's
+   bottom edge, and grows upward into the free space above it. It keeps a
+   4:5 shape, capped so it never gets taller than its column is wide.
+   When the free space is too short to hold a portrait worth looking at,
+   it is dropped (container query below). */
+.hero__portrait { display: none; }
+@supports (container-type: size) {
+  .hero__portrait {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 0;
+    container: portrait / size;
+  }
+  .hero__portrait img {
+    flex: none;
+    display: block;
+    height: min(100%, calc(var(--portrait-w) * 1.25));
+    width: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 45% 40%;
+    /* 26% of the width on both axes (the box is 4:5), so the corners scale
+       with the portrait instead of with the viewport. */
+    border-radius: 26% / 20.8%;
+    background: var(--hero-rule); /* holds the shape while the photo loads */
+    /* A hairline ring, then a soft drop, both tinted to the hero's warm dark. */
+    box-shadow: 0 0 0 1px rgba(244, 241, 234, 0.1), 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+  }
+  @container portrait (max-height: 119px) {
+    .hero__portrait img { display: none; }
+  }
 }
 
 /* The translating line: all four share one grid cell */
@@ -436,7 +480,7 @@ button { font-family: inherit; }
 .hero__cta:hover { color: var(--hero-ink); }
 
 /* Language strip */
-.hero__langs { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.hero__langs { grid-column: 1 / -1; grid-row: 4; margin-top: 40px; display: flex; flex-wrap: wrap; gap: 0 24px; }
 .hero__lang {
   flex: 1 1 140px;
   min-height: 52px;
