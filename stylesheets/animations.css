@@ -48,10 +48,13 @@
 .top-nav      { animation: fade-in 0.8s var(--ease-out) 0.1s both; }
 .hero__eyebrow { animation: enter 0.9s var(--ease-out) 0.2s both; }
 .hero__name    { animation: enter 1s   var(--ease-out) 0.3s both; }
-.hero__portrait img { animation: enter 1.1s var(--ease-out) 0.35s both; }
+.hero__portrait { animation: enter 1.1s var(--ease-out) 0.35s both; }
 .hero__line    { animation: enter 1s   var(--ease-out) 0.5s both; }
 .hero__cta     { animation: enter 0.9s var(--ease-out) 0.58s both; }
 .hero__langs   { animation: enter 0.9s var(--ease-out) 0.65s both; }
+
+/* The Russian line grows to its larger size once it has settled (see styles.css). */
+.hero__line-text { transition: font-size 0.35s var(--ease-out); }
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
@@ -140,8 +143,9 @@
   .hero-terminal-row { opacity: 1; transform: none; transition: none; }
   .site-bg span:nth-child(n) { animation: none; } /* matches the drift rules' specificity */
   .reveal { opacity: 1; transform: none; transition: none; }
-  .site-bg, .top-nav, .hero__eyebrow, .hero__name, .hero__portrait img, .hero__line, .hero__cta, .hero__langs,
+  .site-bg, .top-nav, .hero__eyebrow, .hero__name, .hero__portrait, .hero__line, .hero__cta, .hero__langs,
   .page.active, .page.leaving, .ide-content { animation: none; }
+  .hero__line-text { transition: none; }
   .tw-cursor { animation: none; display: none; }
   .term-cursor { animation: none !important; }
   .eq span { animation: none !important; }

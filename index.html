@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@1,500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
-<!-- The hero portrait is shown from 768px up: fetch it early there, and not at all on phones. -->
-<link rel="preload" as="image" type="image/webp" media="(min-width: 768px)" href="headshot-760.webp" imagesrcset="headshot-400.webp 400w, headshot-760.webp 760w" imagesizes="clamp(112px, calc(16px + 13.6vw), 216px)" fetchpriority="high" />
+<!-- The hero portrait is the largest thing above the fold: fetch it early. -->
+<link rel="preload" as="image" href="headshot.jpeg" fetchpriority="high" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D4A464'/></svg>" />
 <link rel="stylesheet" href="stylesheets/styles.css" />
 <link rel="stylesheet" href="stylesheets/enhancements.css" />
@@ -27,7 +27,7 @@
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
 <!-- Site backdrop: warm glows and grain behind every page, pinned to the
      viewport so content scrolls over it. Decorative. -->
@@ -37,12 +37,12 @@
 
   <!-- ============== TOP NAV ============== -->
   <header class="top-nav">
-    <button type="button" class="nav-logo" data-nav="home">baab.com</button>
+    <button type="button" class="nav-logo" data-nav="home" lang="en">baab.com</button>
     <nav class="nav-links">
-      <button type="button" class="nav-item active" data-nav="home" aria-current="page">Home</button>
-      <button type="button" class="nav-item" data-nav="projects">Projects</button>
-      <button type="button" class="nav-item" data-nav="about">About</button>
-      <button type="button" class="nav-item" data-nav="contact">Contact</button>
+      <button type="button" class="nav-item active" data-nav="home" aria-current="page" data-i18n="home">Home</button>
+      <button type="button" class="nav-item" data-nav="projects" data-i18n="projects">Projects</button>
+      <button type="button" class="nav-item" data-nav="about" data-i18n="about">About</button>
+      <button type="button" class="nav-item" data-nav="contact" data-i18n="contact">Contact</button>
     </nav>
   </header>
 
@@ -52,44 +52,39 @@
     <!-- ============== HOME ============== -->
     <section class="page active" data-page="home" data-screen-label="01 Home">
 
-      <!-- ── HERO: polyglot ──
-           The name stays put; the italic line under it cycles through four
-           languages (scripts/hero.js). The strip below lists them: picking one
-           shows it and stops the rotation for the rest of the visit. All four
-           lines share one grid cell, so the block keeps the tallest line's
-           height and the layout never jumps. -->
+      <!-- ── HERO: polyglot, site-wide ──
+           The text column and the portrait share a row that wraps, so the
+           portrait drops below the text on narrow screens. The strip under
+           them switches the language of the whole site (scripts/i18n.js holds
+           the language and the decode transition; scripts/hero.js the strip
+           and the auto-cycle). Strings come from scripts/strings.js. -->
       <div class="hero" data-hero>
         <div class="hero__main">
-          <div class="hero__intro">
-            <div class="hero__eyebrow">Industrial &amp; Systems Engineering, Georgia Tech</div>
-            <h1 class="hero__name">Abba <em>Ndomo</em></h1>
-          </div>
-
-          <!-- Placed by the grid (see .hero__portrait): level with the name and the line.
-               Lazy, so phones, where it is hidden, never fetch it; on larger screens the preload above has it ready. -->
-          <div class="hero__portrait">
-            <img src="headshot-760.webp" srcset="headshot-400.webp 400w, headshot-760.webp 760w" sizes="clamp(112px, calc(16px + 13.6vw), 216px)" width="760" height="950" alt="Portrait of Abba Ndomo, smiling" loading="lazy" decoding="async">
-          </div>
-
           <div class="hero__row">
-            <p class="hero__line">
-              <span data-line lang="en" class="is-on">I study how systems work, then build the software that makes them work better.</span>
-              <span data-line lang="sw">Ninachunguza jinsi mifumo inavyofanya kazi, kisha ninaunda programu zinazoiboresha.</span>
-              <span data-line lang="es">Estudio cómo funcionan los sistemas y luego construyo el software que los hace funcionar mejor.</span>
-              <span data-line lang="ru">Я учу русский. Пока медленно.</span>
-            </p>
-            <a class="hero__cta" href="#projects" data-nav="projects">View projects
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
-            </a>
+            <div class="hero__text">
+              <div class="hero__eyebrow"><span class="hero__eyebrow-text" data-i18n-reserve="eyebrow"><span data-i18n="eyebrow">Industrial &amp; Systems Engineering, Georgia Tech</span></span></div>
+              <h1 class="hero__name" lang="en">Abba <em>Ndomo</em></h1>
+              <!-- data-i18n-reserve: the block keeps the height of the longest
+                   translation, so the layout never jumps (scripts/i18n.js). -->
+              <p class="hero__line" data-i18n-reserve="line"><span class="hero__line-text" data-i18n="line">I study how systems work, then build the software that makes them work better.</span></p>
+              <a class="hero__cta" href="#projects" data-nav="projects"><span data-i18n="cta">View projects</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+
+            <figure class="hero__portrait">
+              <img src="headshot.jpeg" width="1200" height="1600" alt="Portrait of Abba Ndomo" data-i18n-attr="alt:portrait.alt" fetchpriority="high" decoding="async">
+              <div class="hero__hello"><span data-i18n="hello">Hello</span></div>
+            </figure>
           </div>
 
-          <div class="hero__langs" role="group" aria-label="Language">
-            <button class="hero__lang" type="button" data-lang lang="en" aria-pressed="true">English</button>
-            <button class="hero__lang" type="button" data-lang lang="sw" aria-pressed="false">Kiswahili</button>
-            <button class="hero__lang" type="button" data-lang lang="es" aria-pressed="false">Español</button>
-            <button class="hero__lang" type="button" data-lang aria-pressed="false">
+          <div class="hero__langs" role="group" aria-label="Language" data-i18n-attr="aria-label:lang.group">
+            <button class="hero__lang" type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
+            <button class="hero__lang" type="button" data-lang="sw" lang="sw" aria-pressed="false">Kiswahili</button>
+            <button class="hero__lang" type="button" data-lang="es" lang="es" aria-pressed="false">Español</button>
+            <button class="hero__lang" type="button" data-lang="ru" aria-pressed="false">
               <span lang="ru">Русский</span>
-              <span class="hero__lang-tag">Learning</span>
+              <span class="hero__lang-tag" data-i18n="learning">Learning</span>
             </button>
           </div>
         </div>
@@ -118,9 +113,9 @@
         <div class="rule-head">
           <div class="rule-title">
             <span class="rule-num" aria-hidden="true">01</span>
-            <h2 id="work-h">Work</h2>
+            <h2 id="work-h" data-i18n="work.title">Work</h2>
           </div>
-          <span class="rule-meta">4 entries</span>
+          <span class="rule-meta" data-i18n="work.count">4 entries</span>
         </div>
 
         <article class="role-row">
@@ -129,14 +124,14 @@
             <div class="loc">Atlanta, GA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">ML Intern</div>
+            <div class="role-title-line" data-i18n="work.altura.role">ML Intern</div>
             <ul class="role-bullets">
-              <li>Computer-vision pipeline that measures kitchens from listing photos, cutting measurement error from 44.5% to 18.2%.</li>
+              <li data-i18n="work.altura.bullet">Computer-vision pipeline that measures kitchens from listing photos, cutting measurement error from 44.5% to 18.2%.</li>
             </ul>
           </div>
           <div class="role-when">
-            <div class="dates">Current</div>
-            <div class="kind">Part-time</div>
+            <div class="dates" data-i18n="work.altura.dates">Current</div>
+            <div class="kind" data-i18n="work.altura.kind">Part-time</div>
           </div>
         </article>
 
@@ -146,14 +141,14 @@
             <div class="loc">Cambridge, MA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">Software Engineer</div>
+            <div class="role-title-line" data-i18n="work.hackmit.role">Software Engineer</div>
             <ul class="role-bullets">
-              <li>Built the software for a simulated smart louvre roof that shades plants zone by zone, replayed on real 2023 Florida sun and rain data.</li>
+              <li data-i18n="work.hackmit.bullet">Built the software for a simulated smart louvre roof that shades plants zone by zone, replayed on real 2023 Florida sun and rain data.</li>
             </ul>
           </div>
           <div class="role-when">
-            <div class="dates">Sep 2026</div>
-            <div class="kind">Hackathon</div>
+            <div class="dates" data-i18n="work.hackmit.dates">Sep 2026</div>
+            <div class="kind" data-i18n="work.hackmit.kind">Hackathon</div>
           </div>
         </article>
 
@@ -163,14 +158,14 @@
             <div class="loc">Atlanta, GA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">Quantitative Analyst</div>
+            <div class="role-title-line" data-i18n="work.gtsf.role">Quantitative Analyst</div>
             <ul class="role-bullets">
-              <li>Risk models for a $500K live fund; Monte Carlo stress tests shaped its hedging and cut portfolio VaR 15%.</li>
+              <li data-i18n="work.gtsf.bullet">Risk models for a $500K live fund; Monte Carlo stress tests shaped its hedging and cut portfolio VaR 15%.</li>
             </ul>
           </div>
           <div class="role-when">
-            <div class="dates">Jan 2025 — May 2025</div>
-            <div class="kind">$500K live fund</div>
+            <div class="dates" data-i18n="work.gtsf.dates">Jan 2025 — May 2025</div>
+            <div class="kind" data-i18n="work.gtsf.kind">$500K live fund</div>
           </div>
         </article>
 
@@ -180,14 +175,14 @@
             <div class="loc">Mumbai, India</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">Software Engineering Intern</div>
+            <div class="role-title-line" data-i18n="work.kpmg.role">Software Engineering Intern</div>
             <ul class="role-bullets">
-              <li>Document classifier for 50+ auditors; cut latency from 45s to 8s at 95% precision.</li>
+              <li data-i18n="work.kpmg.bullet">Document classifier for 50+ auditors; cut latency from 45s to 8s at 95% precision.</li>
             </ul>
           </div>
           <div class="role-when">
-            <div class="dates">Jun 2024 — Jan 2025</div>
-            <div class="kind">Internship</div>
+            <div class="dates" data-i18n="work.kpmg.dates">Jun 2024 — Jan 2025</div>
+            <div class="kind" data-i18n="work.kpmg.kind">Internship</div>
           </div>
         </article>
       </section>
@@ -197,7 +192,7 @@
         <div class="rule-head">
           <div class="rule-title">
             <span class="rule-num" aria-hidden="true">02</span>
-            <h2 id="edu-h">Education</h2>
+            <h2 id="edu-h" data-i18n="edu.title">Education</h2>
           </div>
         </div>
 
@@ -207,12 +202,12 @@
             <div class="loc">Atlanta, GA</div>
           </div>
           <div class="role-body">
-            <div class="role-title-line">B.S. Computer Science + Industrial &amp; Systems Engineering</div>
-            <div class="role-sub">Operations Research track · Dean's List</div>
+            <div class="role-title-line" data-i18n="edu.degree">B.S. Computer Science + Industrial &amp; Systems Engineering</div>
+            <div class="role-sub" data-i18n="edu.sub">Operations Research track · Dean's List</div>
           </div>
           <div class="role-when">
-            <div class="dates">Expected Dec 2027</div>
-            <div class="kind">Undergraduate</div>
+            <div class="dates" data-i18n="edu.dates">Expected Dec 2027</div>
+            <div class="kind" data-i18n="edu.kind">Undergraduate</div>
           </div>
         </article>
       </section>
@@ -220,10 +215,10 @@
       <!-- ── FOOTER ── -->
       <footer class="site-footer">
         <span class="copy">© 2026 Abba Ndomo</span>
-        <nav class="footer-links" aria-label="Elsewhere">
+        <nav class="footer-links" aria-label="Elsewhere" data-i18n-attr="aria-label:footer.label">
           <a href="https://github.com/andomo3" target="_blank" rel="noopener">GitHub</a>
           <a href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="mailto:andomo3@gatech.edu">Email</a>
+          <a href="mailto:andomo3@gatech.edu" data-i18n="footer.email">Email</a>
         </nav>
       </footer>
 
@@ -235,11 +230,11 @@
 
       <div class="section">
         <div class="section-head" style="margin-top: 8px;">
-          <h2>Projects</h2>
+          <h2 data-i18n="projects">Projects</h2>
         </div>
 
         <div class="ide">
-          <aside class="ide-side" aria-label="Projects">
+          <aside class="ide-side" aria-label="Projects" data-i18n-attr="aria-label:projects">
             <div class="ide-children" id="file-tree"></div>
           </aside>
 
@@ -256,29 +251,29 @@
 
       <div class="section">
         <div class="section-head" style="margin-top: 8px;">
-          <h2>About</h2>
+          <h2 data-i18n="about">About</h2>
         </div>
 
-        <p class="page-lead">Lived in six countries. I like problems where the data is messy and the stakes are real.</p>
+        <p class="page-lead" data-i18n="about.lead">Lived in six countries. I like problems where the data is messy and the stakes are real.</p>
 
         <!-- Label | content rows, in the same shape as the home page's Work rows. -->
         <section class="info-row" aria-labelledby="about-facts">
-          <h3 class="info-label" id="about-facts">Facts</h3>
+          <h3 class="info-label" id="about-facts" data-i18n="about.facts">Facts</h3>
           <dl class="facts">
-            <div><dt>Role</dt><dd>Data &amp; ML Engineer</dd></div>
-            <div><dt>School</dt><dd>Georgia Tech '27 · CS + ISyE (OR)</dd></div>
-            <div><dt>Currently</dt><dd>Building PerChance · ML Intern @ Altura</dd></div>
-            <div><dt>Languages</dt><dd>EN · SW · ES · RU · AZ</dd></div>
+            <div><dt data-i18n="about.role">Role</dt><dd data-i18n="about.role.v">Data &amp; ML Engineer</dd></div>
+            <div><dt data-i18n="about.school">School</dt><dd>Georgia Tech '27 · CS + ISyE (OR)</dd></div>
+            <div><dt data-i18n="about.currently">Currently</dt><dd data-i18n="about.currently.v">Building PerChance · ML Intern @ Altura</dd></div>
+            <div><dt data-i18n="about.languages">Languages</dt><dd>EN · SW · ES · RU · AZ</dd></div>
           </dl>
         </section>
 
         <section class="info-row" aria-labelledby="about-stack">
-          <h3 class="info-label" id="about-stack">Stack <span>Recent commit volume</span></h3>
+          <h3 class="info-label" id="about-stack"><span data-i18n="about.stack">Stack</span> <span class="sub" data-i18n="about.stack.sub">Recent commit volume</span></h3>
           <div class="langs" id="langs"></div>
         </section>
 
         <section class="info-row" aria-labelledby="about-artists">
-          <h3 class="info-label" id="about-artists">Top artists <span>Spotify, all time</span></h3>
+          <h3 class="info-label" id="about-artists"><span data-i18n="about.artists">Top artists</span> <span class="sub" data-i18n="about.artists.sub">Spotify, all time</span></h3>
           <ol class="artist-list" id="artist-grid"></ol>
         </section>
       </div>
@@ -290,30 +285,30 @@
 
       <div class="section">
         <div class="section-head" style="margin-top: 8px;">
-          <h2>Contact</h2>
+          <h2 data-i18n="contact">Contact</h2>
         </div>
 
-        <p class="page-lead">Let's work together. Open to MLE and data engineering roles.</p>
+        <p class="page-lead" data-i18n="contact.lead">Let's work together. Open to MLE and data engineering roles.</p>
 
         <section class="info-row" aria-labelledby="contact-reach">
-          <h3 class="info-label" id="contact-reach">Reach me</h3>
+          <h3 class="info-label" id="contact-reach" data-i18n="contact.reach">Reach me</h3>
           <ul class="contact-links">
             <li><a href="mailto:andomo3@gatech.edu">andomo3@gatech.edu</a></li>
             <li><a href="https://linkedin.com/in/AbbaNdomo" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
             <li><a href="https://github.com/andomo3" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></li>
-            <li><a href="resume.pdf?v=20260811" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a></li>
+            <li><a href="resume.pdf?v=20260811" target="_blank" rel="noopener"><span data-i18n="contact.resume">Resume</span> <span aria-hidden="true">↗</span></a></li>
           </ul>
         </section>
 
         <section class="info-row" aria-labelledby="contact-availability">
-          <h3 class="info-label" id="contact-availability">Availability</h3>
+          <h3 class="info-label" id="contact-availability" data-i18n="contact.availability">Availability</h3>
           <dl class="facts">
-            <div><dt>Roles</dt><dd>MLE · Data engineering</dd></div>
-            <div><dt>Start</dt><dd>Immediately</dd></div>
-            <div><dt>Visa</dt><dd>F-1 · CPT now · STEM OPT eligible</dd></div>
-            <div><dt>Location</dt><dd>Atlanta · Remote · On-site</dd></div>
-            <div><dt>Timezone</dt><dd>ET, flexible ±5h</dd></div>
-            <div><dt>Open to</dt><dd>Coffee chats · Cold emails</dd></div>
+            <div><dt data-i18n="contact.roles">Roles</dt><dd data-i18n="contact.roles.v">MLE · Data engineering</dd></div>
+            <div><dt data-i18n="contact.start">Start</dt><dd data-i18n="contact.start.v">Immediately</dd></div>
+            <div><dt data-i18n="contact.visa">Visa</dt><dd data-i18n="contact.visa.v">F-1 · CPT now · STEM OPT eligible</dd></div>
+            <div><dt data-i18n="contact.location">Location</dt><dd data-i18n="contact.location.v">Atlanta · Remote · On-site</dd></div>
+            <div><dt data-i18n="contact.timezone">Timezone</dt><dd data-i18n="contact.timezone.v">ET, flexible ±5h</dd></div>
+            <div><dt data-i18n="contact.opento">Open to</dt><dd data-i18n="contact.opento.v">Coffee chats · Cold emails</dd></div>
           </dl>
         </section>
       </div>
@@ -326,24 +321,26 @@
   <nav class="mob-nav" id="mob-nav">
     <button class="mob-tab active" data-nav="home">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-      <span>Home</span>
+      <span data-i18n="home">Home</span>
     </button>
     <button class="mob-tab" data-nav="projects">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
-      <span>Projects</span>
+      <span data-i18n="projects">Projects</span>
     </button>
     <button class="mob-tab" data-nav="about">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <span>About</span>
+      <span data-i18n="about">About</span>
     </button>
     <button class="mob-tab" data-nav="contact">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
-      <span>Contact</span>
+      <span data-i18n="contact">Contact</span>
     </button>
   </nav>
 
 </div>
 
+<script src="scripts/strings.js"></script>
+<script src="scripts/i18n.js"></script>
 <script src="scripts/terminal.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/hero.js"></script>
