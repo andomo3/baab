@@ -126,17 +126,13 @@
     min-height: calc(100dvh - var(--header-h) - var(--mob-nav-h) - env(safe-area-inset-bottom, 0px));
   }
 
-  /* Hero portrait: one column. It sits above the name, left-aligned, and
-     pulls up into the hero's top padding to get a little more room. */
-  .hero__main { --portrait-w: 160px; grid-template-columns: minmax(0, 1fr); }
-  @supports (container-type: size) {
-    .hero__portrait {
-      grid-column: 1;
-      grid-row: 1;
-      justify-content: flex-start;
-      margin: -72px 0 28px;
-    }
+  /* Hero: one column, and no portrait (it is hidden on phones). The title and
+     caption stay centred above the language strip. */
+  .hero__main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "top" "eyebrow" "name" "line" "cta" "bottom" "langs";
   }
+  .hero__portrait { display: none; }
 
   /* Role rows collapse: org, then body, then dates left-aligned under it. */
   .role-row { grid-template-columns: minmax(0,1fr); gap: 14px; padding: 32px 0; }

@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@1,500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
-<!-- The hero portrait is the largest thing above the fold: fetch it early. -->
-<link rel="preload" as="image" type="image/webp" href="headshot-760.webp" imagesrcset="headshot-400.webp 400w, headshot-760.webp 760w" imagesizes="(max-width: 767px) 160px, clamp(200px, 26vw, 380px)" fetchpriority="high" />
+<!-- The hero portrait is shown from 768px up: fetch it early there, and not at all on phones. -->
+<link rel="preload" as="image" type="image/webp" media="(min-width: 768px)" href="headshot-760.webp" imagesrcset="headshot-400.webp 400w, headshot-760.webp 760w" imagesizes="clamp(112px, calc(16px + 13.6vw), 216px)" fetchpriority="high" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D4A464'/></svg>" />
 <link rel="stylesheet" href="stylesheets/styles.css" />
 <link rel="stylesheet" href="stylesheets/enhancements.css" />
@@ -65,9 +65,10 @@
             <h1 class="hero__name">Abba <em>Ndomo</em></h1>
           </div>
 
-          <!-- Placed by the grid (see .hero__portrait): it fills the free space above the name. -->
+          <!-- Placed by the grid (see .hero__portrait): level with the name and the line.
+               Lazy, so phones, where it is hidden, never fetch it; on larger screens the preload above has it ready. -->
           <div class="hero__portrait">
-            <img src="headshot-760.webp" srcset="headshot-400.webp 400w, headshot-760.webp 760w" sizes="(max-width: 767px) 160px, clamp(200px, 26vw, 380px)" width="760" height="950" alt="Portrait of Abba Ndomo, smiling" fetchpriority="high" decoding="async">
+            <img src="headshot-760.webp" srcset="headshot-400.webp 400w, headshot-760.webp 760w" sizes="clamp(112px, calc(16px + 13.6vw), 216px)" width="760" height="950" alt="Portrait of Abba Ndomo, smiling" loading="lazy" decoding="async">
           </div>
 
           <div class="hero__row">
