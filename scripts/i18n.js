@@ -8,9 +8,7 @@
 
    When the language changes, every string on screen decodes from the old text
    to the new one like a departures board (see mix). Strings that are not on
-   screen, and every string under reduced motion, swap at once. While a decode
-   runs, <html> carries data-decoding, for CSS that should wait for the final
-   text.
+   screen, and every string under reduced motion, swap at once.
 
    A string that wraps to a different number of lines in each language would
    shift the page as it changes. Wrap its live text in a box marked
@@ -81,7 +79,6 @@
   // loop. Each job re-rolls its glyphs only when the 55 ms tick changes.
   function decode(jobs) {
     const start = performance.now();
-    document.documentElement.setAttribute('data-decoding', '');
     const step = (now) => {
       const p = Math.min(1, Math.max(0, (now - start) / DURATION));
       const tick = Math.floor(now / REROLL);
@@ -91,12 +88,7 @@
           ? mix(job.from, job.to, p, (j) => job.glyphs[j] ?? (job.glyphs[j] = pick()))
           : job.to;
       }
-      if (p < 1) {
-        frame = requestAnimationFrame(step);
-      } else {
-        frame = 0;
-        document.documentElement.removeAttribute('data-decoding');
-      }
+      frame = p < 1 ? requestAnimationFrame(step) : 0;
     };
     frame = requestAnimationFrame(step);
   }
@@ -104,7 +96,6 @@
   function stopDecode() {
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
-    document.documentElement.removeAttribute('data-decoding');
   }
 
   // On screen: rendered at all (not under display: none, as other pages are)

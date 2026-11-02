@@ -22,9 +22,7 @@
 
       // Hero
       eyebrow: 'Industrial & Systems Engineering, Georgia Tech',
-      line: 'I study how systems work, then build the software that makes them work better.',
       cta: 'View projects',
-      hello: 'Hello',
       learning: 'Learning',
 
       // Page chrome
@@ -62,7 +60,6 @@
       'edu.kind': 'Undergraduate',
 
       // About
-      'about.lead': 'Lived in six countries. I like problems where the data is messy and the stakes are real.',
       'about.facts': 'Facts',
       'about.role': 'Role',
       'about.role.v': 'Data & ML Engineer',
@@ -142,9 +139,7 @@
 
       // Hero
       eyebrow: 'Uhandisi wa Viwanda na Mifumo, Georgia Tech',
-      line: 'Ninachunguza jinsi mifumo inavyofanya kazi, kisha ninaunda programu zinazoiboresha.',
       cta: 'Tazama miradi',
-      hello: 'Habari',
       learning: 'Ninajifunza',
 
       // Page chrome
@@ -182,7 +177,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
@@ -262,9 +256,7 @@
 
       // Hero
       eyebrow: 'Ingeniería Industrial y de Sistemas, Georgia Tech',
-      line: 'Estudio cómo funcionan los sistemas y luego construyo el software que los hace funcionar mejor.',
       cta: 'Ver proyectos',
-      hello: 'Hola',
       learning: 'Aprendiendo',
 
       // Page chrome
@@ -302,7 +294,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
@@ -382,9 +373,7 @@
 
       // Hero
       eyebrow: 'Промышленная и системная инженерия, Georgia Tech',
-      line: 'Я учу русский. Пока медленно.',
       cta: 'Смотреть проекты',
-      hello: 'Привет',
       learning: 'Учу',
 
       // Page chrome
@@ -422,7 +411,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
