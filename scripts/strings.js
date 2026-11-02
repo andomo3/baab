@@ -24,7 +24,6 @@
       eyebrow: 'Industrial & Systems Engineering, Georgia Tech',
       line: 'I study how systems work, then build the software that makes them work better.',
       cta: 'View projects',
-      hello: 'Hello',
       learning: 'Learning',
 
       // Page chrome
@@ -144,7 +143,6 @@
       eyebrow: 'Uhandisi wa Viwanda na Mifumo, Georgia Tech',
       line: 'Ninachunguza jinsi mifumo inavyofanya kazi, kisha ninaunda programu zinazoiboresha.',
       cta: 'Tazama miradi',
-      hello: 'Habari',
       learning: 'Ninajifunza',
 
       // Page chrome
@@ -264,7 +262,6 @@
       eyebrow: 'Ingeniería Industrial y de Sistemas, Georgia Tech',
       line: 'Estudio cómo funcionan los sistemas y luego construyo el software que los hace funcionar mejor.',
       cta: 'Ver proyectos',
-      hello: 'Hola',
       learning: 'Aprendiendo',
 
       // Page chrome
@@ -384,7 +381,6 @@
       eyebrow: 'Промышленная и системная инженерия, Georgia Tech',
       line: 'Я учу русский. Пока медленно.',
       cta: 'Смотреть проекты',
-      hello: 'Привет',
       learning: 'Учу',
 
       // Page chrome

@@ -96,13 +96,11 @@
   /* Instrument Serif has no Cyrillic: the Russian line falls through to
      Cormorant Garamond. */
   --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
-  /* The portrait: its frame, and the greeting tag that sits over it. */
+  /* The portrait's frame. */
   --hero-photo-bg: #1E1B18; /* holds the frame while the photo loads */
   --hero-photo-radius: 24px;
   --hero-photo-shadow: 0 0 0 1px rgba(244, 241, 234, 0.10), 0 40px 80px -24px rgba(0, 0, 0, 0.65);
   --hero-photo-scrim: linear-gradient(180deg, rgba(18, 17, 16, 0) 58%, rgba(18, 17, 16, 0.6) 100%);
-  --hero-tag-bg: rgba(18, 17, 16, 0.55);
-  --hero-tag-line: rgba(244, 241, 234, 0.14);
 
   /* Layout */
   /* The page's side gutter, from the hero design. The nav, hero, home
@@ -425,9 +423,9 @@ button { font-family: inherit; }
 .hero__name em { font-style: italic; }
 
 /* Portrait: a 4:5 frame with rounded corners and a soft drop shadow. The photo
-   is graded warm to sit in the palette, and a scrim darkens its foot for the
-   greeting tag. The frame is what is sized, not the image, so the photo never
-   moves the layout around it. */
+   is graded warm to sit in the palette, and a scrim darkens its foot. The frame
+   is what is sized, not the image, so the photo never moves the layout around
+   it. */
 .hero__portrait {
   position: relative;
   flex: 0 0 auto;
@@ -454,23 +452,6 @@ button { font-family: inherit; }
   background: var(--hero-photo-scrim);
   pointer-events: none;
 }
-.hero__hello {
-  position: absolute;
-  left: 14px;
-  bottom: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--hero-tag-bg);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--hero-tag-line);
-  font-size: 14px;
-  color: var(--hero-text);
-}
-.hero__hello::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--hero-accent); }
 
 /* The translating line. Its min-height holds two lines, and its
    data-i18n-reserve box (above) holds the tallest translation, so the block
