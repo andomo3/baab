@@ -93,9 +93,6 @@
   --hero-ink: #121110; /* text on the light CTA pill */
   --hero-font-sans: 'Space Grotesk', 'IBM Plex Sans', 'Helvetica Neue', Helvetica, sans-serif;
   --hero-font-display: 'Instrument Serif', 'Times New Roman', serif;
-  /* Instrument Serif has no Cyrillic: the Russian line falls through to
-     Cormorant Garamond. */
-  --hero-font-line: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
   /* The portrait's frame. */
   --hero-photo-bg: #1E1B18; /* holds the frame while the photo loads */
   --hero-photo-radius: 24px;
@@ -453,30 +450,9 @@ button { font-family: inherit; }
   pointer-events: none;
 }
 
-/* The translating line. Its min-height holds two lines, and its
-   data-i18n-reserve box (above) holds the tallest translation, so the block
-   does not jump between languages. */
-.hero__line {
-  margin: 40px 0 0;
-  max-width: 860px;
-  min-height: 2.36em;
-  font-family: var(--hero-font-line);
-  font-style: italic;
-  font-size: clamp(24px, 3vw, 44px);
-  line-height: 1.18;
-  color: var(--hero-text-soft);
-  text-wrap: balance;
-}
-/* Cormorant, the Cyrillic fallback, runs small beside Instrument Serif, so the
-   Russian line is set 8% larger: its hidden copy always, and the live text once
-   it has finished decoding into Russian (growing sooner would re-wrap the old
-   text and shift the page). */
-.hero__line .i18n-copy:lang(ru),
-html:lang(ru):not([data-decoding]) .hero__line-text { font-weight: 500; font-size: 1.08em; }
-
 .hero__cta {
   align-self: flex-start;
-  margin-top: 32px;
+  margin-top: 40px;
   display: inline-flex;
   align-items: center;
   gap: 10px;

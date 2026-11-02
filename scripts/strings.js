@@ -22,7 +22,6 @@
 
       // Hero
       eyebrow: 'Industrial & Systems Engineering, Georgia Tech',
-      line: 'I study how systems work, then build the software that makes them work better.',
       cta: 'View projects',
       learning: 'Learning',
 
@@ -141,7 +140,6 @@
 
       // Hero
       eyebrow: 'Uhandisi wa Viwanda na Mifumo, Georgia Tech',
-      line: 'Ninachunguza jinsi mifumo inavyofanya kazi, kisha ninaunda programu zinazoiboresha.',
       cta: 'Tazama miradi',
       learning: 'Ninajifunza',
 
@@ -260,7 +258,6 @@
 
       // Hero
       eyebrow: 'Ingeniería Industrial y de Sistemas, Georgia Tech',
-      line: 'Estudio cómo funcionan los sistemas y luego construyo el software que los hace funcionar mejor.',
       cta: 'Ver proyectos',
       learning: 'Aprendiendo',
 
@@ -379,7 +376,6 @@
 
       // Hero
       eyebrow: 'Промышленная и системная инженерия, Georgia Tech',
-      line: 'Я учу русский. Пока медленно.',
       cta: 'Смотреть проекты',
       learning: 'Учу',
 
