@@ -60,7 +60,6 @@
       'edu.kind': 'Undergraduate',
 
       // About
-      'about.lead': 'Lived in six countries. I like problems where the data is messy and the stakes are real.',
       'about.facts': 'Facts',
       'about.role': 'Role',
       'about.role.v': 'Data & ML Engineer',
@@ -178,7 +177,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
@@ -296,7 +294,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
@@ -414,7 +411,6 @@
       'edu.kind': TODO,
 
       // About
-      'about.lead': TODO,
       'about.facts': TODO,
       'about.role': TODO,
       'about.role.v': TODO,
